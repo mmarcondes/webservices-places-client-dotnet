@@ -51,6 +51,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\AllHeadersBuilderTest.cs" />
     <Compile Include="Builders\AuthorizationBuilderTest.cs" />
     <Compile Include="Builders\HeaderBuilderTest.cs" />
     <Compile Include="Builders\SignatureBuilderTest.cs" />

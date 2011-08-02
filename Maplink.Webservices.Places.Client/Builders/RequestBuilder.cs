@@ -1,4 +1,5 @@
-﻿using Maplink.Webservices.Places.Client.Entities;
+﻿using System.Collections.Generic;
+using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Wrappers;
 
 namespace Maplink.Webservices.Places.Client.Builders
@@ -9,17 +10,20 @@ namespace Maplink.Webservices.Places.Client.Builders
         private readonly IClock _clock;
         private readonly ISignatureBuilder _signatureBuilder;
         private readonly IHeaderBuilder _headerBuilder;
+        private readonly IAuthorizationBuilder _authorizationBuilder;
 
         public RequestBuilder(
             IUriBuilder uriBuilder,
             IClock clock,
             ISignatureBuilder signatureBuilder,
-            IHeaderBuilder headerBuilder)
+            IHeaderBuilder headerBuilder,
+            IAuthorizationBuilder authorizationBuilder)
         {
             _uriBuilder = uriBuilder;
             _clock = clock;
             _signatureBuilder = signatureBuilder;
             _headerBuilder = headerBuilder;
+            _authorizationBuilder = authorizationBuilder;
         }
 
         public Request ForRadiusSearch(RadiusSearchRequest radiusRequest)
@@ -32,11 +36,21 @@ namespace Maplink.Webservices.Places.Client.Builders
                 _signatureBuilder
                     .For("get", requestDateInUtc, uriBuilt, radiusRequest.Login, radiusRequest.Key);
 
-            var _headerBuilder.ForXMaplinkDate(requestDateInUtc);
+            var dateHeader = _headerBuilder.ForXMaplinkDate(requestDateInUtc);
+
+            var signatureHeader =
+                _headerBuilder
+                    .ForAuthorization(
+                        _authorizationBuilder.For(radiusRequest.Login, signatureBuilt));
 
             return new Request
                        {
-                           Uri = uriBuilt
+                           Uri = uriBuilt,
+                           Headers = new List<KeyValuePair<string, string>>
+                                         {
+                                             dateHeader,
+                                             signatureHeader
+                                         }
                        };
         }
     }
