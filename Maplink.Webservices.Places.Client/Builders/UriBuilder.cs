@@ -19,7 +19,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             var culture = CultureInfo.GetCultureInfo("en-us");
 
             return string.Format(
-                "{0}?radius={1}&latitude={2}&longitude={3}",
+                "{0}/places/byradius/?radius={1}&latitude={2}&longitude={3}",
                 _configurationWrapper.ValueFor(BaseUriKey),
                 request.Radius,
                 request.Latitude.ToString(culture),
