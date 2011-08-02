@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\AuthorizationBuilder.cs" />
     <Compile Include="Builders\HeaderBuilder.cs" />
+    <Compile Include="Builders\IAuthorizationBuilder.cs" />
     <Compile Include="Builders\IHeaderBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
