@@ -49,8 +49,10 @@
     <Compile Include="Builders\UriBuilder.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
     <Compile Include="Helpers\Base64Encoder.cs" />
+    <Compile Include="Helpers\Clock.cs" />
     <Compile Include="Helpers\HmacSha1HashGenerator.cs" />
     <Compile Include="Helpers\IBase64Encoder.cs" />
+    <Compile Include="Helpers\IClock.cs" />
     <Compile Include="Helpers\IHmacSha1HashGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wrappers\ConfigurationWrapper.cs" />
