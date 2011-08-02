@@ -1,9 +1,9 @@
-﻿using System;
-using Maplink.Webservices.Places.Client.Helpers;
+using System;
+using Maplink.Webservices.Places.Client.Wrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpTestsEx;
 
-namespace Maplink.Webservices.Client.Places.UnitTests.Helpers
+namespace Maplink.Webservices.Client.Places.UnitTests.Wrappers
 {
     [TestClass]
     public class ClockTest

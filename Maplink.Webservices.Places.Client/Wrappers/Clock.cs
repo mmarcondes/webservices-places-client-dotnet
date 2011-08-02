@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Maplink.Webservices.Places.Client.Helpers
+namespace Maplink.Webservices.Places.Client.Wrappers
 {
     public class Clock : IClock
     {
