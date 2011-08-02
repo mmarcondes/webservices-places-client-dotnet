@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="Builders\HeaderBuilder.cs" />
     <Compile Include="Builders\IHeaderBuilder.cs" />
+    <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
+    <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
     <Compile Include="Helpers\Base64Encoder.cs" />

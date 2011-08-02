@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\HeaderBuilderTest.cs" />
+    <Compile Include="Builders\SignatureBuilderTest.cs" />
     <Compile Include="Builders\UriBuilderTest.cs" />
     <Compile Include="Helpers\Base64EncoderTest.cs" />
     <Compile Include="Helpers\HmacSha1HashGeneratorTest.cs" />
