@@ -44,6 +44,8 @@
     <Compile Include="Builders\IUriBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
+    <Compile Include="Helpers\HmacSha1HashGenerator.cs" />
+    <Compile Include="Helpers\IHmacSha1HashGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wrappers\ConfigurationWrapper.cs" />
     <Compile Include="Wrappers\IConfigurationWrapper.cs" />
