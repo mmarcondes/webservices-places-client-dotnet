@@ -47,8 +47,12 @@
     <Compile Include="Builders\IAllHeadersBuilder.cs" />
     <Compile Include="Builders\IAuthorizationBuilder.cs" />
     <Compile Include="Builders\IHeaderBuilder.cs" />
+    <Compile Include="Builders\IRequestBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
+    <Compile Include="Builders\RequestBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
