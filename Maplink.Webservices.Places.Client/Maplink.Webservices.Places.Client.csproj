@@ -55,6 +55,8 @@
     </Compile>
     <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
+    <Compile Include="Converters\IPlacesConverter.cs" />
+    <Compile Include="Converters\PlacesConverter.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
     <Compile Include="Helpers\Base64Encoder.cs" />

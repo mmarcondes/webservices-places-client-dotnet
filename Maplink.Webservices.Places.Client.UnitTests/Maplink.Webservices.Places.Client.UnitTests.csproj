@@ -57,6 +57,7 @@
     <Compile Include="Builders\RequestBuilderTest.cs" />
     <Compile Include="Builders\SignatureBuilderTest.cs" />
     <Compile Include="Builders\UriBuilderTest.cs" />
+    <Compile Include="Converters\PlacesConverterTest.cs" />
     <Compile Include="Helpers\Base64EncoderTest.cs" />
     <Compile Include="Helpers\HmacSha1HashGeneratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
