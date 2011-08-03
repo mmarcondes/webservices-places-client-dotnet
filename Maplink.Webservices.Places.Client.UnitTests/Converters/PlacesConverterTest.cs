@@ -32,6 +32,12 @@ namespace Maplink.Webservices.Client.Places.UnitTests.Converters
             AssertThis(_secondPlaceResource, places.Last()); 
         }
 
+        [TestMethod]
+        public void ShouldBeAnEmptyListIfTryToConvertToEntityAnNullResource()
+        {
+            _converter.ToEntity(null).Should().Be.Empty();
+        }
+
         private static void AssertThis(Place resource, Webservices.Places.Client.Entities.Place entity)
         {
             entity.Address.Should().Be.EqualTo(resource.Address);
