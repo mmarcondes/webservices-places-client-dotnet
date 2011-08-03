@@ -55,21 +55,27 @@
     </Compile>
     <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
+    <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
     <Compile Include="Helpers\Base64Encoder.cs" />
     <Compile Include="Helpers\HmacSha1HashGenerator.cs" />
     <Compile Include="Helpers\IBase64Encoder.cs" />
     <Compile Include="Helpers\IHmacSha1HashGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Place.cs" />
+    <Compile Include="Resources\Places.cs" />
     <Compile Include="Wrappers\Clock.cs" />
     <Compile Include="Wrappers\ConfigurationWrapper.cs" />
     <Compile Include="Wrappers\HttpClient.cs" />
     <Compile Include="Wrappers\IClock.cs" />
     <Compile Include="Wrappers\IConfigurationWrapper.cs" />
     <Compile Include="Wrappers\IHttpClient.cs" />
+    <Compile Include="Wrappers\IXmlSerializerWrapper.cs" />
     <Compile Include="Wrappers\Request.cs" />
     <Compile Include="Wrappers\Response.cs" />
+    <Compile Include="Wrappers\XmlSerializerWrapper.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
