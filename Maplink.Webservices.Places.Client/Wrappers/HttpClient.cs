@@ -25,7 +25,7 @@ namespace Maplink.Webservices.Places.Client.Wrappers
             AddHeaders(webRequest.Headers, request.Headers);
             webRequest.KeepAlive = false;
             webRequest.Method = "GET";
-            webRequest.ContentType = request.ContentType;
+            webRequest.ContentType = request.ContentType;;
 
             var response = ProcessRequest(webRequest);
 
@@ -58,7 +58,6 @@ namespace Maplink.Webservices.Places.Client.Wrappers
                     {
                         body = reader.ReadToEnd();
                     }
-
                 }
             }
             catch (WebException exception)

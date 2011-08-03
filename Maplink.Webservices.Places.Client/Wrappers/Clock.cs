@@ -4,9 +4,19 @@ namespace Maplink.Webservices.Places.Client.Wrappers
 {
     public class Clock : IClock
     {
-        public DateTime UtcNow()
+        public DateTime UtcHourNow()
         {
-            return DateTime.UtcNow;
+            var now = DateTime.Now;
+
+            return 
+                new DateTime(
+                    now.Year, 
+                    now.Month, 
+                    now.Day, 
+                    now.Hour, 
+                    1, 
+                    1)
+                .ToUniversalTime();
         }
     }
 }

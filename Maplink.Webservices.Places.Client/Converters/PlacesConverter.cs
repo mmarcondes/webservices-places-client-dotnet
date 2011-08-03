@@ -27,7 +27,8 @@ namespace Maplink.Webservices.Places.Client.Converters
                             SecondaryPhone = place.SecondaryPhone,
                             State = place.State,
                             SubCategory = place.SubCategory,
-                            ZipCode = place.ZipCode
+                            ZipCode = place.ZipCode,
+                            DistanceInKilometers = place.Distance
                         });
         }
     }

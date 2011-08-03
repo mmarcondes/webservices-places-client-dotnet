@@ -26,7 +26,7 @@ namespace Maplink.Webservices.Places.Client.Builders
         {
             var uriBuilt = _uriBuilder.ForRadiusSearch(radiusRequest);
 
-            var requestDateInUtc = _clock.UtcNow();
+            var requestDateInUtc = _clock.UtcHourNow();
 
             var signatureBuilt = 
                 _signatureBuilder

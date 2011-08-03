@@ -49,6 +49,7 @@ namespace Maplink.Webservices.Client.Places.UnitTests.Converters
             entity.State.Should().Be.EqualTo(resource.State);
             entity.SubCategory.Should().Be.EqualTo(resource.SubCategory);
             entity.ZipCode.Should().Be.EqualTo(resource.ZipCode);
+            entity.DistanceInKilometers.Should().Be.EqualTo(resource.Distance);
         }
 
         private static void CreateResources()

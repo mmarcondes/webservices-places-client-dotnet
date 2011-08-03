@@ -11,7 +11,7 @@ namespace Maplink.Webservices.Client.Places.UnitTests.Wrappers
         [TestMethod]
         public void ShouldRetrieveUtcNow()
         {
-            new Clock().UtcNow().Date.Should().Be.EqualTo(DateTime.UtcNow.Date);
+            new Clock().UtcHourNow().Date.Should().Be.EqualTo(DateTime.UtcNow.Date);
         }
     }
 }

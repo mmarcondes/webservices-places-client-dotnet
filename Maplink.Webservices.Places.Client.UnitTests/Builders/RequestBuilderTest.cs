@@ -46,7 +46,7 @@ namespace Maplink.Webservices.Client.Places.UnitTests.Builders
 
             _mockedClock = new Mock<IClock>();
             _mockedClock
-                .Setup(it => it.UtcNow())
+                .Setup(it => it.UtcHourNow())
                 .Returns(_dateRetrieved);
 
             _mockedSignatureBuider = new Mock<ISignatureBuilder>();
@@ -97,7 +97,7 @@ namespace Maplink.Webservices.Client.Places.UnitTests.Builders
         {
             _builder.ForRadiusSearch(_radiusRequest);
 
-            _mockedClock.Verify(it => it.UtcNow(), Times.Once());
+            _mockedClock.Verify(it => it.UtcHourNow(), Times.Once());
         }
 
         [TestMethod]
