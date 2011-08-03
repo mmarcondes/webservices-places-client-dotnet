@@ -61,9 +61,11 @@
     <Compile Include="Converters\PlacesConverterTest.cs" />
     <Compile Include="Helpers\Base64EncoderTest.cs" />
     <Compile Include="Helpers\HmacSha1HashGeneratorTest.cs" />
+    <Compile Include="PlaceSeacherTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\PlacesTest.cs" />
     <Compile Include="Resources\PlaceTest.cs" />
+    <Compile Include="Services\PlacesSearchRetrieverTest.cs" />
     <Compile Include="Wrappers\ClockTest.cs" />
   </ItemGroup>
   <ItemGroup>
