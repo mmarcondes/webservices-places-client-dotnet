@@ -8,15 +8,17 @@ namespace Maplink.Webservices.Places.Client.Wrappers
         {
             var now = DateTime.Now;
 
-            return 
+            var utcHourNowForCachingPurpose = 
                 new DateTime(
                     now.Year, 
                     now.Month, 
                     now.Day, 
                     now.Hour, 
                     1, 
-                    1)
-                .ToUniversalTime();
+                    1,
+                    1);
+
+            return utcHourNowForCachingPurpose.ToUniversalTime();
         }
     }
 }

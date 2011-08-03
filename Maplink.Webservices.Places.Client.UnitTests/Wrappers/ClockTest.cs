@@ -9,9 +9,15 @@ namespace Maplink.Webservices.Client.Places.UnitTests.Wrappers
     public class ClockTest
     {
         [TestMethod]
-        public void ShouldRetrieveUtcNow()
+        public void ShouldRetrieveUtcHourNowForCachingPurpose()
         {
-            new Clock().UtcHourNow().Date.Should().Be.EqualTo(DateTime.UtcNow.Date);
+            var now = DateTime.Now;
+
+            var expectedDate = 
+                new DateTime(now.Year, now.Month, now.Day, now.Hour, 1, 1, 1)
+                .ToUniversalTime();
+
+            new Clock().UtcHourNow().Should().Be.EqualTo(expectedDate);
         }
     }
 }
