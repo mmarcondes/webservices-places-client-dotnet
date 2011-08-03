@@ -32,7 +32,7 @@ namespace Maplink.Webservices.Client.Places.UnitTests.Converters
             AssertThis(_secondPlaceResource, places.Last()); 
         }
 
-        private void AssertThis(Place resource, Webservices.Places.Client.Entities.Place entity)
+        private static void AssertThis(Place resource, Webservices.Places.Client.Entities.Place entity)
         {
             entity.Address.Should().Be.EqualTo(resource.Address);
             entity.Category.Should().Be.EqualTo(resource.Category);
