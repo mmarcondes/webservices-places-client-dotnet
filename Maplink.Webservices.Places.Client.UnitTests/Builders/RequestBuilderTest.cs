@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SharpTestsEx;
 
-namespace Maplink.Webservices.Client.Places.UnitTests.Builders
+namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 {
     [TestClass]
     public class RequestBuilderTest

@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SharpTestsEx;
 
-namespace Maplink.Webservices.Client.Places.UnitTests.Services
+namespace Maplink.Webservices.Places.Client.UnitTests.Services
 {
     [TestClass]
     public class PlacesSearchRetrieverTest

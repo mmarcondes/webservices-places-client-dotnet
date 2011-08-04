@@ -5,7 +5,7 @@ using Maplink.Webservices.Places.Client.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpTestsEx;
 
-namespace Maplink.Webservices.Client.Places.UnitTests.Converters
+namespace Maplink.Webservices.Places.Client.UnitTests.Converters
 {
     [TestClass]
     public class PlacesConverterTest

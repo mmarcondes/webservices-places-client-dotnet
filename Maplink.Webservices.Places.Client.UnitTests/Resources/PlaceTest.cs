@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpTestsEx;
 
-namespace Maplink.Webservices.Client.Places.UnitTests.Resources
+namespace Maplink.Webservices.Places.Client.UnitTests.Resources
 {
     [TestClass]
     public class PlaceTest

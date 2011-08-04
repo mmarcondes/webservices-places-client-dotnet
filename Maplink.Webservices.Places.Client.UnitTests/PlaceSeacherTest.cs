@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Maplink.Webservices.Places.Client;
 using Maplink.Webservices.Places.Client.Converters;
 using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Services;
@@ -7,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SharpTestsEx;
 
-namespace Maplink.Webservices.Client.Places.UnitTests
+namespace Maplink.Webservices.Places.Client.UnitTests
 {
     [TestClass]
     public class PlaceSeacherTest

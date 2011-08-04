@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpTestsEx;
 
-namespace Maplink.Webservices.Client.Places.UnitTests.Helpers
+namespace Maplink.Webservices.Places.Client.UnitTests.Helpers
 {
     [TestClass]
     public class Base64EncoderTest

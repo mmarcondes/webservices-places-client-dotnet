@@ -1,7 +1,7 @@
 ﻿using Maplink.Webservices.Places.Client.Wrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Maplink.Webservices.Client.Places.UnitTests.Resources
+namespace Maplink.Webservices.Places.Client.UnitTests.Resources
 {
     [TestClass]
     public class PlacesTest
