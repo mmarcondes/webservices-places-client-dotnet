@@ -46,6 +46,13 @@ namespace Maplink.Webservices.Places.Client.Builders
             return this;
         }
 
+        public RadiusSearchRequestBuilder StartingAtIndex(int index)
+        {
+            _instance.StartsAtIndex = index;
+
+            return this;
+        }
+
         public RadiusSearchRequest Build()
         {
             return _instance;

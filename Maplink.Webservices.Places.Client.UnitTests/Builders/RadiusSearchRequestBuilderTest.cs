@@ -16,6 +16,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .WithLatitude(23.435)
                 .WithLongitude(-46.235)
                 .WithRadius(10)
+                .StartingAtIndex(5)
                 .Build();
 
             requestBuilt.Key.Should().Be.EqualTo("key");
@@ -23,6 +24,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             requestBuilt.Latitude.Should().Be.EqualTo(23.435);
             requestBuilt.Longitude.Should().Be.EqualTo(-46.235);
             requestBuilt.Radius.Should().Be.EqualTo(10);
+            requestBuilt.StartsAtIndex.Should().Be.EqualTo(5);
         }
     }
 }

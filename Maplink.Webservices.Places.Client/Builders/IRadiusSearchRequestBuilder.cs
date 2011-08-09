@@ -9,6 +9,7 @@ namespace Maplink.Webservices.Places.Client.Builders
         RadiusSearchRequestBuilder WithLongitude(double longitude);
         RadiusSearchRequestBuilder WithKey(string key);
         RadiusSearchRequestBuilder WithLogin(string login);
+        RadiusSearchRequestBuilder StartingAtIndex(int index);
         RadiusSearchRequest Build();
     }
 }
