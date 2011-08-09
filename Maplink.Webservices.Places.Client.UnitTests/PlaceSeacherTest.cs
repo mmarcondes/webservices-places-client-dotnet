@@ -16,13 +16,13 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private Mock<IPlacesConverter> _mockedConverter;
         private RadiusSearchRequest _aRadiusRequest;
         private List<Place> _convertedPlaces;
-        private Webservices.Places.Client.Resources.Places _retrievedPlaces;
+        private Client.Resources.Places _retrievedPlaces;
 
         [TestInitialize]
         public void SetUp()
         {
             _aRadiusRequest = new RadiusSearchRequest();
-            _retrievedPlaces = new Webservices.Places.Client.Resources.Places();
+            _retrievedPlaces = new Client.Resources.Places();
             _convertedPlaces = new List<Place>();
 
             _mockedRetriever = new Mock<IPlacesSearchRetriever>();
@@ -32,7 +32,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
 
             _mockedConverter = new Mock<IPlacesConverter>();
             _mockedConverter
-                .Setup(it => it.ToEntity(It.IsAny<Webservices.Places.Client.Resources.Places>()))
+                .Setup(it => it.ToEntity(It.IsAny<Client.Resources.Places>()))
                 .Returns(_convertedPlaces);
 
             _provider = new PlaceSearcher(

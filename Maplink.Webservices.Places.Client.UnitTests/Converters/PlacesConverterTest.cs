@@ -12,7 +12,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Converters
     {
         private static Place _firstPlaceResource;
         private static Place _secondPlaceResource;
-        private static Webservices.Places.Client.Resources.Places _placesResources;
+        private static Client.Resources.Places _placesResources;
         private IPlacesConverter _converter;
 
         [TestInitialize]
@@ -38,7 +38,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Converters
             _converter.ToEntity(null).Should().Be.Empty();
         }
 
-        private static void AssertThis(Place resource, Webservices.Places.Client.Entities.Place entity)
+        private static void AssertThis(Place resource, Entities.Place entity)
         {
             entity.Address.Should().Be.EqualTo(resource.Address);
             entity.Category.Should().Be.EqualTo(resource.Category);
@@ -85,7 +85,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Converters
                                               Id = "43"
                                           };
 
-            _placesResources = new Webservices.Places.Client.Resources.Places
+            _placesResources = new Client.Resources.Places
                                       {
                                           All = new List<Place>
                                                     {
