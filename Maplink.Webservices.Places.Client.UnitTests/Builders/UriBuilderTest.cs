@@ -49,5 +49,22 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             _mockedConfiguration
                 .Verify(it => it.ValueFor("Maplink.Webservices.Places.BaseUri"), Times.Once());
         }
+
+        [TestMethod]
+        public void ShouldCreateForPaginationRequest()
+        {
+            const string expectedUri = "base-uriuri";
+
+            _builder.ForPagination("uri").Should().Be.EqualTo(expectedUri);
+        }
+
+        [TestMethod]
+        public void ShouldGetBaseUriFromConfigurationWhenCreatingForPaginationRequest()
+        {
+            _builder.ForPagination("uri");
+
+            _mockedConfiguration
+                .Verify(it => it.ValueFor("Maplink.Webservices.Places.BaseUri"), Times.Once());
+        }
     }
 }
