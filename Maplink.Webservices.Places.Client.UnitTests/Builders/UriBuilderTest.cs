@@ -21,7 +21,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             {
                 Radius = 3,
                 Latitude = -32.345,
-                Longitude = 12.325263
+                Longitude = 12.325263,
+                StartsAtIndex = 10
             };
             
             _mockedConfiguration = new Mock<IConfigurationWrapper>();
@@ -35,7 +36,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldCreateForRadiusSearch()
         {
-            const string expectedUri = "base-uri/places/byradius/?radius=3&latitude=-32.345&longitude=12.325263";
+            const string expectedUri = "base-uri/places/byradius/?radius=3&latitude=-32.345&longitude=12.325263&start=10";
 
             _builder.ForRadiusSearch(_aRadiusRequest).Should().Be.EqualTo(expectedUri);
         }

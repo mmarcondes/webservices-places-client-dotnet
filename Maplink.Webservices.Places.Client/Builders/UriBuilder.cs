@@ -19,11 +19,12 @@ namespace Maplink.Webservices.Places.Client.Builders
             var culture = CultureInfo.GetCultureInfo("en-us");
 
             return string.Format(
-                "{0}/places/byradius/?radius={1}&latitude={2}&longitude={3}",
-                _configurationWrapper.ValueFor(BaseUriKey),
-                request.Radius,
-                request.Latitude.ToString(culture),
-                request.Longitude.ToString(culture));
+                "{0}/places/byradius/?radius={1}&latitude={2}&longitude={3}&start={4}",
+                    _configurationWrapper.ValueFor(BaseUriKey),
+                    request.Radius,
+                    request.Latitude.ToString(culture),
+                    request.Longitude.ToString(culture),
+                    request.StartsAtIndex);
         }
     }
 }
