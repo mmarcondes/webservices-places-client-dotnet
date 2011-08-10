@@ -26,13 +26,26 @@ namespace Maplink.Webservices.Places.Client.Builders
         {
             var uriBuilt = _uriBuilder.ForRadiusSearch(radiusRequest);
 
+            return ForRadiusSearch(radiusRequest.Login, radiusRequest.Key, uriBuilt);
+        }
+
+        public Request ForRadiusSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest)
+        {
+            return ForRadiusSearch(
+                placeSearchPaginationRequest.Login, 
+                placeSearchPaginationRequest.Key,
+                placeSearchPaginationRequest.Uri);
+        }
+
+        private Request ForRadiusSearch(string login, string key, string uriBuilt)
+        {
             var requestDateInUtc = _clock.UtcHourNow();
 
-            var signatureBuilt = 
+            var signatureBuilt =
                 _signatureBuilder
-                    .For("get", requestDateInUtc, uriBuilt, radiusRequest.Login, radiusRequest.Key);
+                    .For("get", requestDateInUtc, uriBuilt, login, key);
 
-            var headers = _allHeadersBuilder.For(requestDateInUtc, radiusRequest.Login, signatureBuilt);
+            var headers = _allHeadersBuilder.For(requestDateInUtc, login, signatureBuilt);
 
             return new Request
                        {

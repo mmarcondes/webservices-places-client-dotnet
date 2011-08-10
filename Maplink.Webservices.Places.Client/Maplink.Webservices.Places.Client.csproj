@@ -61,6 +61,7 @@
     <Compile Include="Converters\PlacesConverter.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\PlaceResult.cs" />
+    <Compile Include="Entities\PlaceSearchPaginationRequest.cs" />
     <Compile Include="Entities\PlaceSearchResult.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
     <Compile Include="Exceptions\PlaceClientRequestException.cs" />

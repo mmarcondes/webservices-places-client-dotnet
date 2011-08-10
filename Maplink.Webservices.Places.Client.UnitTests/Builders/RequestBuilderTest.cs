@@ -20,6 +20,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         private RadiusSearchRequest _radiusRequest;
         private IEnumerable<KeyValuePair<string, string>>  _headersBuilt;
         private DateTime _dateRetrieved;
+        private PlaceSearchPaginationRequest _paginationRequest;
         private const string UriBuilt = "uri-built";
         private const string SignatureBuilt = "signature-built";
 
@@ -34,6 +35,13 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                                      Login = "login",
                                      Radius = 3
                                  };
+
+            _paginationRequest = new PlaceSearchPaginationRequest
+                                     {
+                                         Key = "a-key",
+                                         Login = "a-login",
+                                         Uri = "a-uri"
+                                     };
 
             _headersBuilt = new Dictionary<string, string>();
 
@@ -127,6 +135,53 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                         it.For(
                             _dateRetrieved,
                             _radiusRequest.Login,
+                            SignatureBuilt), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildARequestForRadiusPaginationSearch()
+        {
+            var request = _builder.ForRadiusSearch(_paginationRequest);
+
+            request.Uri.Should().Be.EqualTo(_paginationRequest.Uri);
+            request.Headers.Should().Be.SameInstanceAs(_headersBuilt);
+        }
+
+        [TestMethod]
+        public void ShouldGetRequestDateWhenBuildingARequestForRadiusPaginationSearch()
+        {
+            _builder.ForRadiusSearch(_paginationRequest);
+
+            _mockedClock.Verify(it => it.UtcHourNow(), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildSignatureWhenBuildingARequestForRadiusPaginationSearch()
+        {
+            _builder.ForRadiusSearch(_paginationRequest);
+
+            _mockedSignatureBuider
+                .Verify(
+                    it => 
+                        it.For(
+                            "get",
+                            _dateRetrieved,
+                            _paginationRequest.Uri,
+                            _paginationRequest.Login,
+                            _paginationRequest.Key), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildAllHeadersWhenBuildingARequestForRadiusPaginationSearch()
+        {
+            _builder.ForRadiusSearch(_paginationRequest);
+
+            _mockedAllHeadersBuilder
+                .Verify(
+                    it => 
+                        it.For(
+                            _dateRetrieved,
+                            _paginationRequest.Login,
                             SignatureBuilt), Times.Once());
         }
     }

@@ -25,6 +25,18 @@ namespace Maplink.Webservices.Places.Client.Services
         {
             var request = _requestBuilder.ForRadiusSearch(radiusSearchRequest);
 
+            return RetrieveFrom(request);
+        }
+
+        public Resources.Places RetrieveFrom(PlaceSearchPaginationRequest placeSearchPaginationRequest)
+        {
+            var request = _requestBuilder.ForRadiusSearch(placeSearchPaginationRequest);
+
+            return RetrieveFrom(request);
+        }
+
+        private Resources.Places RetrieveFrom(Request request)
+        {
             var response = _httpClient.Get(request);
 
             if (IsAnInvalidResponse(response))

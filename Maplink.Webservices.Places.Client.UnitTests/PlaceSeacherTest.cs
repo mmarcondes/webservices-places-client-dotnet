@@ -16,17 +16,22 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private RadiusSearchRequest _aRadiusRequest;
         private PlaceSearchResult _placeSearchResult;
         private Client.Resources.Places _retrievedPlaces;
+        private PlaceSearchPaginationRequest _aPaginationRequest;
 
         [TestInitialize]
         public void SetUp()
         {
             _aRadiusRequest = new RadiusSearchRequest();
+            _aPaginationRequest = new PlaceSearchPaginationRequest();
             _retrievedPlaces = new Client.Resources.Places();
             _placeSearchResult = new PlaceSearchResult();
 
             _mockedRetriever = new Mock<IPlacesSearchRetriever>();
             _mockedRetriever
                 .Setup(it => it.RetrieveFrom(It.IsAny<RadiusSearchRequest>()))
+                .Returns(_retrievedPlaces);
+            _mockedRetriever
+                .Setup(it => it.RetrieveFrom(It.IsAny<PlaceSearchPaginationRequest>()))
                 .Returns(_retrievedPlaces);
 
             _mockedConverter = new Mock<IPlacesConverter>();
@@ -56,6 +61,26 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         public void ShouldConvertToEntityWhenSearchingByRadius()
         {
             _provider.ByRadius(_aRadiusRequest);
+            _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldRetrievePlacesByRadiusForPaginationRequest()
+        {
+            _provider.ByRadius(_aPaginationRequest).Should().Be.SameInstanceAs(_placeSearchResult);
+        }
+
+        [TestMethod]
+        public void ShouldRetrieveResourcesWhenSearchingByRadiusForPaginationRequest()
+        {
+            _provider.ByRadius(_aPaginationRequest);
+            _mockedRetriever.Verify(it => it.RetrieveFrom(_aPaginationRequest), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldConvertToEntityWhenSearchingByRadiusForPaginationRequest()
+        {
+            _provider.ByRadius(_aPaginationRequest);
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
     }
