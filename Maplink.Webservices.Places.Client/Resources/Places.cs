@@ -8,12 +8,12 @@ namespace Maplink.Webservices.Places.Client.Resources
     {
         public Places()
         {
-            All = new List<Place>();
+            Retrieved = new List<Place>();
             Links = new List<AtomLink>();
         }
 
         [XmlElement(ElementName = "place")]
-        public List<Place> All { get; set; }
+        public List<Place> Retrieved { get; set; }
 
         [XmlElement("total-found")]
         public int TotalFound { get; set; }

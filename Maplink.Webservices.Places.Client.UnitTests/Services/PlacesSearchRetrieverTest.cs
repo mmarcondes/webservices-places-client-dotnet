@@ -111,7 +111,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasNotFound()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRadiusSearchRequest).All
+            _retriever.RetrieveFrom(_aRadiusSearchRequest).Retrieved
                 .Should().Be.Empty();
         }
 

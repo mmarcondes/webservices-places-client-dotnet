@@ -25,7 +25,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Resources
                 _serializer
                     .Deserialize<Webservices.Places.Client.Resources.Places>(placesResourceInXml);
 
-            placesDeserialized.All.Should().Have.Count.EqualTo(2);
+            placesDeserialized.Retrieved.Should().Have.Count.EqualTo(2);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Maplink.Webservices.Places.Client.Converters
         public IEnumerable<Place> ToEntity(Resources.Places placesResource)
         {
             return placesResource != null
-                ? placesResource.All
+                ? placesResource.Retrieved
                     .Select(
                         place =>
                         new Place

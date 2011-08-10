@@ -87,7 +87,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Converters
 
             _placesResources = new Client.Resources.Places
                                       {
-                                          All = new List<Place>
+                                          Retrieved = new List<Place>
                                                     {
                                                         _firstPlaceResource,
                                                         _secondPlaceResource
