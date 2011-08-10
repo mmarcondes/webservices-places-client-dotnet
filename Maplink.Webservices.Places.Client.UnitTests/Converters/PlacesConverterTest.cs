@@ -23,19 +23,44 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Converters
         }
 
         [TestMethod]
-        public void ShouldConvertToEntities()
+        public void ShouldConvertToEntity()
         {
-            var places = _converter.ToEntity(_placesResources).ToList();
+            GivenAllLinksWereRetrieved();
+            
+            var placeSearchResult = _converter.ToEntity(_placesResources);
 
-            places.Should().Have.Count.EqualTo(2);
-            AssertThis(_firstPlaceResource, places.First());
-            AssertThis(_secondPlaceResource, places.Last()); 
+            placeSearchResult.Places.Should().Have.Count.EqualTo(2);
+            AssertThis(_firstPlaceResource, placeSearchResult.Places.First());
+            AssertThis(_secondPlaceResource, placeSearchResult.Places.Last());
+            placeSearchResult.TotalFound.Should().Be.EqualTo(20);
+            placeSearchResult.NextPageUri.Should().Be.EqualTo("next-uri");
+            placeSearchResult.PreviousPageUri.Should().Be.EqualTo("previous-uri");
+        }
+
+        [TestMethod]
+        public void ShouldNotContainPreviousPageUri()
+        {
+            GivenThePreviousLinkWasNotRetrieved();
+
+            var placeSearchResult = _converter.ToEntity(_placesResources);
+
+            placeSearchResult.PreviousPageUri.Should().Be.Empty();
+        }
+
+        [TestMethod]
+        public void ShouldNotContainNextPageUri()
+        {
+            GivenTheNextLinkWasNotRetrieved();
+
+            var placeSearchResult = _converter.ToEntity(_placesResources);
+
+            placeSearchResult.NextPageUri.Should().Be.Empty();
         }
 
         [TestMethod]
         public void ShouldBeAnEmptyListIfTryToConvertToEntityAnNullResource()
         {
-            _converter.ToEntity(null).Should().Be.Empty();
+            _converter.ToEntity(null).Places.Should().Be.Empty();
         }
 
         private static void AssertThis(Place resource, Entities.Place entity)
@@ -91,8 +116,34 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Converters
                                                     {
                                                         _firstPlaceResource,
                                                         _secondPlaceResource
-                                                    }
+                                                    },
+                                          TotalFound = 20
                                       };
+        }
+
+        private void GivenAllLinksWereRetrieved()
+        {
+            _placesResources.Links = new List<AtomLink>
+                                         {
+                                             new AtomLink {Rel = "next", Href = "next-uri"},
+                                             new AtomLink {Rel = "previous", Href = "previous-uri"},
+                                         };
+        }
+
+        private void GivenThePreviousLinkWasNotRetrieved()
+        {
+            _placesResources.Links = new List<AtomLink>
+                                         {
+                                             new AtomLink {Rel = "next", Href = "next-uri"}
+                                         };
+        }
+
+        private void GivenTheNextLinkWasNotRetrieved()
+        {
+            _placesResources.Links = new List<AtomLink>
+                                         {
+                                             new AtomLink {Rel = "previous", Href = "previous-uri"}
+                                         };
         }
     }
 }

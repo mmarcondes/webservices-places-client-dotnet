@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Maplink.Webservices.Places.Client.Converters;
+﻿using Maplink.Webservices.Places.Client.Converters;
 using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,7 +14,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private Mock<IPlacesSearchRetriever> _mockedRetriever;
         private Mock<IPlacesConverter> _mockedConverter;
         private RadiusSearchRequest _aRadiusRequest;
-        private List<Place> _convertedPlaces;
+        private PlaceSearchResult _placeSearchResult;
         private Client.Resources.Places _retrievedPlaces;
 
         [TestInitialize]
@@ -23,7 +22,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             _aRadiusRequest = new RadiusSearchRequest();
             _retrievedPlaces = new Client.Resources.Places();
-            _convertedPlaces = new List<Place>();
+            _placeSearchResult = new PlaceSearchResult();
 
             _mockedRetriever = new Mock<IPlacesSearchRetriever>();
             _mockedRetriever
@@ -33,7 +32,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             _mockedConverter = new Mock<IPlacesConverter>();
             _mockedConverter
                 .Setup(it => it.ToEntity(It.IsAny<Client.Resources.Places>()))
-                .Returns(_convertedPlaces);
+                .Returns(_placeSearchResult);
 
             _provider = new PlaceSearcher(
                 _mockedRetriever.Object,
@@ -43,7 +42,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         [TestMethod]
         public void ShouldRetrievePlacesByRadius()
         {
-            _provider.ByRadius(_aRadiusRequest).Should().Be.SameInstanceAs(_convertedPlaces);
+            _provider.ByRadius(_aRadiusRequest).Should().Be.SameInstanceAs(_placeSearchResult);
         }
 
         [TestMethod]

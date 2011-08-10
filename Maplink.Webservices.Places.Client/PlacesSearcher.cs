@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Maplink.Webservices.Places.Client.Builders;
+﻿using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Converters;
 using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Helpers;
@@ -33,7 +32,7 @@ namespace Maplink.Webservices.Places.Client
         {
         }
 
-        public IEnumerable<Place> ByRadius(RadiusSearchRequest radiusSearchRequest)
+        public PlaceSearchResult ByRadius(RadiusSearchRequest radiusSearchRequest)
         {
             var places = _retriever.RetrieveFrom(radiusSearchRequest);
 
