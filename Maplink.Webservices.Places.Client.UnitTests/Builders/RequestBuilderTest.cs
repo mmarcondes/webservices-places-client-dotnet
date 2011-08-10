@@ -51,6 +51,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             _mockedUriBuilder
                 .Setup(it => it.ForRadiusSearch(It.IsAny<RadiusSearchRequest>()))
                 .Returns(UriBuilt);
+            _mockedUriBuilder
+                .Setup(it => it.ForPagination(It.IsAny<string>()))
+                .Returns(UriBuilt);
 
             _mockedClock = new Mock<IClock>();
             _mockedClock
@@ -143,8 +146,16 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         {
             var request = _builder.ForRadiusSearch(_paginationRequest);
 
-            request.Uri.Should().Be.EqualTo(_paginationRequest.Uri);
+            request.Uri.Should().Be.EqualTo(UriBuilt);
             request.Headers.Should().Be.SameInstanceAs(_headersBuilt);
+        }
+
+        [TestMethod]
+        public void ShouldBuildUriWhenBuildingARequestForRadiusPaginationSearch()
+        {
+            _builder.ForRadiusSearch(_paginationRequest);
+
+            _mockedUriBuilder.Verify(it => it.ForPagination(_paginationRequest.Uri), Times.Once());
         }
 
         [TestMethod]
@@ -166,7 +177,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                         it.For(
                             "get",
                             _dateRetrieved,
-                            _paginationRequest.Uri,
+                            UriBuilt,
                             _paginationRequest.Login,
                             _paginationRequest.Key), Times.Once());
         }

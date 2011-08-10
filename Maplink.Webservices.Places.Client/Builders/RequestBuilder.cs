@@ -31,10 +31,12 @@ namespace Maplink.Webservices.Places.Client.Builders
 
         public Request ForRadiusSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest)
         {
+            var uriBuilt = _uriBuilder.ForPagination(placeSearchPaginationRequest.Uri);
+
             return ForRadiusSearch(
                 placeSearchPaginationRequest.Login, 
                 placeSearchPaginationRequest.Key,
-                placeSearchPaginationRequest.Uri);
+                uriBuilt);
         }
 
         private Request ForRadiusSearch(string login, string key, string uriBuilt)
