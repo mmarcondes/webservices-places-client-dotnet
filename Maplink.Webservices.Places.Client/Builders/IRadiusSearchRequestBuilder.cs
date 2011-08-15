@@ -4,7 +4,7 @@ namespace Maplink.Webservices.Places.Client.Builders
 {
     public interface IRadiusSearchRequestBuilder
     {
-        RadiusSearchRequestBuilder WithRadius(int radius);
+        RadiusSearchRequestBuilder WithRadius(double radius);
         RadiusSearchRequestBuilder WithLatitude(double latitude);
         RadiusSearchRequestBuilder WithLongitude(double longitude);
         RadiusSearchRequestBuilder WithKey(string key);

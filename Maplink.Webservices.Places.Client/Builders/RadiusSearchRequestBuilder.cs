@@ -11,7 +11,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             _instance = new RadiusSearchRequest();
         }
 
-        public RadiusSearchRequestBuilder WithRadius(int radius)
+        public RadiusSearchRequestBuilder WithRadius(double radius)
         {
             _instance.Radius = radius;
 
