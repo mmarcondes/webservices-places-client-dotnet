@@ -22,7 +22,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             return String.Format(
                 "{0}/places/byradius/?radius={1}&latitude={2}&longitude={3}&start={4}",
                     _configurationWrapper.ValueFor(BaseUriKey),
-                    request.Radius,
+                    request.Radius.ToString(culture),
                     request.Latitude.ToString(culture),
                     request.Longitude.ToString(culture),
                     request.StartsAtIndex);
