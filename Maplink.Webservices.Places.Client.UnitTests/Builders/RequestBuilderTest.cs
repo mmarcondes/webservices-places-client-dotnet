@@ -17,67 +17,25 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         private Mock<IClock> _mockedClock;
         private Mock<ISignatureBuilder> _mockedSignatureBuider;
         private Mock<IAllHeadersBuilder> _mockedAllHeadersBuilder;
-        private RadiusSearchRequest _radiusRequest;
-        private IEnumerable<KeyValuePair<string, string>>  _headersBuilt;
+        private IEnumerable<KeyValuePair<string, string>> _headersBuilt;
         private DateTime _dateRetrieved;
         private PlaceSearchPaginationRequest _paginationRequest;
+        private SearchRequest _searchRequest;
         private const string UriBuilt = "uri-built";
         private const string SignatureBuilt = "signature-built";
 
         [TestInitialize]
         public void SetUp()
         {
-            _radiusRequest = new RadiusSearchRequest
-                                 {
-                                     Key = "key",
-                                     Latitude = -12.432,
-                                     Longitude = -24.124,
-                                     Login = "login",
-                                     Radius = 3
-                                 };
+            CreateSearchRequest();
 
-            _paginationRequest = new PlaceSearchPaginationRequest
-                                     {
-                                         Key = "a-key",
-                                         Login = "a-login",
-                                         Uri = "a-uri"
-                                     };
+            CreatePaginationRequest();
 
             _headersBuilt = new Dictionary<string, string>();
-
-            _dateRetrieved = new DateTime(2011, 08, 01);
-
             _mockedUriBuilder = new Mock<IUriBuilder>();
-            _mockedUriBuilder
-                .Setup(it => it.ForRadiusSearch(It.IsAny<RadiusSearchRequest>()))
-                .Returns(UriBuilt);
-            _mockedUriBuilder
-                .Setup(it => it.ForPagination(It.IsAny<string>()))
-                .Returns(UriBuilt);
-
             _mockedClock = new Mock<IClock>();
-            _mockedClock
-                .Setup(it => it.UtcHourNow())
-                .Returns(_dateRetrieved);
-
             _mockedSignatureBuider = new Mock<ISignatureBuilder>();
-            _mockedSignatureBuider
-                .Setup(
-                    it =>
-                    it.For(
-                        It.IsAny<string>(),
-                        It.IsAny<DateTime>(),
-                        It.IsAny<string>(),
-                        It.IsAny<string>(),
-                        It.IsAny<string>()))
-                .Returns(SignatureBuilt);
-            
             _mockedAllHeadersBuilder = new Mock<IAllHeadersBuilder>();
-            _mockedAllHeadersBuilder
-                .Setup(
-                    it =>
-                        it.For(It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(_headersBuilt);
 
             _builder = new RequestBuilder(
                 _mockedUriBuilder.Object,
@@ -85,65 +43,94 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 _mockedSignatureBuider.Object,
                 _mockedAllHeadersBuilder.Object);
         }
-
         [TestMethod]
-        public void ShouldBuildARequestForRadiusSearch()
+        public void ShouldBuildARequestForSearch()
         {
-            var request = _builder.ForRadiusSearch(_radiusRequest);
+            GivenTheUriWasBuiltForSearchRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
+
+            var request = _builder.For(_searchRequest);
 
             request.Uri.Should().Be.EqualTo(UriBuilt);
             request.Headers.Should().Be.SameInstanceAs(_headersBuilt);
         }
 
         [TestMethod]
-        public void ShouldBuildUriWhenBuildingARequestForRadiusSearch()
+        public void ShouldBuildUriWhenBuildingARequestForSearch()
         {
-            _builder.ForRadiusSearch(_radiusRequest);
+            GivenTheUriWasBuiltForSearchRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
 
-            _mockedUriBuilder.Verify(it => it.ForRadiusSearch(_radiusRequest), Times.Once());
+            _builder.For(_searchRequest);
+
+            _mockedUriBuilder.Verify(it => it.For(_searchRequest), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldGetRequestDateWhenBuildingARequestForRadiusSearch()
+        public void ShouldGetRequestDateWhenBuildingARequestForSearch()
         {
-            _builder.ForRadiusSearch(_radiusRequest);
+            GivenTheUriWasBuiltForSearchRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
+
+            _builder.For(_searchRequest);
 
             _mockedClock.Verify(it => it.UtcHourNow(), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldBuildSignatureWhenBuildingARequestForRadiusSearch()
+        public void ShouldBuildSignatureWhenBuildingARequestForSearch()
         {
-            _builder.ForRadiusSearch(_radiusRequest);
+            GivenTheUriWasBuiltForSearchRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
+
+            _builder.For(_searchRequest);
 
             _mockedSignatureBuider
                 .Verify(
-                    it => 
+                    it =>
                         it.For(
                             "get",
                             _dateRetrieved,
                             UriBuilt,
-                            _radiusRequest.Login,
-                            _radiusRequest.Key), Times.Once());
+                            _searchRequest.Login,
+                            _searchRequest.Key), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldBuildAllHeadersWhenBuildingARequestForRadiusSearch()
+        public void ShouldBuildAllHeadersWhenBuildingARequestForSearch()
         {
-            _builder.ForRadiusSearch(_radiusRequest);
+            GivenTheUriWasBuiltForSearchRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
+
+            _builder.For(_searchRequest);
 
             _mockedAllHeadersBuilder
                 .Verify(
-                    it => 
+                    it =>
                         it.For(
                             _dateRetrieved,
-                            _radiusRequest.Login,
+                            _searchRequest.Login,
                             SignatureBuilt), Times.Once());
         }
 
         [TestMethod]
         public void ShouldBuildARequestForRadiusPaginationSearch()
         {
+            GivenTheUriWasBuiltForPaginationRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
+
             var request = _builder.ForRadiusSearch(_paginationRequest);
 
             request.Uri.Should().Be.EqualTo(UriBuilt);
@@ -169,11 +156,16 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldBuildSignatureWhenBuildingARequestForRadiusPaginationSearch()
         {
+            GivenTheUriWasBuiltForPaginationRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
+
             _builder.ForRadiusSearch(_paginationRequest);
 
             _mockedSignatureBuider
                 .Verify(
-                    it => 
+                    it =>
                         it.For(
                             "get",
                             _dateRetrieved,
@@ -185,15 +177,100 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldBuildAllHeadersWhenBuildingARequestForRadiusPaginationSearch()
         {
+            GivenTheUriWasBuiltForPaginationRequest()
+                .AndTheDateWasRetrieved()
+                .AndTheSignatureWasBuilt()
+                .AndTheHeadersWereBuilt();
+
             _builder.ForRadiusSearch(_paginationRequest);
 
             _mockedAllHeadersBuilder
                 .Verify(
-                    it => 
+                    it =>
                         it.For(
                             _dateRetrieved,
                             _paginationRequest.Login,
                             SignatureBuilt), Times.Once());
+        }
+
+        private void CreatePaginationRequest()
+        {
+            _paginationRequest = new PlaceSearchPaginationRequest
+            {
+                Key = "a-key",
+                Login = "a-login",
+                Uri = "a-uri"
+            };
+        }
+
+        private void CreateSearchRequest()
+        {
+            _searchRequest = new SearchRequest
+            {
+                Key = "key",
+                Login = "login",
+                Arguments = new List<KeyValuePair<string, string>>
+                                                     {
+                                                         new KeyValuePair<string, string>("latitude", "-12.432"),
+                                                         new KeyValuePair<string, string>("longitude", "-24.124"),
+                                                         new KeyValuePair<string, string>("radius", "3")
+                                                     }
+
+            };
+        }
+
+        private RequestBuilderTest GivenTheUriWasBuiltForPaginationRequest()
+        {
+            _mockedUriBuilder
+                .Setup(it => it.ForPagination(It.IsAny<string>()))
+                .Returns(UriBuilt);
+
+            return this;
+        }
+
+        private RequestBuilderTest GivenTheUriWasBuiltForSearchRequest()
+        {
+            _mockedUriBuilder
+                .Setup(it => it.For(It.IsAny<SearchRequest>()))
+                .Returns(UriBuilt);
+
+            return this;
+        }
+
+        private void AndTheHeadersWereBuilt()
+        {
+            _mockedAllHeadersBuilder
+                .Setup(
+                    it =>
+                    it.For(It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(_headersBuilt);
+        }
+
+        private RequestBuilderTest AndTheSignatureWasBuilt()
+        {
+            _mockedSignatureBuider
+                .Setup(
+                    it =>
+                    it.For(
+                        It.IsAny<string>(),
+                        It.IsAny<DateTime>(),
+                        It.IsAny<string>(),
+                        It.IsAny<string>(),
+                        It.IsAny<string>()))
+                .Returns(SignatureBuilt);
+
+            return this;
+        }
+
+        private RequestBuilderTest AndTheDateWasRetrieved()
+        {
+            _dateRetrieved = new DateTime(2011, 08, 01);
+
+            _mockedClock
+                .Setup(it => it.UtcHourNow())
+                .Returns(_dateRetrieved);
+
+            return this;
         }
     }
 }

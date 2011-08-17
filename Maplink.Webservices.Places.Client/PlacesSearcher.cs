@@ -32,9 +32,9 @@ namespace Maplink.Webservices.Places.Client
         {
         }
 
-        public PlaceSearchResult ByRadius(RadiusSearchRequest radiusSearchRequest)
+        public PlaceSearchResult ByRadius(SearchRequest searchRequest)
         {
-            var places = _retriever.RetrieveFrom(radiusSearchRequest);
+            var places = _retriever.RetrieveFrom(searchRequest);
 
             return ToEntity(places);
         }

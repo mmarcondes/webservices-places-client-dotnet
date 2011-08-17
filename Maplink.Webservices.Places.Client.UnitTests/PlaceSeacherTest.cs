@@ -13,22 +13,22 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private IPlaceSearcher _provider;
         private Mock<IPlacesSearchRetriever> _mockedRetriever;
         private Mock<IPlacesConverter> _mockedConverter;
-        private RadiusSearchRequest _aRadiusRequest;
         private PlaceSearchResult _placeSearchResult;
         private Client.Resources.Places _retrievedPlaces;
         private PlaceSearchPaginationRequest _aPaginationRequest;
+        private SearchRequest _aSearchRequest;
 
         [TestInitialize]
         public void SetUp()
         {
-            _aRadiusRequest = new RadiusSearchRequest();
+            _aSearchRequest = new SearchRequest();
             _aPaginationRequest = new PlaceSearchPaginationRequest();
             _retrievedPlaces = new Client.Resources.Places();
             _placeSearchResult = new PlaceSearchResult();
 
             _mockedRetriever = new Mock<IPlacesSearchRetriever>();
             _mockedRetriever
-                .Setup(it => it.RetrieveFrom(It.IsAny<RadiusSearchRequest>()))
+                .Setup(it => it.RetrieveFrom(It.IsAny<SearchRequest>()))
                 .Returns(_retrievedPlaces);
             _mockedRetriever
                 .Setup(it => it.RetrieveFrom(It.IsAny<PlaceSearchPaginationRequest>()))
@@ -45,22 +45,22 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         }
 
         [TestMethod]
-        public void ShouldRetrievePlacesByRadius()
+        public void ShouldRetrievePlacesByRadiusForSearchRequest()
         {
-            _provider.ByRadius(_aRadiusRequest).Should().Be.SameInstanceAs(_placeSearchResult);
+            _provider.ByRadius(_aSearchRequest).Should().Be.SameInstanceAs(_placeSearchResult);
         }
 
         [TestMethod]
-        public void ShouldRetrieveResourcesWhenSearchingByRadius()
+        public void ShouldRetrieveResourcesWhenSearchingByRadiusForSearchRequest()
         {
-            _provider.ByRadius(_aRadiusRequest);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRadiusRequest), Times.Once());
+            _provider.ByRadius(_aSearchRequest);
+            _mockedRetriever.Verify(it => it.RetrieveFrom(_aSearchRequest), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldConvertToEntityWhenSearchingByRadius()
+        public void ShouldConvertToEntityWhenSearchingByRadiusForSearchRequest()
         {
-            _provider.ByRadius(_aRadiusRequest);
+            _provider.ByRadius(_aSearchRequest);
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
 

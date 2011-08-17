@@ -22,24 +22,23 @@ namespace Maplink.Webservices.Places.Client.Builders
             _allHeadersBuilder = allHeadersBuilder;
         }
 
-        public Request ForRadiusSearch(RadiusSearchRequest radiusRequest)
+        public Request For(SearchRequest searchRequest)
         {
-            var uriBuilt = _uriBuilder.ForRadiusSearch(radiusRequest);
-
-            return ForRadiusSearch(radiusRequest.Login, radiusRequest.Key, uriBuilt);
+            var uriBuilt = _uriBuilder.For(searchRequest);
+            return CreateHttpRequest(searchRequest.Login, searchRequest.Key, uriBuilt);
         }
 
         public Request ForRadiusSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest)
         {
             var uriBuilt = _uriBuilder.ForPagination(placeSearchPaginationRequest.Uri);
 
-            return ForRadiusSearch(
+            return CreateHttpRequest(
                 placeSearchPaginationRequest.Login, 
                 placeSearchPaginationRequest.Key,
                 uriBuilt);
         }
 
-        private Request ForRadiusSearch(string login, string key, string uriBuilt)
+        private Request CreateHttpRequest(string login, string key, string uriBuilt)
         {
             var requestDateInUtc = _clock.UtcHourNow();
 

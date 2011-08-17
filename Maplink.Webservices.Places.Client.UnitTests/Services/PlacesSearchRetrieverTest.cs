@@ -17,17 +17,17 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         private Mock<IHttpClient> _mockedHttpClient;
         private Mock<IXmlSerializerWrapper> _mockedSerializer;
         private Client.Resources.Places _deserializedPlaces;
-        private RadiusSearchRequest _aRadiusSearchRequest;
         private Request _requestBuilt;
         private Response _anOkResponse;
         private Response _anInvalidResponse;
         private Response _anNotFoundResponse;
         private PlaceSearchPaginationRequest _paginationRequest;
+        private SearchRequest _aSearchRequest;
 
         [TestInitialize]
         public void SetUp()
         {
-            _aRadiusSearchRequest = new RadiusSearchRequest();
+            _aSearchRequest = new SearchRequest();
             _paginationRequest = new PlaceSearchPaginationRequest();
 
             _anOkResponse = new Response { Success = true, StatusCode = 200, Body = "body-content" };
@@ -45,50 +45,50 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         }
 
         [TestMethod]
-        public void ShouldRetrivePlacesFromRadiusRequest()
+        public void ShouldRetrievePlacesFromRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRadiusSearchRequest)
+            _retriever.RetrieveFrom(_aSearchRequest)
                 .Should().Be.EqualTo(_deserializedPlaces);
         }
 
         [TestMethod]
-        public void ShouldBuildRequestWhenRetrivePlacesFromRadiusRequest()
+        public void ShouldBuildRequestWhenRetrievingPlacesFromRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRadiusSearchRequest);
+            _retriever.RetrieveFrom(_aSearchRequest);
 
             _mockedRequestBuilder
-                .Verify(it => it.ForRadiusSearch(_aRadiusSearchRequest), Times.Once());
+                .Verify(it => it.For(_aSearchRequest), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldSendRequestWhenRetrivePlacesFromRadiusRequest()
+        public void ShouldSendRequestWhenRetrievingPlacesFromRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRadiusSearchRequest);
+            _retriever.RetrieveFrom(_aSearchRequest);
 
             _mockedHttpClient
                 .Verify(it => it.Get(_requestBuilt), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldDeserializeResponseBodyWhenRetrivePlacesFromRadiusRequest()
+        public void ShouldDeserializeResponseBodyWhenRetrievingPlacesFromRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRadiusSearchRequest);
+            _retriever.RetrieveFrom(_aSearchRequest);
 
             _mockedSerializer
                 .Verify(
@@ -98,28 +98,28 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
 
         [ExpectedException(typeof(PlaceClientRequestException))]
         [TestMethod]
-        public void ShouldThrowExceptionWhenRetrievingPlacesFromRadiusRequestRetrievesAInvalidReponse()
+        public void ShouldThrowExceptionWhenRetrievingPlacesFromRequestRetrievesAInvalidReponse()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasInvalid()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRadiusSearchRequest);
+            _retriever.RetrieveFrom(_aSearchRequest);
         }
 
         [TestMethod]
-        public void ShouldRetrieveAEmptyPlaceFromRadiusRequestWhenRetrievesANotFoundReponse()
+        public void ShouldRetrieveAnEmptyPlaceFromRequestWhenRetrievingANotFoundReponse()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasNotFound()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRadiusSearchRequest).Retrieved
+            _retriever.RetrieveFrom(_aSearchRequest).Retrieved
                 .Should().Be.Empty();
         }
 
         [TestMethod]
-        public void ShouldRetrivePlacesFromPaginationRequest()
+        public void ShouldRetrievePlacesFromPaginationRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
@@ -130,7 +130,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         }
 
         [TestMethod]
-        public void ShouldBuildRequestWhenRetrivePlacesFromPaginationRequest()
+        public void ShouldBuildRequestWhenRetrievingPlacesFromPaginationRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
@@ -143,7 +143,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         }
 
         [TestMethod]
-        public void ShouldSendRequestWhenRetrivePlacesFromPaginationRequest()
+        public void ShouldSendRequestWhenRetrievingPlacesFromPaginationRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
@@ -156,7 +156,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         }
 
         [TestMethod]
-        public void ShouldDeserializeResponseBodyWhenRetrivePlacesFromPaginationRequest()
+        public void ShouldDeserializeResponseBodyWhenRetrievingPlacesFromPaginationRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
@@ -197,7 +197,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _requestBuilt = new Request();
 
             _mockedRequestBuilder
-                .Setup(it => it.ForRadiusSearch(It.IsAny<RadiusSearchRequest>()))
+                .Setup(it => it.For(It.IsAny<SearchRequest>()))
                 .Returns(_requestBuilt);
 
             _mockedRequestBuilder

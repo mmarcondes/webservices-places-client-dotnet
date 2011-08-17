@@ -5,7 +5,7 @@ namespace Maplink.Webservices.Places.Client.Builders
 {
     public interface IRequestBuilder
     {
-        Request ForRadiusSearch(RadiusSearchRequest radiusRequest);
+        Request For(SearchRequest searchRequest);
         Request ForRadiusSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest);
     }
 }

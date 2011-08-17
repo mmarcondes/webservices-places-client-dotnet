@@ -20,10 +20,10 @@ namespace Maplink.Webservices.Places.Client.Services
             _httpClient = httpClient;
             _serializerWrapper = serializerWrapper;
         }
-
-        public Resources.Places RetrieveFrom(RadiusSearchRequest radiusSearchRequest)
+        
+        public Resources.Places RetrieveFrom(SearchRequest searchRequest)
         {
-            var request = _requestBuilder.ForRadiusSearch(radiusSearchRequest);
+            var request = _requestBuilder.For(searchRequest);
 
             return RetrieveFrom(request);
         }
