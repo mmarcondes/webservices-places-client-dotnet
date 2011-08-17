@@ -7,14 +7,14 @@ namespace Maplink.Webservices.Places.Client.Entities
     {
         public SearchRequest()
         {
-            Login = String.Empty;
-            Key = String.Empty;
+            LicenseLogin = String.Empty;
+            LicenseKey = String.Empty;
         }
 
         public string UriPath { get; set; }
         public IEnumerable<KeyValuePair<string, string>> Arguments { get; set; }
         public int StartsAtIndex { get; set; }
-        public string Login { get; set; }
-        public string Key { get; set; }
+        public string LicenseLogin { get; set; }
+        public string LicenseKey { get; set; }
     }
 }

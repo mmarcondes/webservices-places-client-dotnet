@@ -25,7 +25,7 @@ namespace Maplink.Webservices.Places.Client.Builders
         public Request For(SearchRequest searchRequest)
         {
             var uriBuilt = _uriBuilder.For(searchRequest);
-            return CreateHttpRequest(searchRequest.Login, searchRequest.Key, uriBuilt);
+            return CreateHttpRequest(searchRequest.LicenseLogin, searchRequest.LicenseKey, uriBuilt);
         }
 
         public Request ForRadiusSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest)

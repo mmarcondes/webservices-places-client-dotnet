@@ -100,8 +100,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                             "get",
                             _dateRetrieved,
                             UriBuilt,
-                            _searchRequest.Login,
-                            _searchRequest.Key), Times.Once());
+                            _searchRequest.LicenseLogin,
+                            _searchRequest.LicenseKey), Times.Once());
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                     it =>
                         it.For(
                             _dateRetrieved,
-                            _searchRequest.Login,
+                            _searchRequest.LicenseLogin,
                             SignatureBuilt), Times.Once());
         }
 
@@ -207,8 +207,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         {
             _searchRequest = new SearchRequest
             {
-                Key = "key",
-                Login = "login",
+                LicenseKey = "key",
+                LicenseLogin = "login",
                 Arguments = new List<KeyValuePair<string, string>>
                                                      {
                                                          new KeyValuePair<string, string>("latitude", "-12.432"),
