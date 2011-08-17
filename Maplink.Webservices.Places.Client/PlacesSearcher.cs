@@ -22,7 +22,7 @@ namespace Maplink.Webservices.Places.Client
             : this(
                 new PlacesSearchRetriever(
                     new RequestBuilder(
-                        new UriBuilder(new ConfigurationWrapper()), 
+                        new UriBuilder(new ConfigurationWrapper(), new UriQueryBuilder()), 
                         new Clock(), 
                         new SignatureBuilder(new HmacSha1HashGenerator()),
                         new AllHeadersBuilder(new HeaderBuilder(), new AuthorizationBuilder(new Base64Encoder()))),

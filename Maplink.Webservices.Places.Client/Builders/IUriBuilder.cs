@@ -6,5 +6,6 @@ namespace Maplink.Webservices.Places.Client.Builders
     {
         string ForRadiusSearch(RadiusSearchRequest request);
         string ForPagination(string uri);
+        string For(SearchRequest request);
     }
 }

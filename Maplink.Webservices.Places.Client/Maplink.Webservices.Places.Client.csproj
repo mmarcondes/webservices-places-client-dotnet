@@ -51,12 +51,14 @@
     <Compile Include="Builders\IRequestBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
+    <Compile Include="Builders\IUriQueryBuilder.cs" />
     <Compile Include="Builders\RadiusSearchRequestBuilder.cs" />
     <Compile Include="Builders\RequestBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
+    <Compile Include="Builders\UriQueryBuilder.cs" />
     <Compile Include="Converters\IPlacesConverter.cs" />
     <Compile Include="Converters\PlacesConverter.cs" />
     <Compile Include="Entities\Place.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Entities\PlaceSearchPaginationRequest.cs" />
     <Compile Include="Entities\PlaceSearchResult.cs" />
     <Compile Include="Entities\RadiusSearchRequest.cs" />
+    <Compile Include="Entities\SearchRequest.cs" />
     <Compile Include="Exceptions\PlaceClientRequestException.cs" />
     <Compile Include="Factories\IPlaceResultFactory.cs" />
     <Compile Include="Factories\PlaceResultFactory.cs" />
