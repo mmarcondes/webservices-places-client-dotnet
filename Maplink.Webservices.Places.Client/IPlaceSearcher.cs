@@ -9,7 +9,6 @@ namespace Maplink.Webservices.Places.Client
             double radius,
             double latitude,
             double longitude);
-        PlaceSearchResult ByRadius(SearchRequest searchRequest);
         PlaceSearchResult ByRadius(PlaceSearchPaginationRequest placeSearchPaginationRequest);
     }
 }

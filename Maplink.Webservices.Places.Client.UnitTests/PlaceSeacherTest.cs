@@ -127,15 +127,6 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         }
 
         [TestMethod]
-        public void ShouldRetrievePlacesByRadiusForSearchRequest()
-        {
-            GivenThePlacesWereRetrieved()
-                .AndThePlacesWereConverted();
-
-            _provider.ByRadius(_aSearchRequest).Should().Be.SameInstanceAs(_placeSearchResult);
-        }
-
-        [TestMethod]
         public void ShouldRetrieveResourcesWhenSearchingByRadius()
         {
             GivenTheSearchRequestWasBuilt();
@@ -145,23 +136,6 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         }
 
 
-        [TestMethod]
-        public void ShouldRetrieveResourcesWhenSearchingByRadiusForSearchRequest()
-        {
-            _provider.ByRadius(_aSearchRequest);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aSearchRequest), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldConvertToEntityWhenSearchingByRadiusForSearchRequest()
-        {
-            GivenThePlacesWereRetrieved()
-                .AndThePlacesWereConverted();
-
-            _provider.ByRadius(_aSearchRequest);
-            _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
-        }
-        
         [TestMethod]
         public void ShouldConvertToEntityWhenSearchingByRadius()
         {

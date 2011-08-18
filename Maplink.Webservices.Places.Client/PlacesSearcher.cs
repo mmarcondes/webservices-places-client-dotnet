@@ -61,13 +61,6 @@ namespace Maplink.Webservices.Places.Client
             return ToEntity(places);
         }
 
-        public PlaceSearchResult ByRadius(SearchRequest searchRequest)
-        {
-            var places = _retriever.RetrieveFrom(searchRequest);
-
-            return ToEntity(places);
-        }
-
         public PlaceSearchResult ByRadius(PlaceSearchPaginationRequest placeSearchPaginationRequest)
         {
             var places = _retriever.RetrieveFrom(placeSearchPaginationRequest);
