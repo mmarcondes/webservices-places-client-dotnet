@@ -4,6 +4,11 @@ namespace Maplink.Webservices.Places.Client
 {
     public interface IPlaceSearcher
     {
+        PlaceSearchResult ByRadius(
+            LicenseInfo licenseInfo,
+            double radius,
+            double latitude,
+            double longitude);
         PlaceSearchResult ByRadius(SearchRequest searchRequest);
         PlaceSearchResult ByRadius(PlaceSearchPaginationRequest placeSearchPaginationRequest);
     }

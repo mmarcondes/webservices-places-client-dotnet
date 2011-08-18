@@ -62,6 +62,7 @@
     <Compile Include="Builders\UriQueryBuilder.cs" />
     <Compile Include="Converters\IPlacesConverter.cs" />
     <Compile Include="Converters\PlacesConverter.cs" />
+    <Compile Include="Entities\LicenseInfo.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\PlaceResult.cs" />
     <Compile Include="Entities\PlaceSearchPaginationRequest.cs" />
