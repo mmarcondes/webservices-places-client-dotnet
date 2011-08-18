@@ -14,16 +14,19 @@ namespace Maplink.Webservices.Places.Client
         private readonly IPlacesSearchRetriever _retriever;
         private readonly IPlacesConverter _converter;
         private readonly ISearchRequestBuilder _searchRequestBuilder;
+        private readonly IPlaceSearchPaginationRequestBuilder _placeSearchPaginationRequestBuilder;
         private static readonly CultureInfo UnitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
 
         public PlaceSearcher(
             IPlacesSearchRetriever retriever, 
             IPlacesConverter converter, 
-            ISearchRequestBuilder searchRequestBuilder)
+            ISearchRequestBuilder searchRequestBuilder,
+            IPlaceSearchPaginationRequestBuilder placeSearchPaginationRequestBuilder)
         {
             _retriever = retriever;
             _converter = converter;
             _searchRequestBuilder = searchRequestBuilder;
+            _placeSearchPaginationRequestBuilder = placeSearchPaginationRequestBuilder;
         }
 
         public PlaceSearcher()
@@ -37,7 +40,8 @@ namespace Maplink.Webservices.Places.Client
                     new HttpClient(), 
                     new XmlSerializerWrapper()), 
                 new PlacesConverter(), 
-                new SearchRequestBuilder())
+                new SearchRequestBuilder(),
+                new PlaceSearchPaginationRequestBuilder())
         {
         }
 
@@ -61,8 +65,13 @@ namespace Maplink.Webservices.Places.Client
             return ToEntity(places);
         }
 
-        public PlaceSearchResult ByRadius(PlaceSearchPaginationRequest placeSearchPaginationRequest)
+        public PlaceSearchResult ByPaginationUri(string paginationUri, LicenseInfo licenseInfo)
         {
+                var placeSearchPaginationRequest = _placeSearchPaginationRequestBuilder
+                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
+                .WithUri(paginationUri)
+                .Build();
+                
             var places = _retriever.RetrieveFrom(placeSearchPaginationRequest);
 
             return ToEntity(places);

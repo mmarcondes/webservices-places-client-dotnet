@@ -28,7 +28,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             return CreateHttpRequest(searchRequest.LicenseLogin, searchRequest.LicenseKey, uriBuilt);
         }
 
-        public Request ForRadiusSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest)
+        public Request ForPaginationSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest)
         {
             var uriBuilt = _uriBuilder.ForPagination(placeSearchPaginationRequest.Uri);
 

@@ -131,7 +131,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            var request = _builder.ForRadiusSearch(_paginationRequest);
+            var request = _builder.ForPaginationSearch(_paginationRequest);
 
             request.Uri.Should().Be.EqualTo(UriBuilt);
             request.Headers.Should().Be.SameInstanceAs(_headersBuilt);
@@ -140,7 +140,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldBuildUriWhenBuildingARequestForRadiusPaginationSearch()
         {
-            _builder.ForRadiusSearch(_paginationRequest);
+            _builder.ForPaginationSearch(_paginationRequest);
 
             _mockedUriBuilder.Verify(it => it.ForPagination(_paginationRequest.Uri), Times.Once());
         }
@@ -148,7 +148,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldGetRequestDateWhenBuildingARequestForRadiusPaginationSearch()
         {
-            _builder.ForRadiusSearch(_paginationRequest);
+            _builder.ForPaginationSearch(_paginationRequest);
 
             _mockedClock.Verify(it => it.UtcHourNow(), Times.Once());
         }
@@ -161,7 +161,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.ForRadiusSearch(_paginationRequest);
+            _builder.ForPaginationSearch(_paginationRequest);
 
             _mockedSignatureBuider
                 .Verify(
@@ -182,7 +182,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.ForRadiusSearch(_paginationRequest);
+            _builder.ForPaginationSearch(_paginationRequest);
 
             _mockedAllHeadersBuilder
                 .Verify(

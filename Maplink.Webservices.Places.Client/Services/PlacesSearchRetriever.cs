@@ -30,7 +30,7 @@ namespace Maplink.Webservices.Places.Client.Services
 
         public Resources.Places RetrieveFrom(PlaceSearchPaginationRequest placeSearchPaginationRequest)
         {
-            var request = _requestBuilder.ForRadiusSearch(placeSearchPaginationRequest);
+            var request = _requestBuilder.ForPaginationSearch(placeSearchPaginationRequest);
 
             return RetrieveFrom(request);
         }

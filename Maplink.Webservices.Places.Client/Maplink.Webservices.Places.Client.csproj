@@ -48,11 +48,13 @@
     <Compile Include="Builders\IAllHeadersBuilder.cs" />
     <Compile Include="Builders\IAuthorizationBuilder.cs" />
     <Compile Include="Builders\IHeaderBuilder.cs" />
+    <Compile Include="Builders\IPlaceSearchPaginationRequestBuilder.cs" />
     <Compile Include="Builders\IRequestBuilder.cs" />
     <Compile Include="Builders\ISearchRequestBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
     <Compile Include="Builders\IUriQueryBuilder.cs" />
+    <Compile Include="Builders\PlaceSearchPaginationRequestBuilder.cs" />
     <Compile Include="Builders\RequestBuilder.cs">
       <SubType>Code</SubType>
     </Compile>

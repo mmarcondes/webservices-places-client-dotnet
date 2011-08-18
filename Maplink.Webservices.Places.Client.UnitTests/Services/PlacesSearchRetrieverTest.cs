@@ -139,7 +139,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _retriever.RetrieveFrom(_paginationRequest);
 
             _mockedRequestBuilder
-                .Verify(it => it.ForRadiusSearch(_paginationRequest), Times.Once());
+                .Verify(it => it.ForPaginationSearch(_paginationRequest), Times.Once());
         }
 
         [TestMethod]
@@ -201,7 +201,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .Returns(_requestBuilt);
 
             _mockedRequestBuilder
-                .Setup(it => it.ForRadiusSearch(It.IsAny<PlaceSearchPaginationRequest>()))
+                .Setup(it => it.ForPaginationSearch(It.IsAny<PlaceSearchPaginationRequest>()))
                 .Returns(_requestBuilt);
 
             return this;

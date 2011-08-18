@@ -25,6 +25,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private const double Latitude = -23.45;
         private const double Longitude = -43.56;
         private readonly CultureInfo _unitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
+        private Mock<IPlaceSearchPaginationRequestBuilder> _mockedPaginationRequestBuilder;
+        private const string PaginationUri = "pagination-uri";
 
         [TestInitialize]
         public void SetUp()
@@ -36,13 +38,15 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             _aLicenseInfo = new LicenseInfo { Login = "login", Key = "key" };
 
             _mockedSearchRequestBuilder = new Mock<ISearchRequestBuilder>();
+            _mockedPaginationRequestBuilder = new Mock<IPlaceSearchPaginationRequestBuilder>();
             _mockedRetriever = new Mock<IPlacesSearchRetriever>();
             _mockedConverter = new Mock<IPlacesConverter>();
 
             _provider = new PlaceSearcher(
                 _mockedRetriever.Object,
                 _mockedConverter.Object,
-                _mockedSearchRequestBuilder.Object);
+                _mockedSearchRequestBuilder.Object,
+                _mockedPaginationRequestBuilder.Object);
         }
 
         [TestMethod]
@@ -150,26 +154,30 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         [TestMethod]
         public void ShouldRetrievePlacesByRadiusForPaginationRequest()
         {
-            GivenThePlacesWereRetrieved()
+            GivenThePaginationRequestWasBuilt()
+                .GivenThePlacesWereRetrieved()
                 .AndThePlacesWereConverted();
 
-            _provider.ByRadius(_aPaginationRequest).Should().Be.SameInstanceAs(_placeSearchResult);
+           _provider.ByPaginationUri(PaginationUri, _aLicenseInfo).Should().Be.SameInstanceAs(_placeSearchResult);
         }
 
         [TestMethod]
         public void ShouldRetrieveResourcesWhenSearchingByRadiusForPaginationRequest()
         {
-            _provider.ByRadius(_aPaginationRequest);
+            GivenThePaginationRequestWasBuilt();
+
+            _provider.ByPaginationUri(PaginationUri, _aLicenseInfo);
             _mockedRetriever.Verify(it => it.RetrieveFrom(_aPaginationRequest), Times.Once());
         }
 
         [TestMethod]
         public void ShouldConvertToEntityWhenSearchingByRadiusForPaginationRequest()
         {
-            GivenThePlacesWereRetrieved()
+            GivenThePaginationRequestWasBuilt()
+                .GivenThePlacesWereRetrieved()
                 .AndThePlacesWereConverted();
 
-            _provider.ByRadius(_aPaginationRequest);
+            _provider.ByPaginationUri(PaginationUri, _aLicenseInfo);
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
 
@@ -180,6 +188,22 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .Setup(it => it.ToEntity(It.IsAny<Client.Resources.Places>()))
                 .Returns(_placeSearchResult);
         }
+
+        private PlaceSeacherTest GivenThePaginationRequestWasBuilt()
+        {
+            _mockedPaginationRequestBuilder
+                .Setup(it => it.WithLicenseInfo(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(_mockedPaginationRequestBuilder.Object);
+            _mockedPaginationRequestBuilder
+                .Setup(it => it.WithUri(It.IsAny<string>()))
+                .Returns(_mockedPaginationRequestBuilder.Object);
+            _mockedPaginationRequestBuilder
+                .Setup(it => it.Build())
+                .Returns(_aPaginationRequest);
+
+            return this;
+        }
+
 
         private PlaceSeacherTest GivenThePlacesWereRetrieved()
         {
