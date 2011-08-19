@@ -5,6 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maplink.Webservices.Places.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF95A9FF-91AC-42EC-BA87-EE11BB87F6E6}"
 	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
 		Local.testsettings = Local.testsettings
 		Maplink.Webservices.Places.Client.vsmdi = Maplink.Webservices.Places.Client.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
