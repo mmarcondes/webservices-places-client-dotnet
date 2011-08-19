@@ -1,0 +1,27 @@
+h1. Client .NET (3.5) para acesso aos Webservices de locais
+
+h2. Como usar
+
+h3. Pesquisa de locais
+
+h4. Por Raio
+
+bc.. var licenseInfo = new LicenseInfo { Key = "<chave da sua licença>", Login = "<login da sua licença>"};
+var radius = 3.0;
+var latitude = -23.45;
+var longitude = -43.56;
+var placeSearcher = new PlaceSearcher();
+var results = placeSearcher.ByRadius(licenseInfo, radius, latitude, longitude);
+
+h4. Por Termo
+
+bc.. var licenseInfo = new LicenseInfo { Key = "<chave da sua licença>", Login = "<login da sua licença>"};
+var term = "termo";
+var placeSearcher = new PlaceSearcher();
+var results = placeSearcher.ByTerm(licenseInfo, term);
+
+
+h4. Paginação
+
+bc.. var nextPageResults = ByPaginationUri(licenseInfo, results.NextPageUri);
+var previousPageResults = ByPaginationUri(licenseInfo, results.PreviousPageUri);

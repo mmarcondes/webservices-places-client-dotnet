@@ -236,7 +236,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .GivenThePlacesWereRetrieved()
                 .AndThePlacesWereConverted();
 
-           _provider.ByPaginationUri(PaginationUri, _aLicenseInfo).Should().Be.SameInstanceAs(_placeSearchResult);
+           _provider.ByPaginationUri(_aLicenseInfo, PaginationUri).Should().Be.SameInstanceAs(_placeSearchResult);
         }
 
         [TestMethod]
@@ -244,7 +244,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             GivenThePaginationRequestWasBuilt();
 
-            _provider.ByPaginationUri(PaginationUri, _aLicenseInfo);
+            _provider.ByPaginationUri(_aLicenseInfo, PaginationUri);
             _mockedRetriever.Verify(it => it.RetrieveFrom(_aPaginationRequest), Times.Once());
         }
 
@@ -255,7 +255,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .GivenThePlacesWereRetrieved()
                 .AndThePlacesWereConverted();
 
-            _provider.ByPaginationUri(PaginationUri, _aLicenseInfo);
+            _provider.ByPaginationUri(_aLicenseInfo, PaginationUri);
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
 

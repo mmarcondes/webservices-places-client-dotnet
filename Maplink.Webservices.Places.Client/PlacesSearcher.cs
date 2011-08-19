@@ -81,7 +81,7 @@ namespace Maplink.Webservices.Places.Client
             return ToEntity(places);
         }
 
-        public PlaceSearchResult ByPaginationUri(string paginationUri, LicenseInfo licenseInfo)
+        public PlaceSearchResult ByPaginationUri(LicenseInfo licenseInfo, string paginationUri)
         {
                 var placeSearchPaginationRequest = _placeSearchPaginationRequestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
