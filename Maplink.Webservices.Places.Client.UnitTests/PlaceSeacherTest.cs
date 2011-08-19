@@ -26,6 +26,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private const double Longitude = -43.56;
         private readonly CultureInfo _unitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
         private Mock<IPlaceSearchPaginationRequestBuilder> _mockedPaginationRequestBuilder;
+        private const string Term = "term";
         private const string PaginationUri = "pagination-uri";
 
         [TestInitialize]
@@ -151,8 +152,85 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
 
+
         [TestMethod]
-        public void ShouldRetrievePlacesByRadiusForPaginationRequest()
+        public void ShouldRetrievePlacesByTerm()
+        {
+            GivenTheSearchRequestWasBuilt()
+                .GivenThePlacesWereRetrieved()
+                .AndThePlacesWereConverted();
+
+            _provider.ByTerm(_aLicenseInfo, Term).Should().Be.EqualTo(_placeSearchResult);
+        }
+
+        [TestMethod]
+        public void ShouldBuildSearchRequestForTermSearchWithLicenseInfo()
+        {
+            GivenTheSearchRequestWasBuilt();
+            _provider.ByTerm(_aLicenseInfo, Term);
+            _mockedSearchRequestBuilder
+                .Verify(it=> it.WithLicenseInfo(_aLicenseInfo.Login, _aLicenseInfo.Key), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildSearchRequestForTermSearchWithUriPath()
+        {
+            GivenTheSearchRequestWasBuilt();
+            _provider.ByTerm(_aLicenseInfo, Term);
+            _mockedSearchRequestBuilder
+                .Verify(it => it.WithUriPath("places/byterm"), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildSearchRequestForTermSearchWithStartIndex()
+        {
+            GivenTheSearchRequestWasBuilt();
+            _provider.ByTerm(_aLicenseInfo, Term);
+            _mockedSearchRequestBuilder
+                .Verify(it => it.WithStartIndex(0), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildSearchRequestForTermSearchWithTermArgument()
+        {
+            GivenTheSearchRequestWasBuilt();
+            _provider.ByTerm(_aLicenseInfo, Term);
+            _mockedSearchRequestBuilder
+                .Verify(it => it.WithArgument("term", Term), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildSearchRequestForTermSearch()
+        {
+            GivenTheSearchRequestWasBuilt();
+            _provider.ByTerm(_aLicenseInfo, Term);
+            _mockedSearchRequestBuilder
+                .Verify(it => it.Build(), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldRetrieveResourcesWhenSearchingByTerm()
+        {
+            GivenTheSearchRequestWasBuilt();
+
+            _provider.ByTerm(_aLicenseInfo, Term);
+            _mockedRetriever.Verify(it => it.RetrieveFrom(_aSearchRequest), Times.Once());
+        }
+
+
+        [TestMethod]
+        public void ShouldConvertToEntityWhenSearchingByTerm()
+        {
+            GivenTheSearchRequestWasBuilt()
+                .GivenThePlacesWereRetrieved()
+                .AndThePlacesWereConverted();
+
+            _provider.ByTerm(_aLicenseInfo, Term);
+            _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldRetrievePlacesForPaginationRequest()
         {
             GivenThePaginationRequestWasBuilt()
                 .GivenThePlacesWereRetrieved()
@@ -162,7 +240,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         }
 
         [TestMethod]
-        public void ShouldRetrieveResourcesWhenSearchingByRadiusForPaginationRequest()
+        public void ShouldRetrieveResourcesWhenSearchingForPaginationRequest()
         {
             GivenThePaginationRequestWasBuilt();
 
@@ -171,7 +249,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         }
 
         [TestMethod]
-        public void ShouldConvertToEntityWhenSearchingByRadiusForPaginationRequest()
+        public void ShouldConvertToEntityWhenSearchingForPaginationRequest()
         {
             GivenThePaginationRequestWasBuilt()
                 .GivenThePlacesWereRetrieved()

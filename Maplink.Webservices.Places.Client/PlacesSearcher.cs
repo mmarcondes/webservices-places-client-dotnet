@@ -65,6 +65,22 @@ namespace Maplink.Webservices.Places.Client
             return ToEntity(places);
         }
 
+        public PlaceSearchResult ByTerm(
+            LicenseInfo licenseInfo, 
+            string term)
+        {
+            var searchRequest = _searchRequestBuilder
+                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
+                .WithUriPath("places/byterm")
+                .WithStartIndex(0)
+                .WithArgument("term", term)
+                .Build();
+
+            var places = _retriever.RetrieveFrom(searchRequest);
+
+            return ToEntity(places);
+        }
+
         public PlaceSearchResult ByPaginationUri(string paginationUri, LicenseInfo licenseInfo)
         {
                 var placeSearchPaginationRequest = _placeSearchPaginationRequestBuilder

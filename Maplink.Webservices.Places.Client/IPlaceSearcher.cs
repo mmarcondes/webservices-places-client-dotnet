@@ -9,6 +9,7 @@ namespace Maplink.Webservices.Places.Client
             double radius,
             double latitude,
             double longitude);
+        PlaceSearchResult ByTerm(LicenseInfo licenseInfo, string term);
         PlaceSearchResult ByPaginationUri(string paginationUri, LicenseInfo licenseInfo);
     }
 }
