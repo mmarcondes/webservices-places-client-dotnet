@@ -1,4 +1,4 @@
-﻿h1. Client .NET (3.5) para acesso aos Webservices de locais
+h1. Client .NET (3.5) para acesso aos Webservices de locais
 
 h2. Como usar
 
@@ -19,7 +19,6 @@ bc.. var licenseInfo = new LicenseInfo { Key = "<chave da sua licença>", Login 
 var term = "termo";
 var placeSearcher = new PlaceSearcher();
 var results = placeSearcher.ByTerm(licenseInfo, term);
-
 
 h4. Paginação
 
