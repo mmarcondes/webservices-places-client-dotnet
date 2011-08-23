@@ -93,6 +93,18 @@ namespace Maplink.Webservices.Places.Client
             return ToEntity(places);
         }
 
+        public PlaceSearchResult ByCategory(LicenseInfo licenseInfo, int categoryId)
+        {
+            var searchRequest = _searchRequestBuilder
+                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
+                .WithArgument("categoryId", categoryId.ToString())
+                .WithStartIndex(0)
+                .Build();
+            var places = _retriever.RetrieveFrom(searchRequest);
+
+            return ToEntity(places);
+        }
+
         private PlaceSearchResult ToEntity(Resources.Places resource)
         {
             return _converter.ToEntity(resource);
