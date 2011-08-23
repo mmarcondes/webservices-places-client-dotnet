@@ -348,6 +348,18 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         }
 
         [TestMethod]
+        public void ShouldBuildSearchRequestWithUriPathWhenSearchingByCategory()
+        {
+            GivenTheSearchRequestCanBeBuilt()
+                .AndThePlacesCanBeRetrieved()
+                .AndThePlacesCanBeConverted();
+
+            _provider.ByCategory(_aLicenseInfo, CategoryId);
+            _mockedSearchRequestBuilder
+                .Verify(it => it.WithUriPath("places/bycategory"), Times.Once());
+        }
+
+        [TestMethod]
         public void ShouldBuildSearchRequestWithStartIndexWhenSearchingByCategory()
         {
             GivenTheSearchRequestCanBeBuilt()

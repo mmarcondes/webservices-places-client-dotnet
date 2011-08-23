@@ -97,6 +97,7 @@ namespace Maplink.Webservices.Places.Client
         {
             var searchRequest = _searchRequestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
+                .WithUriPath("places/bycategory")
                 .WithArgument("categoryId", categoryId.ToString())
                 .WithStartIndex(0)
                 .Build();
