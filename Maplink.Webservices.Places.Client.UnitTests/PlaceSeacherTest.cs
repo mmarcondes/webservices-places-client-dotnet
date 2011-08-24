@@ -19,7 +19,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private PlaceSearchResult _placeSearchResult;
         private Client.Resources.Places _retrievedPlaces;
         private CustomRequest _aCustomRequest;
-        private SearchRequest _aSearchRequest;
+        private Request _aRequest;
         private LicenseInfo _aLicenseInfo;
         private const double Radius = 3.0;
         private const double Latitude = -23.45;
@@ -33,7 +33,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         [TestInitialize]
         public void SetUp()
         {
-            _aSearchRequest = new SearchRequest();
+            _aRequest = new Request();
             _aCustomRequest = new CustomRequest();
             _retrievedPlaces = new Client.Resources.Places();
             _placeSearchResult = new PlaceSearchResult();
@@ -161,7 +161,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByRadius(_aLicenseInfo, Radius, Latitude, Longitude);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aSearchRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRequest), Times.Once());
         }
 
 
@@ -255,7 +255,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByTerm(_aLicenseInfo, Term);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aSearchRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRequest), Times.Once());
         }
 
 
@@ -379,7 +379,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aSearchRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRequest), Times.Once());
         }
 
         [TestMethod]
@@ -419,7 +419,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private PlaceSeacherTest AndThePlacesCanBeRetrieved()
         {
             _mockedRetriever
-                .Setup(it => it.RetrieveFrom(It.IsAny<SearchRequest>()))
+                .Setup(it => it.RetrieveFrom(It.IsAny<Request>()))
                 .Returns(_retrievedPlaces);
             _mockedRetriever
                 .Setup(it => it.RetrieveFrom(It.IsAny<CustomRequest>()))
@@ -443,7 +443,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .Returns(_mockedSearchRequestBuilder.Object);
             _mockedSearchRequestBuilder
                 .Setup(it => it.Build())
-                .Returns(_aSearchRequest);
+                .Returns(_aRequest);
 
             return this;
         }

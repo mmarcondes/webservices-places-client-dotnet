@@ -21,11 +21,11 @@ namespace Maplink.Webservices.Places.Client.Services
             _serializerWrapper = serializerWrapper;
         }
         
-        public Resources.Places RetrieveFrom(SearchRequest searchRequest)
+        public Resources.Places RetrieveFrom(Request request)
         {
-            var request = _httpRequestBuilder.For(searchRequest);
+            var httpRequest = _httpRequestBuilder.For(request);
 
-            return RetrieveFrom(request);
+            return RetrieveFrom(httpRequest);
         }
 
         public Resources.Places RetrieveFrom(CustomRequest customRequest)

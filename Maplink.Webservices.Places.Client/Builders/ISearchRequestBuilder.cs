@@ -8,6 +8,6 @@ namespace Maplink.Webservices.Places.Client.Builders
         ISearchRequestBuilder WithStartIndex(int startIndex);
         ISearchRequestBuilder WithLicenseInfo(string login, string key);
         ISearchRequestBuilder WithArgument(string key, string value);
-        SearchRequest Build();
+        Request Build();
     }
 }

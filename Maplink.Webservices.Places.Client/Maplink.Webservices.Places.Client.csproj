@@ -69,7 +69,7 @@
     <Compile Include="Entities\PlaceResult.cs" />
     <Compile Include="Entities\CustomRequest.cs" />
     <Compile Include="Entities\PlaceSearchResult.cs" />
-    <Compile Include="Entities\SearchRequest.cs" />
+    <Compile Include="Entities\Request.cs" />
     <Compile Include="Exceptions\PlaceClientRequestException.cs" />
     <Compile Include="Factories\IPlaceResultFactory.cs" />
     <Compile Include="Factories\PlaceResultFactory.cs" />

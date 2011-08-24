@@ -6,47 +6,47 @@ namespace Maplink.Webservices.Places.Client.Builders
 {
     public class SearchRequestBuilder : ISearchRequestBuilder
     {
-        private readonly SearchRequest _searchRequest;
+        private readonly Request _request;
 
         public SearchRequestBuilder()
         {
-            _searchRequest = new SearchRequest {Arguments = new Dictionary<string, string>()};
+            _request = new Request {Arguments = new Dictionary<string, string>()};
         }
 
         public ISearchRequestBuilder WithUriPath(string uriPath)
         {
-            _searchRequest.UriPath = uriPath;
+            _request.UriPath = uriPath;
 
             return this;
         }
 
         public ISearchRequestBuilder WithStartIndex(int startIndex)
         {
-            _searchRequest.StartsAtIndex = startIndex;
+            _request.StartsAtIndex = startIndex;
 
             return this;
         }
  
         public ISearchRequestBuilder WithLicenseInfo(string login, string key)
         {
-            _searchRequest.LicenseLogin = login;
-            _searchRequest.LicenseKey = key;
+            _request.LicenseLogin = login;
+            _request.LicenseKey = key;
 
             return this;
         }
 
         public ISearchRequestBuilder WithArgument(string key, string value)
         {
-            _searchRequest.Arguments = _searchRequest
+            _request.Arguments = _request
                 .Arguments
                 .Concat(new Dictionary<string, string> {{key, value}});
 
             return this;
         }
 
-        public SearchRequest Build()
+        public Request Build()
         {
-            return _searchRequest; 
+            return _request; 
         }
         
     }

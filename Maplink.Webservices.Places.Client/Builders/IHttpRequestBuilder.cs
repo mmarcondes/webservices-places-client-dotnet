@@ -5,7 +5,7 @@ namespace Maplink.Webservices.Places.Client.Builders
 {
     public interface IHttpRequestBuilder
     {
-        HttpRequest For(SearchRequest searchRequest);
+        HttpRequest For(Request request);
         HttpRequest ForCustomRequest(CustomRequest customRequest);
     }
 }

@@ -14,12 +14,12 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         private IUriBuilder _builder;
         private Mock<IConfigurationWrapper> _mockedConfiguration;
         private Mock<IUriQueryBuilder> _mockedUriQueryBuilder;
-        private SearchRequest _searchRequest;
+        private Request _request;
 
         [TestInitialize]
         public void SetUp()
         {
-            _searchRequest = new SearchRequest
+            _request = new Request
                                  {
                                      Arguments = new List<KeyValuePair<string, string>>(),
                                      UriPath = "uri/path"
@@ -58,21 +58,21 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldBuildUriForSearchRequest()
         {
-            _builder.For(_searchRequest).Should().Be.EqualTo("base-uri/uri/path?query-built");
+            _builder.For(_request).Should().Be.EqualTo("base-uri/uri/path?query-built");
         }
 
         [TestMethod]
         public void ShouldBuildUriQueryWhenBuildingUriForSearchRequest()
         {
-            _builder.For(_searchRequest);
+            _builder.For(_request);
             _mockedUriQueryBuilder
-                .Verify(it => it.Build(_searchRequest.Arguments), Times.Once());
+                .Verify(it => it.Build(_request.Arguments), Times.Once());
         }
 
         [TestMethod]
         public void ShouldGetBaseUriWhenBuildingUriForSearchRequest()
         {
-            _builder.For(_searchRequest);
+            _builder.For(_request);
             _mockedConfiguration
                 .Verify(it => it.ValueFor("Maplink.Webservices.Places.BaseUri"), Times.Once());
         }

@@ -16,7 +16,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             _uriQueryBuilder = uriQueryBuilder;
         }
 
-        public string For(SearchRequest request)
+        public string For(Request request)
         {
             var uriQuery = _uriQueryBuilder.Build(request.Arguments);
 

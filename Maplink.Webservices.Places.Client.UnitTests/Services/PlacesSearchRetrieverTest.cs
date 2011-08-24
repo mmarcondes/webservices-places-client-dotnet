@@ -22,12 +22,12 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         private HttpResponse _anInvalidHttpResponse;
         private HttpResponse _anNotFoundHttpResponse;
         private CustomRequest _customRequest;
-        private SearchRequest _aSearchRequest;
+        private Request _aRequest;
 
         [TestInitialize]
         public void SetUp()
         {
-            _aSearchRequest = new SearchRequest();
+            _aRequest = new Request();
             _customRequest = new CustomRequest();
 
             _anOkHttpResponse = new HttpResponse { Success = true, StatusCode = 200, Body = "body-content" };
@@ -51,7 +51,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aSearchRequest)
+            _retriever.RetrieveFrom(_aRequest)
                 .Should().Be.EqualTo(_deserializedPlaces);
         }
 
@@ -62,10 +62,10 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aSearchRequest);
+            _retriever.RetrieveFrom(_aRequest);
 
             _mockedRequestBuilder
-                .Verify(it => it.For(_aSearchRequest), Times.Once());
+                .Verify(it => it.For(_aRequest), Times.Once());
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aSearchRequest);
+            _retriever.RetrieveFrom(_aRequest);
 
             _mockedHttpClient
                 .Verify(it => it.Get(_httpRequestBuilt), Times.Once());
@@ -88,7 +88,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aSearchRequest);
+            _retriever.RetrieveFrom(_aRequest);
 
             _mockedSerializer
                 .Verify(
@@ -104,7 +104,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasInvalid()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aSearchRequest);
+            _retriever.RetrieveFrom(_aRequest);
         }
 
         [TestMethod]
@@ -114,7 +114,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasNotFound()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aSearchRequest).Retrieved
+            _retriever.RetrieveFrom(_aRequest).Retrieved
                 .Should().Be.Empty();
         }
 
@@ -197,7 +197,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _httpRequestBuilt = new HttpRequest();
 
             _mockedRequestBuilder
-                .Setup(it => it.For(It.IsAny<SearchRequest>()))
+                .Setup(it => it.For(It.IsAny<Request>()))
                 .Returns(_httpRequestBuilt);
 
             _mockedRequestBuilder

@@ -20,7 +20,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         private IEnumerable<KeyValuePair<string, string>> _headersBuilt;
         private DateTime _dateRetrieved;
         private CustomRequest _customRequest;
-        private SearchRequest _searchRequest;
+        private Request _request;
         private const string UriBuilt = "uri-built";
         private const string SignatureBuilt = "signature-built";
 
@@ -51,7 +51,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            var request = _builder.For(_searchRequest);
+            var request = _builder.For(_request);
 
             request.Uri.Should().Be.EqualTo(UriBuilt);
             request.Headers.Should().Be.SameInstanceAs(_headersBuilt);
@@ -65,9 +65,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.For(_searchRequest);
+            _builder.For(_request);
 
-            _mockedUriBuilder.Verify(it => it.For(_searchRequest), Times.Once());
+            _mockedUriBuilder.Verify(it => it.For(_request), Times.Once());
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.For(_searchRequest);
+            _builder.For(_request);
 
             _mockedClock.Verify(it => it.UtcHourNow(), Times.Once());
         }
@@ -91,7 +91,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.For(_searchRequest);
+            _builder.For(_request);
 
             _mockedSignatureBuider
                 .Verify(
@@ -100,8 +100,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                             "get",
                             _dateRetrieved,
                             UriBuilt,
-                            _searchRequest.LicenseLogin,
-                            _searchRequest.LicenseKey), Times.Once());
+                            _request.LicenseLogin,
+                            _request.LicenseKey), Times.Once());
         }
 
         [TestMethod]
@@ -112,14 +112,14 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.For(_searchRequest);
+            _builder.For(_request);
 
             _mockedAllHeadersBuilder
                 .Verify(
                     it =>
                         it.For(
                             _dateRetrieved,
-                            _searchRequest.LicenseLogin,
+                            _request.LicenseLogin,
                             SignatureBuilt), Times.Once());
         }
 
@@ -205,7 +205,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 
         private void CreateSearchRequest()
         {
-            _searchRequest = new SearchRequest
+            _request = new Request
             {
                 LicenseKey = "key",
                 LicenseLogin = "login",
@@ -231,7 +231,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         private HttpRequestBuilderTest GivenTheUriWasBuiltForSearchRequest()
         {
             _mockedUriBuilder
-                .Setup(it => it.For(It.IsAny<SearchRequest>()))
+                .Setup(it => it.For(It.IsAny<Request>()))
                 .Returns(UriBuilt);
 
             return this;

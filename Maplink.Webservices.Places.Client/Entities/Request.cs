@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Maplink.Webservices.Places.Client.Entities
 {
-    public class SearchRequest
+    public class Request
     {
-        public SearchRequest()
+        public Request()
         {
             LicenseLogin = String.Empty;
             LicenseKey = String.Empty;

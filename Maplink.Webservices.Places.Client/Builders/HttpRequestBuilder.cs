@@ -22,10 +22,10 @@ namespace Maplink.Webservices.Places.Client.Builders
             _allHttpHeadersBuilder = allHttpHeadersBuilder;
         }
 
-        public HttpRequest For(SearchRequest searchRequest)
+        public HttpRequest For(Request request)
         {
-            var uriBuilt = _uriBuilder.For(searchRequest);
-            return CreateHttpRequest(searchRequest.LicenseLogin, searchRequest.LicenseKey, uriBuilt);
+            var uriBuilt = _uriBuilder.For(request);
+            return CreateHttpRequest(request.LicenseLogin, request.LicenseKey, uriBuilt);
         }
 
         public HttpRequest ForCustomRequest(CustomRequest customRequest)
