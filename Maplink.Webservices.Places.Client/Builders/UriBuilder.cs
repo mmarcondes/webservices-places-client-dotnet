@@ -21,18 +21,18 @@ namespace Maplink.Webservices.Places.Client.Builders
             var uriQuery = _uriQueryBuilder.Build(request.Arguments);
 
             return String.Format(
-                "{0}{1}?{2}", 
+                "{0}{1}?{2}{3}", 
                 _configurationWrapper.ValueFor(BaseUriKey), 
                 request.UriPath, 
-                uriQuery);
+                uriQuery,
+                CreateQueryStringForStartIndex(request));
         }
 
-        public string ForPagination(string uri)
+        private static string CreateQueryStringForStartIndex(Request request)
         {
-            return String.Format(
-                "{0}{1}",
-                _configurationWrapper.ValueFor(BaseUriKey),
-                uri);
+            return request.StartsAtIndex > 0
+                ? String.Format("&start={0}", request.StartsAtIndex)
+                : String.Empty ;
         }
     }
 }

@@ -135,16 +135,6 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 
             };
         }
-
-        private HttpRequestBuilderTest GivenTheUriWasBuiltForPaginationRequest()
-        {
-            _mockedUriBuilder
-                .Setup(it => it.ForPagination(It.IsAny<string>()))
-                .Returns(UriBuilt);
-
-            return this;
-        }
-
         private HttpRequestBuilderTest GivenTheUriWasBuiltForSearchRequest()
         {
             _mockedUriBuilder

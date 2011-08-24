@@ -22,7 +22,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             _request = new Request
                                  {
                                      Arguments = new List<KeyValuePair<string, string>>(),
-                                     UriPath = "uri/path"
+                                     UriPath = "uri/path",
+                                     StartsAtIndex = 0
                                  };
 
             _mockedConfiguration = new Mock<IConfigurationWrapper>();
@@ -39,26 +40,17 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         }
 
         [TestMethod]
-        public void ShouldCreateForPaginationRequest()
-        {
-            const string expectedUri = "base-uriuri";
-
-            _builder.ForPagination("uri").Should().Be.EqualTo(expectedUri);
-        }
-
-        [TestMethod]
-        public void ShouldGetBaseUriFromConfigurationWhenCreatingForPaginationRequest()
-        {
-            _builder.ForPagination("uri");
-
-            _mockedConfiguration
-                .Verify(it => it.ValueFor("Maplink.Webservices.Places.BaseUri"), Times.Once());
-        }
-
-        [TestMethod]
         public void ShouldBuildUriForSearchRequest()
         {
             _builder.For(_request).Should().Be.EqualTo("base-uriuri/path?query-built");
+        }
+
+        [TestMethod]
+        public void ShouldBuildUriForSearchRequestWithStartIndex()
+        {
+            _request.StartsAtIndex = 1;
+
+            _builder.For(_request).Should().Be.EqualTo("base-uriuri/path?query-built&start=1");
         }
 
         [TestMethod]
