@@ -58,7 +58,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldBuildUriForSearchRequest()
         {
-            _builder.For(_request).Should().Be.EqualTo("base-uri/uri/path?query-built");
+            _builder.For(_request).Should().Be.EqualTo("base-uriuri/path?query-built");
         }
 
         [TestMethod]

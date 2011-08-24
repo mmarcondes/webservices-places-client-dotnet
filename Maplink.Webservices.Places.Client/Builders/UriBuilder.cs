@@ -21,7 +21,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             var uriQuery = _uriQueryBuilder.Build(request.Arguments);
 
             return String.Format(
-                "{0}/{1}?{2}", 
+                "{0}{1}?{2}", 
                 _configurationWrapper.ValueFor(BaseUriKey), 
                 request.UriPath, 
                 uriQuery);

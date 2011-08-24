@@ -49,7 +49,7 @@ namespace Maplink.Webservices.Places.Client
         {
             var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
-                .WithUriPath("places/byradius")
+                .WithUriPath("/places/byradius")
                 .WithStartIndex(0)
                 .WithArgument("radius", radius.ToString(UnitedStatesCultureInfo))
                 .WithArgument("latitude", latitude.ToString(UnitedStatesCultureInfo))
@@ -65,7 +65,7 @@ namespace Maplink.Webservices.Places.Client
         {
             var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
-                .WithUriPath("places/byterm")
+                .WithUriPath("/places/byterm")
                 .WithStartIndex(0)
                 .WithArgument("term", term)
                 .Build();
@@ -77,7 +77,7 @@ namespace Maplink.Webservices.Places.Client
         {
             var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
-                .WithUriPath("places/bycategory")
+                .WithUriPath("/places/bycategory")
                 .WithArgument("categoryId", categoryId.ToString())
                 .WithStartIndex(0)
                 .Build();

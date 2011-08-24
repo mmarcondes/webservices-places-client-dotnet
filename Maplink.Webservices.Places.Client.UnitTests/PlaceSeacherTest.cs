@@ -77,7 +77,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             
             _provider.ByRadius(_aLicenseInfo, Radius, Latitude, Longitude);
             _mockedSearchRequestBuilder
-                .Verify(it => it.WithUriPath("places/byradius"), Times.Once());
+                .Verify(it => it.WithUriPath("/places/byradius"), Times.Once());
         }
 
         [TestMethod]
@@ -203,7 +203,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
 
             _provider.ByTerm(_aLicenseInfo, Term);
             _mockedSearchRequestBuilder
-                .Verify(it => it.WithUriPath("places/byterm"), Times.Once());
+                .Verify(it => it.WithUriPath("/places/byterm"), Times.Once());
         }
 
         [TestMethod]
@@ -351,7 +351,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
 
             _provider.ByCategory(_aLicenseInfo, CategoryId);
             _mockedSearchRequestBuilder
-                .Verify(it => it.WithUriPath("places/bycategory"), Times.Once());
+                .Verify(it => it.WithUriPath("/places/bycategory"), Times.Once());
         }
 
         [TestMethod]
