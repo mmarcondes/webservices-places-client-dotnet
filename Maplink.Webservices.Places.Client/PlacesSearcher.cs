@@ -87,26 +87,19 @@ namespace Maplink.Webservices.Places.Client
 
         public PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uriPathAndQuery)
         {
-            var request = _requestBuilder
+            var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
                 .WithUriPathAndQuery(uriPathAndQuery)
                 .Build();
 
-            var places = _retriever.RetrieveFrom(request);
-
-            return ToEntity(places);
+            return RetrievePlaces(searchRequest);
         }
 
         private PlaceSearchResult RetrievePlaces(Request searchRequest)
         {
             var places = _retriever.RetrieveFrom(searchRequest);
 
-            return ToEntity(places);
-        }
-
-        private PlaceSearchResult ToEntity(Resources.Places resource)
-        {
-            return _converter.ToEntity(resource);
+            return _converter.ToEntity(places);
         }
     }
 }
