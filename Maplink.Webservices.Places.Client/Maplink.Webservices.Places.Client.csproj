@@ -48,13 +48,11 @@
     <Compile Include="Builders\IAllHttpHeadersBuilder.cs" />
     <Compile Include="Builders\IAuthorizationBuilder.cs" />
     <Compile Include="Builders\IHttpHeaderBuilder.cs" />
-    <Compile Include="Builders\ICustomRequestBuilder.cs" />
     <Compile Include="Builders\IHttpRequestBuilder.cs" />
     <Compile Include="Builders\IRequestBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
     <Compile Include="Builders\IUriQueryBuilder.cs" />
-    <Compile Include="Builders\CustomRequestBuilder.cs" />
     <Compile Include="Builders\HttpRequestBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -67,7 +65,6 @@
     <Compile Include="Entities\LicenseInfo.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\PlaceResult.cs" />
-    <Compile Include="Entities\CustomRequest.cs" />
     <Compile Include="Entities\PlaceSearchResult.cs" />
     <Compile Include="Entities\Request.cs" />
     <Compile Include="Exceptions\PlaceClientRequestException.cs" />

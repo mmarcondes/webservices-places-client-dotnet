@@ -14,19 +14,16 @@ namespace Maplink.Webservices.Places.Client
         private readonly IPlacesSearchRetriever _retriever;
         private readonly IPlacesConverter _converter;
         private readonly IRequestBuilder _requestBuilder;
-        private readonly ICustomRequestBuilder _customRequestBuilder;
         private static readonly CultureInfo UnitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
 
         public PlaceSearcher(
             IPlacesSearchRetriever retriever, 
             IPlacesConverter converter, 
-            IRequestBuilder requestBuilder,
-            ICustomRequestBuilder customRequestBuilder)
+            IRequestBuilder requestBuilder)
         {
             _retriever = retriever;
             _converter = converter;
             _requestBuilder = requestBuilder;
-            _customRequestBuilder = customRequestBuilder;
         }
 
         public PlaceSearcher()
@@ -40,8 +37,7 @@ namespace Maplink.Webservices.Places.Client
                     new HttpClient(), 
                     new XmlSerializerWrapper()), 
                 new PlacesConverter(), 
-                new RequestBuilder(),
-                new CustomRequestBuilder())
+                new RequestBuilder())
         {
         }
 
@@ -91,12 +87,12 @@ namespace Maplink.Webservices.Places.Client
 
         public PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uriPathAndQuery)
         {
-            var customRequest = _customRequestBuilder
+            var request = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
                 .WithUriPathAndQuery(uriPathAndQuery)
                 .Build();
 
-            var places = _retriever.RetrieveFrom(customRequest);
+            var places = _retriever.RetrieveFrom(request);
 
             return ToEntity(places);
         }

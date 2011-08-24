@@ -28,13 +28,6 @@ namespace Maplink.Webservices.Places.Client.Services
             return RetrieveFrom(httpRequest);
         }
 
-        public Resources.Places RetrieveFrom(CustomRequest customRequest)
-        {
-            var request = _httpRequestBuilder.ForCustomRequest(customRequest);
-
-            return RetrieveFrom(request);
-        }
-
         private Resources.Places RetrieveFrom(HttpRequest httpRequest)
         {
             var response = _httpClient.Get(httpRequest);

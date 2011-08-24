@@ -21,14 +21,12 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         private HttpResponse _anOkHttpResponse;
         private HttpResponse _anInvalidHttpResponse;
         private HttpResponse _anNotFoundHttpResponse;
-        private CustomRequest _customRequest;
         private Request _aRequest;
 
         [TestInitialize]
         public void SetUp()
         {
             _aRequest = new Request();
-            _customRequest = new CustomRequest();
 
             _anOkHttpResponse = new HttpResponse { Success = true, StatusCode = 200, Body = "body-content" };
             _anInvalidHttpResponse = new HttpResponse { Success = false, StatusCode = 400 };
@@ -118,90 +116,12 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .Should().Be.Empty();
         }
 
-        [TestMethod]
-        public void ShouldRetrievePlacesFromPaginationRequest()
-        {
-            GivenTheRequestWasBuilt()
-                .AndTheResponseWasOk()
-                .AndTheResponseWasDeserialized();
-
-            _retriever.RetrieveFrom(_customRequest)
-                .Should().Be.EqualTo(_deserializedPlaces);
-        }
-
-        [TestMethod]
-        public void ShouldBuildRequestWhenRetrievingPlacesFromCustomRequest()
-        {
-            GivenTheRequestWasBuilt()
-                .AndTheResponseWasOk()
-                .AndTheResponseWasDeserialized();
-
-            _retriever.RetrieveFrom(_customRequest);
-
-            _mockedRequestBuilder
-                .Verify(it => it.ForCustomRequest(_customRequest), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldSendRequestWhenRetrievingPlacesFromPaginationRequest()
-        {
-            GivenTheRequestWasBuilt()
-                .AndTheResponseWasOk()
-                .AndTheResponseWasDeserialized();
-
-            _retriever.RetrieveFrom(_customRequest);
-
-            _mockedHttpClient
-                .Verify(it => it.Get(_httpRequestBuilt), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldDeserializeResponseBodyWhenRetrievingPlacesFromPaginationRequest()
-        {
-            GivenTheRequestWasBuilt()
-                .AndTheResponseWasOk()
-                .AndTheResponseWasDeserialized();
-
-            _retriever.RetrieveFrom(_customRequest);
-
-            _mockedSerializer
-                .Verify(
-                    it => 
-                        it.Deserialize<Client.Resources.Places>(_anOkHttpResponse.Body), Times.Once());
-        }
-
-        [ExpectedException(typeof(PlaceClientRequestException))]
-        [TestMethod]
-        public void ShouldThrowExceptionWhenRetrievingPlacesFromPaginationRequestRetrievesAInvalidReponse()
-        {
-            GivenTheRequestWasBuilt()
-                .AndTheResponseWasInvalid()
-                .AndTheResponseWasDeserialized();
-
-            _retriever.RetrieveFrom(_customRequest);
-        }
-
-        [TestMethod]
-        public void ShouldRetrieveAEmptyPlaceFromPaginationRequestWhenRetrievesANotFoundReponse()
-        {
-            GivenTheRequestWasBuilt()
-                .AndTheResponseWasNotFound()
-                .AndTheResponseWasDeserialized();
-
-            _retriever.RetrieveFrom(_customRequest).Retrieved
-                .Should().Be.Empty();
-        }
-
         private PlacesSearchRetrieverTest GivenTheRequestWasBuilt()
         {
             _httpRequestBuilt = new HttpRequest();
 
             _mockedRequestBuilder
                 .Setup(it => it.For(It.IsAny<Request>()))
-                .Returns(_httpRequestBuilt);
-
-            _mockedRequestBuilder
-                .Setup(it => it.ForCustomRequest(It.IsAny<CustomRequest>()))
                 .Returns(_httpRequestBuilt);
 
             return this;

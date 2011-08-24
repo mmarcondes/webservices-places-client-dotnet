@@ -19,7 +19,6 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         private Mock<IAllHttpHeadersBuilder> _mockedAllHeadersBuilder;
         private IEnumerable<KeyValuePair<string, string>> _headersBuilt;
         private DateTime _dateRetrieved;
-        private CustomRequest _customRequest;
         private Request _request;
         private const string UriBuilt = "uri-built";
         private const string SignatureBuilt = "signature-built";
@@ -28,8 +27,6 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         public void SetUp()
         {
             CreateSearchRequest();
-
-            CreatePaginationRequest();
 
             _headersBuilt = new Dictionary<string, string>();
             _mockedUriBuilder = new Mock<IUriBuilder>();
@@ -121,86 +118,6 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                             _dateRetrieved,
                             _request.LicenseLogin,
                             SignatureBuilt), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldBuildARequestForCustomRequest()
-        {
-            GivenTheUriWasBuiltForPaginationRequest()
-                .AndTheDateWasRetrieved()
-                .AndTheSignatureWasBuilt()
-                .AndTheHeadersWereBuilt();
-
-            var request = _builder.ForCustomRequest(_customRequest);
-
-            request.Uri.Should().Be.EqualTo(UriBuilt);
-            request.Headers.Should().Be.SameInstanceAs(_headersBuilt);
-        }
-
-        [TestMethod]
-        public void ShouldBuildUriWhenBuildingARequestForCustomRequest()
-        {
-            _builder.ForCustomRequest(_customRequest);
-
-            _mockedUriBuilder.Verify(it => it.ForPagination(_customRequest.UriPathAndQuery), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldGetRequestDateWhenBuildingARequestForCustomRequest()
-        {
-            _builder.ForCustomRequest(_customRequest);
-
-            _mockedClock.Verify(it => it.UtcHourNow(), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldBuildSignatureWhenBuildingARequestForCustomRequest()
-        {
-            GivenTheUriWasBuiltForPaginationRequest()
-                .AndTheDateWasRetrieved()
-                .AndTheSignatureWasBuilt()
-                .AndTheHeadersWereBuilt();
-
-            _builder.ForCustomRequest(_customRequest);
-
-            _mockedSignatureBuider
-                .Verify(
-                    it =>
-                        it.For(
-                            "get",
-                            _dateRetrieved,
-                            UriBuilt,
-                            _customRequest.Login,
-                            _customRequest.Key), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldBuildAllHeadersWhenBuildingARequestForCustomRequest()
-        {
-            GivenTheUriWasBuiltForPaginationRequest()
-                .AndTheDateWasRetrieved()
-                .AndTheSignatureWasBuilt()
-                .AndTheHeadersWereBuilt();
-
-            _builder.ForCustomRequest(_customRequest);
-
-            _mockedAllHeadersBuilder
-                .Verify(
-                    it =>
-                        it.For(
-                            _dateRetrieved,
-                            _customRequest.Login,
-                            SignatureBuilt), Times.Once());
-        }
-
-        private void CreatePaginationRequest()
-        {
-            _customRequest = new CustomRequest
-            {
-                Key = "a-key",
-                Login = "a-login",
-                UriPathAndQuery = "a-uri"
-            };
         }
 
         private void CreateSearchRequest()

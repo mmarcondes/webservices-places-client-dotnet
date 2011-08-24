@@ -28,16 +28,6 @@ namespace Maplink.Webservices.Places.Client.Builders
             return CreateHttpRequest(request.LicenseLogin, request.LicenseKey, uriBuilt);
         }
 
-        public HttpRequest ForCustomRequest(CustomRequest customRequest)
-        {
-            var uriBuilt = _uriBuilder.ForPagination(customRequest.UriPathAndQuery);
-
-            return CreateHttpRequest(
-                customRequest.Login, 
-                customRequest.Key,
-                uriBuilt);
-        }
-
         private HttpRequest CreateHttpRequest(string login, string key, string uriBuilt)
         {
             var requestDateInUtc = _clock.UtcHourNow();
