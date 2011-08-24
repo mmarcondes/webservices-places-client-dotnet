@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Maplink.Webservices.Places.Client.Entities;
 using System.Linq;
 
@@ -74,8 +75,25 @@ namespace Maplink.Webservices.Places.Client.Builders
 
             foreach (var argumentWithKeyAndValue in queryString.Split('&').Select(argument => argument.Split('=')))
             {
-                WithArgument(argumentWithKeyAndValue.FirstOrDefault(), argumentWithKeyAndValue.LastOrDefault());
+                var argumentKey = argumentWithKeyAndValue.FirstOrDefault();
+                var argumentValue = argumentWithKeyAndValue.LastOrDefault();
+
+                if(argumentKey.Equals("start"))
+                {
+                    WithStartIndex(ExtractStartIndexFromArgumentValue(argumentValue));
+                    break;
+                }
+
+                WithArgument(argumentKey, argumentValue);
             }
+        }
+
+        private static int ExtractStartIndexFromArgumentValue(string argumentValue)
+        {
+            int startIndex;
+
+            Int32.TryParse(argumentValue, out startIndex);
+            return startIndex;
         }
     }
 }

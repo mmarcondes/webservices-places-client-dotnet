@@ -85,5 +85,17 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             requestBuilt.UriPath.Should().Be.EqualTo("/path");
             requestBuilt.Arguments.Should().Have.Count.EqualTo(0);
         }
+
+        [TestMethod]
+        public void ShouldBuildWithUriPathAndQuerySettingStartingAtIndexWhenItIsOnQueryString()
+        {
+            var requestBuilt = _requestBuilder
+                .WithUriPathAndQuery("/path?start=60")
+                .Build();
+
+            requestBuilt.UriPath.Should().Be.EqualTo("/path");
+            requestBuilt.Arguments.Should().Have.Count.EqualTo(0);
+            requestBuilt.StartsAtIndex.Should().Be.EqualTo(60);
+        }
     }
 }
