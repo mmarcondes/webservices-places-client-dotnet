@@ -81,6 +81,8 @@
     <Compile Include="PlacesSearcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AtomLink.cs" />
+    <Compile Include="Resources\Categories.cs" />
+    <Compile Include="Resources\Category.cs" />
     <Compile Include="Resources\Place.cs" />
     <Compile Include="Resources\Places.cs" />
     <Compile Include="Services\IPlacesSearchRetriever.cs" />
