@@ -5,7 +5,7 @@ using SharpTestsEx;
 namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 {
     [TestClass]
-    public class PlaceSearchPaginationRequestBuilderTest
+    public class CustomRequestBuilderTest
     {
         private CustomRequestBuilder customRequestBuilder;
 

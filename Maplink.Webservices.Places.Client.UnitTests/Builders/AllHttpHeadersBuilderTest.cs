@@ -8,7 +8,7 @@ using SharpTestsEx;
 namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 {
     [TestClass]
-    public class AllHeadersBuilderTest
+    public class AllHttpHeadersBuilderTest
     {
         private AllHttpHeadersBuilder _builder;
         private Mock<IHttpHeaderBuilder> _mockedHeaderBuilder;

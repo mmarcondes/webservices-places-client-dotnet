@@ -10,7 +10,7 @@ using SharpTestsEx;
 namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 {
     [TestClass]
-    public class RequestBuilderTest
+    public class HttpRequestBuilderTest
     {
         private IHttpRequestBuilder _builder;
         private Mock<IUriBuilder> _mockedUriBuilder;
@@ -219,7 +219,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             };
         }
 
-        private RequestBuilderTest GivenTheUriWasBuiltForPaginationRequest()
+        private HttpRequestBuilderTest GivenTheUriWasBuiltForPaginationRequest()
         {
             _mockedUriBuilder
                 .Setup(it => it.ForPagination(It.IsAny<string>()))
@@ -228,7 +228,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             return this;
         }
 
-        private RequestBuilderTest GivenTheUriWasBuiltForSearchRequest()
+        private HttpRequestBuilderTest GivenTheUriWasBuiltForSearchRequest()
         {
             _mockedUriBuilder
                 .Setup(it => it.For(It.IsAny<SearchRequest>()))
@@ -246,7 +246,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .Returns(_headersBuilt);
         }
 
-        private RequestBuilderTest AndTheSignatureWasBuilt()
+        private HttpRequestBuilderTest AndTheSignatureWasBuilt()
         {
             _mockedSignatureBuider
                 .Setup(
@@ -262,7 +262,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             return this;
         }
 
-        private RequestBuilderTest AndTheDateWasRetrieved()
+        private HttpRequestBuilderTest AndTheDateWasRetrieved()
         {
             _dateRetrieved = new DateTime(2011, 08, 01);
 

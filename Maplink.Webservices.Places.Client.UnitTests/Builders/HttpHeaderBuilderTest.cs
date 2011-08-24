@@ -6,7 +6,7 @@ using SharpTestsEx;
 namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 {
     [TestClass]
-    public class HeaderBuilderTest
+    public class HttpHeaderBuilderTest
     {
         [TestMethod]
         public void ShouldCreateHeaderForXMaplinkDate()
