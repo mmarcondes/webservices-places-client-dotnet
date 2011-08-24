@@ -13,19 +13,19 @@ namespace Maplink.Webservices.Places.Client
     {
         private readonly IPlacesSearchRetriever _retriever;
         private readonly IPlacesConverter _converter;
-        private readonly ISearchRequestBuilder _searchRequestBuilder;
+        private readonly IRequestBuilder _requestBuilder;
         private readonly ICustomRequestBuilder _customRequestBuilder;
         private static readonly CultureInfo UnitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
 
         public PlaceSearcher(
             IPlacesSearchRetriever retriever, 
             IPlacesConverter converter, 
-            ISearchRequestBuilder searchRequestBuilder,
+            IRequestBuilder requestBuilder,
             ICustomRequestBuilder customRequestBuilder)
         {
             _retriever = retriever;
             _converter = converter;
-            _searchRequestBuilder = searchRequestBuilder;
+            _requestBuilder = requestBuilder;
             _customRequestBuilder = customRequestBuilder;
         }
 
@@ -40,7 +40,7 @@ namespace Maplink.Webservices.Places.Client
                     new HttpClient(), 
                     new XmlSerializerWrapper()), 
                 new PlacesConverter(), 
-                new SearchRequestBuilder(),
+                new RequestBuilder(),
                 new CustomRequestBuilder())
         {
         }
@@ -51,7 +51,7 @@ namespace Maplink.Webservices.Places.Client
             double latitude, 
             double longitude)
         {
-            var searchRequest = _searchRequestBuilder
+            var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
                 .WithUriPath("places/byradius")
                 .WithStartIndex(0)
@@ -60,49 +60,50 @@ namespace Maplink.Webservices.Places.Client
                 .WithArgument("longitude", longitude.ToString(UnitedStatesCultureInfo))
                 .Build();
 
-            var places = _retriever.RetrieveFrom(searchRequest);
-
-            return ToEntity(places);
+            return RetrievePlaces(searchRequest);
         }
 
         public PlaceSearchResult ByTerm(
             LicenseInfo licenseInfo, 
             string term)
         {
-            var searchRequest = _searchRequestBuilder
+            var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
                 .WithUriPath("places/byterm")
                 .WithStartIndex(0)
                 .WithArgument("term", term)
                 .Build();
 
-            var places = _retriever.RetrieveFrom(searchRequest);
-
-            return ToEntity(places);
+            return RetrievePlaces(searchRequest);
         }
 
         public PlaceSearchResult ByCategory(LicenseInfo licenseInfo, int categoryId)
         {
-            var searchRequest = _searchRequestBuilder
+            var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
                 .WithUriPath("places/bycategory")
                 .WithArgument("categoryId", categoryId.ToString())
                 .WithStartIndex(0)
                 .Build();
 
-            var places = _retriever.RetrieveFrom(searchRequest);
+            return RetrievePlaces(searchRequest);
+        }
+
+        public PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uriPathAndQuery)
+        {
+            var customRequest = _customRequestBuilder
+                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
+                .WithUriPathAndQuery(uriPathAndQuery)
+                .Build();
+
+            var places = _retriever.RetrieveFrom(customRequest);
 
             return ToEntity(places);
         }
 
-        public PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uri)
+        private PlaceSearchResult RetrievePlaces(Request searchRequest)
         {
-            var customRequest = _customRequestBuilder
-                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
-                .WithUri(uri)
-                .Build();
-
-            var places = _retriever.RetrieveFrom(customRequest);
+            var places = _retriever.RetrieveFrom(searchRequest);
 
             return ToEntity(places);
         }

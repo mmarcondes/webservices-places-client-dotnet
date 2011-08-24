@@ -50,7 +50,7 @@
     <Compile Include="Builders\IHttpHeaderBuilder.cs" />
     <Compile Include="Builders\ICustomRequestBuilder.cs" />
     <Compile Include="Builders\IHttpRequestBuilder.cs" />
-    <Compile Include="Builders\ISearchRequestBuilder.cs" />
+    <Compile Include="Builders\IRequestBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
     <Compile Include="Builders\IUriQueryBuilder.cs" />
@@ -58,7 +58,7 @@
     <Compile Include="Builders\HttpRequestBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Builders\SearchRequestBuilder.cs" />
+    <Compile Include="Builders\RequestBuilder.cs" />
     <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
     <Compile Include="Builders\UriQueryBuilder.cs" />

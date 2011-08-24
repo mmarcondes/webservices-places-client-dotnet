@@ -15,7 +15,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private IPlaceSearcher _provider;
         private Mock<IPlacesSearchRetriever> _mockedRetriever;
         private Mock<IPlacesConverter> _mockedConverter;
-        private Mock<ISearchRequestBuilder> _mockedSearchRequestBuilder;
+        private Mock<IRequestBuilder> _mockedSearchRequestBuilder;
         private PlaceSearchResult _placeSearchResult;
         private Client.Resources.Places _retrievedPlaces;
         private CustomRequest _aCustomRequest;
@@ -39,7 +39,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             _placeSearchResult = new PlaceSearchResult();
             _aLicenseInfo = new LicenseInfo { Login = "login", Key = "key" };
 
-            _mockedSearchRequestBuilder = new Mock<ISearchRequestBuilder>();
+            _mockedSearchRequestBuilder = new Mock<IRequestBuilder>();
             _mockedPaginationRequestBuilder = new Mock<ICustomRequestBuilder>();
             _mockedRetriever = new Mock<IPlacesSearchRetriever>();
             _mockedConverter = new Mock<IPlacesConverter>();
@@ -406,7 +406,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .Setup(it => it.WithLicenseInfo(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(_mockedPaginationRequestBuilder.Object);
             _mockedPaginationRequestBuilder
-                .Setup(it => it.WithUri(It.IsAny<string>()))
+                .Setup(it => it.WithUriPathAndQuery(It.IsAny<string>()))
                 .Returns(_mockedPaginationRequestBuilder.Object);
             _mockedPaginationRequestBuilder
                 .Setup(it => it.Build())

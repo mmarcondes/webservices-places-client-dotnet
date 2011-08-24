@@ -19,7 +19,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             return this;
         }
 
-        public ICustomRequestBuilder WithUri(string uri)
+        public ICustomRequestBuilder WithUriPathAndQuery(string uri)
         {
             _customRequest.UriPathAndQuery = uri;
 

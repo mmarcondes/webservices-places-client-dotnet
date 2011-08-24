@@ -30,7 +30,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         public void ShouldBuildAPlaceSearchPaginationRequestWithUri()
         {
             var placeSearchPaginationRequest = customRequestBuilder
-                .WithUri("uri")
+                .WithUriPathAndQuery("uri")
                 .Build();
 
             placeSearchPaginationRequest.UriPathAndQuery.Should().Be.EqualTo("uri");

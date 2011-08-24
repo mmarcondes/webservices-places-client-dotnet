@@ -56,7 +56,7 @@
     <Compile Include="Builders\HttpHeaderBuilderTest.cs" />
     <Compile Include="Builders\CustomRequestBuilderTest.cs" />
     <Compile Include="Builders\HttpRequestBuilderTest.cs" />
-    <Compile Include="Builders\SearchRequestBuilderTest.cs" />
+    <Compile Include="Builders\RequestBuilderTest.cs" />
     <Compile Include="Builders\SignatureBuilderTest.cs" />
     <Compile Include="Builders\UriBuilderTest.cs" />
     <Compile Include="Builders\UriQueryBuilderTest.cs" />
