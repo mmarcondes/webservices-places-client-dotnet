@@ -21,14 +21,14 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         private Response _anOkResponse;
         private Response _anInvalidResponse;
         private Response _anNotFoundResponse;
-        private PlaceSearchPaginationRequest _paginationRequest;
+        private CustomRequest _customRequest;
         private SearchRequest _aSearchRequest;
 
         [TestInitialize]
         public void SetUp()
         {
             _aSearchRequest = new SearchRequest();
-            _paginationRequest = new PlaceSearchPaginationRequest();
+            _customRequest = new CustomRequest();
 
             _anOkResponse = new Response { Success = true, StatusCode = 200, Body = "body-content" };
             _anInvalidResponse = new Response { Success = false, StatusCode = 400 };
@@ -125,21 +125,21 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_paginationRequest)
+            _retriever.RetrieveFrom(_customRequest)
                 .Should().Be.EqualTo(_deserializedPlaces);
         }
 
         [TestMethod]
-        public void ShouldBuildRequestWhenRetrievingPlacesFromPaginationRequest()
+        public void ShouldBuildRequestWhenRetrievingPlacesFromCustomRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_paginationRequest);
+            _retriever.RetrieveFrom(_customRequest);
 
             _mockedRequestBuilder
-                .Verify(it => it.ForPaginationSearch(_paginationRequest), Times.Once());
+                .Verify(it => it.ForCustomRequest(_customRequest), Times.Once());
         }
 
         [TestMethod]
@@ -149,7 +149,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_paginationRequest);
+            _retriever.RetrieveFrom(_customRequest);
 
             _mockedHttpClient
                 .Verify(it => it.Get(_requestBuilt), Times.Once());
@@ -162,7 +162,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_paginationRequest);
+            _retriever.RetrieveFrom(_customRequest);
 
             _mockedSerializer
                 .Verify(
@@ -178,7 +178,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasInvalid()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_paginationRequest);
+            _retriever.RetrieveFrom(_customRequest);
         }
 
         [TestMethod]
@@ -188,7 +188,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasNotFound()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_paginationRequest).Retrieved
+            _retriever.RetrieveFrom(_customRequest).Retrieved
                 .Should().Be.Empty();
         }
 
@@ -201,7 +201,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .Returns(_requestBuilt);
 
             _mockedRequestBuilder
-                .Setup(it => it.ForPaginationSearch(It.IsAny<PlaceSearchPaginationRequest>()))
+                .Setup(it => it.ForCustomRequest(It.IsAny<CustomRequest>()))
                 .Returns(_requestBuilt);
 
             return this;

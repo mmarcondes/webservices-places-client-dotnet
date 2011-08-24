@@ -33,7 +33,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .WithUri("uri")
                 .Build();
 
-            placeSearchPaginationRequest.Uri.Should().Be.EqualTo("uri");
+            placeSearchPaginationRequest.UriPathAndQuery.Should().Be.EqualTo("uri");
         }
     }
 }

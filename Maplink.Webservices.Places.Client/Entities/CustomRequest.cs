@@ -1,8 +1,8 @@
 namespace Maplink.Webservices.Places.Client.Entities
 {
-    public class PlaceSearchPaginationRequest
+    public class CustomRequest
     {
-        public string Uri { get; set; }
+        public string UriPathAndQuery { get; set; }
         public string Login { get; set; }
         public string Key { get; set; }
     }

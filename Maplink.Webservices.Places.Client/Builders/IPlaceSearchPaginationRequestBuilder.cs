@@ -6,6 +6,6 @@ namespace Maplink.Webservices.Places.Client.Builders
     {
         IPlaceSearchPaginationRequestBuilder WithLicenseInfo(string licenseLogin, string licenseKey);
         IPlaceSearchPaginationRequestBuilder WithUri(string uri);
-        PlaceSearchPaginationRequest Build();
+        CustomRequest Build();
     }
 }

@@ -28,9 +28,9 @@ namespace Maplink.Webservices.Places.Client.Services
             return RetrieveFrom(request);
         }
 
-        public Resources.Places RetrieveFrom(PlaceSearchPaginationRequest placeSearchPaginationRequest)
+        public Resources.Places RetrieveFrom(CustomRequest customRequest)
         {
-            var request = _requestBuilder.ForPaginationSearch(placeSearchPaginationRequest);
+            var request = _requestBuilder.ForCustomRequest(customRequest);
 
             return RetrieveFrom(request);
         }

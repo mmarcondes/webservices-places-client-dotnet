@@ -19,7 +19,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         private Mock<IAllHeadersBuilder> _mockedAllHeadersBuilder;
         private IEnumerable<KeyValuePair<string, string>> _headersBuilt;
         private DateTime _dateRetrieved;
-        private PlaceSearchPaginationRequest _paginationRequest;
+        private CustomRequest _customRequest;
         private SearchRequest _searchRequest;
         private const string UriBuilt = "uri-built";
         private const string SignatureBuilt = "signature-built";
@@ -124,44 +124,44 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         }
 
         [TestMethod]
-        public void ShouldBuildARequestForRadiusPaginationSearch()
+        public void ShouldBuildARequestForCustomRequest()
         {
             GivenTheUriWasBuiltForPaginationRequest()
                 .AndTheDateWasRetrieved()
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            var request = _builder.ForPaginationSearch(_paginationRequest);
+            var request = _builder.ForCustomRequest(_customRequest);
 
             request.Uri.Should().Be.EqualTo(UriBuilt);
             request.Headers.Should().Be.SameInstanceAs(_headersBuilt);
         }
 
         [TestMethod]
-        public void ShouldBuildUriWhenBuildingARequestForRadiusPaginationSearch()
+        public void ShouldBuildUriWhenBuildingARequestForCustomRequest()
         {
-            _builder.ForPaginationSearch(_paginationRequest);
+            _builder.ForCustomRequest(_customRequest);
 
-            _mockedUriBuilder.Verify(it => it.ForPagination(_paginationRequest.Uri), Times.Once());
+            _mockedUriBuilder.Verify(it => it.ForPagination(_customRequest.UriPathAndQuery), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldGetRequestDateWhenBuildingARequestForRadiusPaginationSearch()
+        public void ShouldGetRequestDateWhenBuildingARequestForCustomRequest()
         {
-            _builder.ForPaginationSearch(_paginationRequest);
+            _builder.ForCustomRequest(_customRequest);
 
             _mockedClock.Verify(it => it.UtcHourNow(), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldBuildSignatureWhenBuildingARequestForRadiusPaginationSearch()
+        public void ShouldBuildSignatureWhenBuildingARequestForCustomRequest()
         {
             GivenTheUriWasBuiltForPaginationRequest()
                 .AndTheDateWasRetrieved()
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.ForPaginationSearch(_paginationRequest);
+            _builder.ForCustomRequest(_customRequest);
 
             _mockedSignatureBuider
                 .Verify(
@@ -170,36 +170,36 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                             "get",
                             _dateRetrieved,
                             UriBuilt,
-                            _paginationRequest.Login,
-                            _paginationRequest.Key), Times.Once());
+                            _customRequest.Login,
+                            _customRequest.Key), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldBuildAllHeadersWhenBuildingARequestForRadiusPaginationSearch()
+        public void ShouldBuildAllHeadersWhenBuildingARequestForCustomRequest()
         {
             GivenTheUriWasBuiltForPaginationRequest()
                 .AndTheDateWasRetrieved()
                 .AndTheSignatureWasBuilt()
                 .AndTheHeadersWereBuilt();
 
-            _builder.ForPaginationSearch(_paginationRequest);
+            _builder.ForCustomRequest(_customRequest);
 
             _mockedAllHeadersBuilder
                 .Verify(
                     it =>
                         it.For(
                             _dateRetrieved,
-                            _paginationRequest.Login,
+                            _customRequest.Login,
                             SignatureBuilt), Times.Once());
         }
 
         private void CreatePaginationRequest()
         {
-            _paginationRequest = new PlaceSearchPaginationRequest
+            _customRequest = new CustomRequest
             {
                 Key = "a-key",
                 Login = "a-login",
-                Uri = "a-uri"
+                UriPathAndQuery = "a-uri"
             };
         }
 

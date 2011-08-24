@@ -18,7 +18,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private Mock<ISearchRequestBuilder> _mockedSearchRequestBuilder;
         private PlaceSearchResult _placeSearchResult;
         private Client.Resources.Places _retrievedPlaces;
-        private PlaceSearchPaginationRequest _aPaginationRequest;
+        private CustomRequest _aCustomRequest;
         private SearchRequest _aSearchRequest;
         private LicenseInfo _aLicenseInfo;
         private const double Radius = 3.0;
@@ -34,7 +34,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         public void SetUp()
         {
             _aSearchRequest = new SearchRequest();
-            _aPaginationRequest = new PlaceSearchPaginationRequest();
+            _aCustomRequest = new CustomRequest();
             _retrievedPlaces = new Client.Resources.Places();
             _placeSearchResult = new PlaceSearchResult();
             _aLicenseInfo = new LicenseInfo { Login = "login", Key = "key" };
@@ -288,7 +288,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByPaginationUri(_aLicenseInfo, PaginationUri);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aPaginationRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.RetrieveFrom(_aCustomRequest), Times.Once());
         }
 
         [TestMethod]
@@ -410,7 +410,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .Returns(_mockedPaginationRequestBuilder.Object);
             _mockedPaginationRequestBuilder
                 .Setup(it => it.Build())
-                .Returns(_aPaginationRequest);
+                .Returns(_aCustomRequest);
 
             return this;
         }
@@ -422,7 +422,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .Setup(it => it.RetrieveFrom(It.IsAny<SearchRequest>()))
                 .Returns(_retrievedPlaces);
             _mockedRetriever
-                .Setup(it => it.RetrieveFrom(It.IsAny<PlaceSearchPaginationRequest>()))
+                .Setup(it => it.RetrieveFrom(It.IsAny<CustomRequest>()))
                 .Returns(_retrievedPlaces);
             return this;
         }

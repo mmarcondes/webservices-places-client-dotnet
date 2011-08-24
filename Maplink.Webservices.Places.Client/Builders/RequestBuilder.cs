@@ -28,13 +28,13 @@ namespace Maplink.Webservices.Places.Client.Builders
             return CreateHttpRequest(searchRequest.LicenseLogin, searchRequest.LicenseKey, uriBuilt);
         }
 
-        public Request ForPaginationSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest)
+        public Request ForCustomRequest(CustomRequest customRequest)
         {
-            var uriBuilt = _uriBuilder.ForPagination(placeSearchPaginationRequest.Uri);
+            var uriBuilt = _uriBuilder.ForPagination(customRequest.UriPathAndQuery);
 
             return CreateHttpRequest(
-                placeSearchPaginationRequest.Login, 
-                placeSearchPaginationRequest.Key,
+                customRequest.Login, 
+                customRequest.Key,
                 uriBuilt);
         }
 

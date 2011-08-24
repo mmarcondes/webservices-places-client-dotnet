@@ -4,31 +4,31 @@ namespace Maplink.Webservices.Places.Client.Builders
 {
     public class PlaceSearchPaginationRequestBuilder : IPlaceSearchPaginationRequestBuilder
     {
-        private readonly PlaceSearchPaginationRequest _placeSearchPaginationRequest; 
+        private readonly CustomRequest _customRequest; 
 
         public PlaceSearchPaginationRequestBuilder()
         {
-            _placeSearchPaginationRequest = new PlaceSearchPaginationRequest();
+            _customRequest = new CustomRequest();
         }
 
         public IPlaceSearchPaginationRequestBuilder WithLicenseInfo(string licenseLogin, string licenseKey)
         {
-            _placeSearchPaginationRequest.Login = licenseLogin;
-            _placeSearchPaginationRequest.Key = licenseKey;
+            _customRequest.Login = licenseLogin;
+            _customRequest.Key = licenseKey;
 
             return this;
         }
 
         public IPlaceSearchPaginationRequestBuilder WithUri(string uri)
         {
-            _placeSearchPaginationRequest.Uri = uri;
+            _customRequest.UriPathAndQuery = uri;
 
             return this;
         }
 
-        public PlaceSearchPaginationRequest Build()
+        public CustomRequest Build()
         {
-            return _placeSearchPaginationRequest;
+            return _customRequest;
         }
     }
 }

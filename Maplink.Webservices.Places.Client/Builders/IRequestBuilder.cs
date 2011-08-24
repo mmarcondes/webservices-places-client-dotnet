@@ -6,6 +6,6 @@ namespace Maplink.Webservices.Places.Client.Builders
     public interface IRequestBuilder
     {
         Request For(SearchRequest searchRequest);
-        Request ForPaginationSearch(PlaceSearchPaginationRequest placeSearchPaginationRequest);
+        Request ForCustomRequest(CustomRequest customRequest);
     }
 }
