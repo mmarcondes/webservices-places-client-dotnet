@@ -2,7 +2,7 @@
 
 namespace Maplink.Webservices.Places.Client.Wrappers
 {
-    public class Response
+    public class HttpResponse
     {
         public int StatusCode { get; set; }
         public IEnumerable<KeyValuePair<string, string>> Headers { get; set; }

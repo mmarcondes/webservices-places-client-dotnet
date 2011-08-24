@@ -12,11 +12,11 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
     [TestClass]
     public class RequestBuilderTest
     {
-        private IRequestBuilder _builder;
+        private IHttpRequestBuilder _builder;
         private Mock<IUriBuilder> _mockedUriBuilder;
         private Mock<IClock> _mockedClock;
         private Mock<ISignatureBuilder> _mockedSignatureBuider;
-        private Mock<IAllHeadersBuilder> _mockedAllHeadersBuilder;
+        private Mock<IAllHttpHeadersBuilder> _mockedAllHeadersBuilder;
         private IEnumerable<KeyValuePair<string, string>> _headersBuilt;
         private DateTime _dateRetrieved;
         private CustomRequest _customRequest;
@@ -35,9 +35,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             _mockedUriBuilder = new Mock<IUriBuilder>();
             _mockedClock = new Mock<IClock>();
             _mockedSignatureBuider = new Mock<ISignatureBuilder>();
-            _mockedAllHeadersBuilder = new Mock<IAllHeadersBuilder>();
+            _mockedAllHeadersBuilder = new Mock<IAllHttpHeadersBuilder>();
 
-            _builder = new RequestBuilder(
+            _builder = new HttpRequestBuilder(
                 _mockedUriBuilder.Object,
                 _mockedClock.Object,
                 _mockedSignatureBuider.Object,

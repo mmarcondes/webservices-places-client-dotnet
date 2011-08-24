@@ -13,14 +13,14 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
     public class PlacesSearchRetrieverTest
     {
         private IPlacesSearchRetriever _retriever;
-        private Mock<IRequestBuilder> _mockedRequestBuilder;
+        private Mock<IHttpRequestBuilder> _mockedRequestBuilder;
         private Mock<IHttpClient> _mockedHttpClient;
         private Mock<IXmlSerializerWrapper> _mockedSerializer;
         private Client.Resources.Places _deserializedPlaces;
-        private Request _requestBuilt;
-        private Response _anOkResponse;
-        private Response _anInvalidResponse;
-        private Response _anNotFoundResponse;
+        private HttpRequest _httpRequestBuilt;
+        private HttpResponse _anOkHttpResponse;
+        private HttpResponse _anInvalidHttpResponse;
+        private HttpResponse _anNotFoundHttpResponse;
         private CustomRequest _customRequest;
         private SearchRequest _aSearchRequest;
 
@@ -30,11 +30,11 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _aSearchRequest = new SearchRequest();
             _customRequest = new CustomRequest();
 
-            _anOkResponse = new Response { Success = true, StatusCode = 200, Body = "body-content" };
-            _anInvalidResponse = new Response { Success = false, StatusCode = 400 };
-            _anNotFoundResponse = new Response { Success = false, StatusCode = 404 };
+            _anOkHttpResponse = new HttpResponse { Success = true, StatusCode = 200, Body = "body-content" };
+            _anInvalidHttpResponse = new HttpResponse { Success = false, StatusCode = 400 };
+            _anNotFoundHttpResponse = new HttpResponse { Success = false, StatusCode = 404 };
 
-            _mockedRequestBuilder = new Mock<IRequestBuilder>();
+            _mockedRequestBuilder = new Mock<IHttpRequestBuilder>();
             _mockedHttpClient = new Mock<IHttpClient>();
             _mockedSerializer = new Mock<IXmlSerializerWrapper>();
 
@@ -78,7 +78,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _retriever.RetrieveFrom(_aSearchRequest);
 
             _mockedHttpClient
-                .Verify(it => it.Get(_requestBuilt), Times.Once());
+                .Verify(it => it.Get(_httpRequestBuilt), Times.Once());
         }
 
         [TestMethod]
@@ -93,7 +93,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _mockedSerializer
                 .Verify(
                     it => 
-                        it.Deserialize<Client.Resources.Places>(_anOkResponse.Body), Times.Once());
+                        it.Deserialize<Client.Resources.Places>(_anOkHttpResponse.Body), Times.Once());
         }
 
         [ExpectedException(typeof(PlaceClientRequestException))]
@@ -152,7 +152,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _retriever.RetrieveFrom(_customRequest);
 
             _mockedHttpClient
-                .Verify(it => it.Get(_requestBuilt), Times.Once());
+                .Verify(it => it.Get(_httpRequestBuilt), Times.Once());
         }
 
         [TestMethod]
@@ -167,7 +167,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _mockedSerializer
                 .Verify(
                     it => 
-                        it.Deserialize<Client.Resources.Places>(_anOkResponse.Body), Times.Once());
+                        it.Deserialize<Client.Resources.Places>(_anOkHttpResponse.Body), Times.Once());
         }
 
         [ExpectedException(typeof(PlaceClientRequestException))]
@@ -194,15 +194,15 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
 
         private PlacesSearchRetrieverTest GivenTheRequestWasBuilt()
         {
-            _requestBuilt = new Request();
+            _httpRequestBuilt = new HttpRequest();
 
             _mockedRequestBuilder
                 .Setup(it => it.For(It.IsAny<SearchRequest>()))
-                .Returns(_requestBuilt);
+                .Returns(_httpRequestBuilt);
 
             _mockedRequestBuilder
                 .Setup(it => it.ForCustomRequest(It.IsAny<CustomRequest>()))
-                .Returns(_requestBuilt);
+                .Returns(_httpRequestBuilt);
 
             return this;
         }
@@ -210,8 +210,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         private PlacesSearchRetrieverTest AndTheResponseWasOk()
         {
             _mockedHttpClient
-                 .Setup(it => it.Get(It.IsAny<Request>()))
-                 .Returns(_anOkResponse);
+                 .Setup(it => it.Get(It.IsAny<HttpRequest>()))
+                 .Returns(_anOkHttpResponse);
 
             return this;
         }
@@ -219,8 +219,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         private PlacesSearchRetrieverTest AndTheResponseWasNotFound()
         {
             _mockedHttpClient
-                 .Setup(it => it.Get(It.IsAny<Request>()))
-                 .Returns(_anNotFoundResponse);
+                 .Setup(it => it.Get(It.IsAny<HttpRequest>()))
+                 .Returns(_anNotFoundHttpResponse);
 
             return this;
         }
@@ -228,8 +228,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
         private PlacesSearchRetrieverTest AndTheResponseWasInvalid()
         {
             _mockedHttpClient
-                .Setup(it => it.Get(It.IsAny<Request>()))
-                .Returns(_anInvalidResponse);
+                .Setup(it => it.Get(It.IsAny<HttpRequest>()))
+                .Returns(_anInvalidHttpResponse);
 
             return this;
         }

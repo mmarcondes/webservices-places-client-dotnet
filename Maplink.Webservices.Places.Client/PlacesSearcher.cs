@@ -32,11 +32,11 @@ namespace Maplink.Webservices.Places.Client
         public PlaceSearcher()
             : this(
                 new PlacesSearchRetriever(
-                    new RequestBuilder(
+                    new HttpRequestBuilder(
                         new UriBuilder(new ConfigurationWrapper(), new UriQueryBuilder()), 
                         new Clock(), 
                         new SignatureBuilder(new HmacSha1HashGenerator()),
-                        new AllHeadersBuilder(new HeaderBuilder(), new AuthorizationBuilder(new Base64Encoder()))),
+                        new AllHttpHeadersBuilder(new HttpHeaderBuilder(), new AuthorizationBuilder(new Base64Encoder()))),
                     new HttpClient(), 
                     new XmlSerializerWrapper()), 
                 new PlacesConverter(), 
@@ -89,6 +89,7 @@ namespace Maplink.Webservices.Places.Client
                 .WithArgument("categoryId", categoryId.ToString())
                 .WithStartIndex(0)
                 .Build();
+
             var places = _retriever.RetrieveFrom(searchRequest);
 
             return ToEntity(places);

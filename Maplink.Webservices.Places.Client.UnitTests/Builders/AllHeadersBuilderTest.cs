@@ -10,8 +10,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
     [TestClass]
     public class AllHeadersBuilderTest
     {
-        private AllHeadersBuilder _builder;
-        private Mock<IHeaderBuilder> _mockedHeaderBuilder;
+        private AllHttpHeadersBuilder _builder;
+        private Mock<IHttpHeaderBuilder> _mockedHeaderBuilder;
         private Mock<IAuthorizationBuilder> _mockedAuthorizationBuilder;
         private DateTime _aDate;
         private KeyValuePair<string, string> _authorizationHeader;
@@ -28,7 +28,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             _authorizationHeader = new KeyValuePair<string, string>("authorization", "header");
             _xMaplinkDateHeader = new KeyValuePair<string, string>("x-maplink-date", "header");
             
-            _mockedHeaderBuilder = new Mock<IHeaderBuilder>();
+            _mockedHeaderBuilder = new Mock<IHttpHeaderBuilder>();
             _mockedHeaderBuilder
                 .Setup(it => it.ForAuthorization(It.IsAny<string>()))
                 .Returns(_authorizationHeader);
@@ -42,7 +42,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
                 .Setup(it => it.For(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(AuthorizationBuilt);
             
-            _builder = new AllHeadersBuilder(
+            _builder = new AllHttpHeadersBuilder(
                 _mockedHeaderBuilder.Object,
                 _mockedAuthorizationBuilder.Object);
         }

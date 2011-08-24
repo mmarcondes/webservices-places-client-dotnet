@@ -42,20 +42,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\AllHeadersBuilder.cs" />
+    <Compile Include="Builders\AllHttpHeadersBuilder.cs" />
     <Compile Include="Builders\AuthorizationBuilder.cs" />
-    <Compile Include="Builders\HeaderBuilder.cs" />
-    <Compile Include="Builders\IAllHeadersBuilder.cs" />
+    <Compile Include="Builders\HttpHeaderBuilder.cs" />
+    <Compile Include="Builders\IAllHttpHeadersBuilder.cs" />
     <Compile Include="Builders\IAuthorizationBuilder.cs" />
-    <Compile Include="Builders\IHeaderBuilder.cs" />
+    <Compile Include="Builders\IHttpHeaderBuilder.cs" />
     <Compile Include="Builders\ICustomRequestBuilder.cs" />
-    <Compile Include="Builders\IRequestBuilder.cs" />
+    <Compile Include="Builders\IHttpRequestBuilder.cs" />
     <Compile Include="Builders\ISearchRequestBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
     <Compile Include="Builders\IUriQueryBuilder.cs" />
     <Compile Include="Builders\CustomRequestBuilder.cs" />
-    <Compile Include="Builders\RequestBuilder.cs">
+    <Compile Include="Builders\HttpRequestBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Builders\SearchRequestBuilder.cs" />
@@ -94,8 +94,8 @@
     <Compile Include="Wrappers\IConfigurationWrapper.cs" />
     <Compile Include="Wrappers\IHttpClient.cs" />
     <Compile Include="Wrappers\IXmlSerializerWrapper.cs" />
-    <Compile Include="Wrappers\Request.cs" />
-    <Compile Include="Wrappers\Response.cs" />
+    <Compile Include="Wrappers\HttpRequest.cs" />
+    <Compile Include="Wrappers\HttpResponse.cs" />
     <Compile Include="Wrappers\XmlSerializerWrapper.cs" />
   </ItemGroup>
   <ItemGroup />

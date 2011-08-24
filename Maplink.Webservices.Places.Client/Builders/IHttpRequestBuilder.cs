@@ -3,9 +3,9 @@ using Maplink.Webservices.Places.Client.Wrappers;
 
 namespace Maplink.Webservices.Places.Client.Builders
 {
-    public interface IRequestBuilder
+    public interface IHttpRequestBuilder
     {
-        Request For(SearchRequest searchRequest);
-        Request ForCustomRequest(CustomRequest customRequest);
+        HttpRequest For(SearchRequest searchRequest);
+        HttpRequest ForCustomRequest(CustomRequest customRequest);
     }
 }

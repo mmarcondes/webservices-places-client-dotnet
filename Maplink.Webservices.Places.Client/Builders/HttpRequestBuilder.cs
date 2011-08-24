@@ -3,32 +3,32 @@ using Maplink.Webservices.Places.Client.Wrappers;
 
 namespace Maplink.Webservices.Places.Client.Builders
 {
-    public class RequestBuilder : IRequestBuilder
+    public class HttpRequestBuilder : IHttpRequestBuilder
     {
         private readonly IUriBuilder _uriBuilder;
         private readonly IClock _clock;
         private readonly ISignatureBuilder _signatureBuilder;
-        private readonly IAllHeadersBuilder _allHeadersBuilder;
+        private readonly IAllHttpHeadersBuilder _allHttpHeadersBuilder;
 
-        public RequestBuilder(
+        public HttpRequestBuilder(
             IUriBuilder uriBuilder,
             IClock clock,
             ISignatureBuilder signatureBuilder,
-            IAllHeadersBuilder allHeadersBuilder)
+            IAllHttpHeadersBuilder allHttpHeadersBuilder)
         {
             _uriBuilder = uriBuilder;
             _clock = clock;
             _signatureBuilder = signatureBuilder;
-            _allHeadersBuilder = allHeadersBuilder;
+            _allHttpHeadersBuilder = allHttpHeadersBuilder;
         }
 
-        public Request For(SearchRequest searchRequest)
+        public HttpRequest For(SearchRequest searchRequest)
         {
             var uriBuilt = _uriBuilder.For(searchRequest);
             return CreateHttpRequest(searchRequest.LicenseLogin, searchRequest.LicenseKey, uriBuilt);
         }
 
-        public Request ForCustomRequest(CustomRequest customRequest)
+        public HttpRequest ForCustomRequest(CustomRequest customRequest)
         {
             var uriBuilt = _uriBuilder.ForPagination(customRequest.UriPathAndQuery);
 
@@ -38,7 +38,7 @@ namespace Maplink.Webservices.Places.Client.Builders
                 uriBuilt);
         }
 
-        private Request CreateHttpRequest(string login, string key, string uriBuilt)
+        private HttpRequest CreateHttpRequest(string login, string key, string uriBuilt)
         {
             var requestDateInUtc = _clock.UtcHourNow();
 
@@ -46,9 +46,9 @@ namespace Maplink.Webservices.Places.Client.Builders
                 _signatureBuilder
                     .For("get", requestDateInUtc, uriBuilt, login, key);
 
-            var headers = _allHeadersBuilder.For(requestDateInUtc, login, signatureBuilt);
+            var headers = _allHttpHeadersBuilder.For(requestDateInUtc, login, signatureBuilt);
 
-            return new Request
+            return new HttpRequest
                        {
                            Uri = uriBuilt,
                            Headers = headers

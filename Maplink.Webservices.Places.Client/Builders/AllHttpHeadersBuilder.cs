@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Maplink.Webservices.Places.Client.Builders
 {
-    public class AllHeadersBuilder : IAllHeadersBuilder
+    public class AllHttpHeadersBuilder : IAllHttpHeadersBuilder
     {
-        private readonly IHeaderBuilder _headerBuilder;
+        private readonly IHttpHeaderBuilder _httpHeaderBuilder;
         private readonly IAuthorizationBuilder _authorizationBuilder;
 
-        public AllHeadersBuilder(IHeaderBuilder headerBuilder, IAuthorizationBuilder authorizationBuilder)
+        public AllHttpHeadersBuilder(IHttpHeaderBuilder httpHeaderBuilder, IAuthorizationBuilder authorizationBuilder)
         {
-            _headerBuilder = headerBuilder;
+            _httpHeaderBuilder = httpHeaderBuilder;
             _authorizationBuilder = authorizationBuilder;
         }
 
@@ -19,10 +19,10 @@ namespace Maplink.Webservices.Places.Client.Builders
             string login,
             string signature)
         {
-            var dateHeader = _headerBuilder.ForXMaplinkDate(requestDate);
+            var dateHeader = _httpHeaderBuilder.ForXMaplinkDate(requestDate);
 
             var signatureHeader =
-                _headerBuilder
+                _httpHeaderBuilder
                     .ForAuthorization(
                         _authorizationBuilder.For(login, signature));
 

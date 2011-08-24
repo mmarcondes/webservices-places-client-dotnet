@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Maplink.Webservices.Places.Client.Builders
 {
-    public class HeaderBuilder : IHeaderBuilder
+    public class HttpHeaderBuilder : IHttpHeaderBuilder
     {
         public KeyValuePair<string, string> ForXMaplinkDate(DateTime date)
         {

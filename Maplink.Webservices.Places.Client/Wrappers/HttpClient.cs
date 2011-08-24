@@ -19,13 +19,13 @@ namespace Maplink.Webservices.Places.Client.Wrappers
                                                  (int) HttpStatusCode.PartialContent
                                              };
 
-        public Response Get(Request request)
+        public HttpResponse Get(HttpRequest httpRequest)
         {
-            var webRequest = (HttpWebRequest)WebRequest.Create(request.Uri);
-            AddHeaders(webRequest.Headers, request.Headers);
+            var webRequest = (HttpWebRequest)WebRequest.Create(httpRequest.Uri);
+            AddHeaders(webRequest.Headers, httpRequest.Headers);
             webRequest.KeepAlive = false;
             webRequest.Method = "GET";
-            webRequest.ContentType = request.ContentType;;
+            webRequest.ContentType = httpRequest.ContentType;;
 
             var response = ProcessRequest(webRequest);
 
@@ -42,7 +42,7 @@ namespace Maplink.Webservices.Places.Client.Wrappers
             }
         }
 
-        private static Response ProcessRequest(WebRequest webRequest)
+        private static HttpResponse ProcessRequest(WebRequest webRequest)
         {
             string body;
             int statusCode;
@@ -76,12 +76,12 @@ namespace Maplink.Webservices.Places.Client.Wrappers
             return Create(statusCode, headers, body);
         }
 
-        private static Response Create(
+        private static HttpResponse Create(
             int statusCode,
             IEnumerable<KeyValuePair<string, string>> headers,
             string body)
         {
-            return new Response
+            return new HttpResponse
                        {
                            StatusCode = statusCode,
                            Headers = headers,
