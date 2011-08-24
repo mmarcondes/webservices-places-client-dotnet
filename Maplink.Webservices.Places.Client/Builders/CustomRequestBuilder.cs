@@ -2,16 +2,16 @@
 
 namespace Maplink.Webservices.Places.Client.Builders
 {
-    public class PlaceSearchPaginationRequestBuilder : IPlaceSearchPaginationRequestBuilder
+    public class CustomRequestBuilder : ICustomRequestBuilder
     {
         private readonly CustomRequest _customRequest; 
 
-        public PlaceSearchPaginationRequestBuilder()
+        public CustomRequestBuilder()
         {
             _customRequest = new CustomRequest();
         }
 
-        public IPlaceSearchPaginationRequestBuilder WithLicenseInfo(string licenseLogin, string licenseKey)
+        public ICustomRequestBuilder WithLicenseInfo(string licenseLogin, string licenseKey)
         {
             _customRequest.Login = licenseLogin;
             _customRequest.Key = licenseKey;
@@ -19,7 +19,7 @@ namespace Maplink.Webservices.Places.Client.Builders
             return this;
         }
 
-        public IPlaceSearchPaginationRequestBuilder WithUri(string uri)
+        public ICustomRequestBuilder WithUri(string uri)
         {
             _customRequest.UriPathAndQuery = uri;
 

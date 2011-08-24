@@ -7,18 +7,18 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
     [TestClass]
     public class PlaceSearchPaginationRequestBuilderTest
     {
-        private PlaceSearchPaginationRequestBuilder placeSearchPaginationRequestBuilder;
+        private CustomRequestBuilder customRequestBuilder;
 
         [TestInitialize]
         public void SetUp()
         {
-            placeSearchPaginationRequestBuilder = new PlaceSearchPaginationRequestBuilder();
+            customRequestBuilder = new CustomRequestBuilder();
         }
 
         [TestMethod]
         public void ShouldBuildAPlaceSearchPaginationRequestWithLicenseInfo()
         {
-            var placeSearchPaginationRequest = placeSearchPaginationRequestBuilder
+            var placeSearchPaginationRequest = customRequestBuilder
                 .WithLicenseInfo("login", "key")
                 .Build();
 
@@ -29,7 +29,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestMethod]
         public void ShouldBuildAPlaceSearchPaginationRequestWithUri()
         {
-            var placeSearchPaginationRequest = placeSearchPaginationRequestBuilder
+            var placeSearchPaginationRequest = customRequestBuilder
                 .WithUri("uri")
                 .Build();
 

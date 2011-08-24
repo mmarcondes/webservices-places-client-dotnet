@@ -14,19 +14,19 @@ namespace Maplink.Webservices.Places.Client
         private readonly IPlacesSearchRetriever _retriever;
         private readonly IPlacesConverter _converter;
         private readonly ISearchRequestBuilder _searchRequestBuilder;
-        private readonly IPlaceSearchPaginationRequestBuilder _placeSearchPaginationRequestBuilder;
+        private readonly ICustomRequestBuilder _customRequestBuilder;
         private static readonly CultureInfo UnitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
 
         public PlaceSearcher(
             IPlacesSearchRetriever retriever, 
             IPlacesConverter converter, 
             ISearchRequestBuilder searchRequestBuilder,
-            IPlaceSearchPaginationRequestBuilder placeSearchPaginationRequestBuilder)
+            ICustomRequestBuilder customRequestBuilder)
         {
             _retriever = retriever;
             _converter = converter;
             _searchRequestBuilder = searchRequestBuilder;
-            _placeSearchPaginationRequestBuilder = placeSearchPaginationRequestBuilder;
+            _customRequestBuilder = customRequestBuilder;
         }
 
         public PlaceSearcher()
@@ -41,7 +41,7 @@ namespace Maplink.Webservices.Places.Client
                     new XmlSerializerWrapper()), 
                 new PlacesConverter(), 
                 new SearchRequestBuilder(),
-                new PlaceSearchPaginationRequestBuilder())
+                new CustomRequestBuilder())
         {
         }
 
@@ -81,18 +81,6 @@ namespace Maplink.Webservices.Places.Client
             return ToEntity(places);
         }
 
-        public PlaceSearchResult ByPaginationUri(LicenseInfo licenseInfo, string paginationUri)
-        {
-                var placeSearchPaginationRequest = _placeSearchPaginationRequestBuilder
-                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
-                .WithUri(paginationUri)
-                .Build();
-                
-            var places = _retriever.RetrieveFrom(placeSearchPaginationRequest);
-
-            return ToEntity(places);
-        }
-
         public PlaceSearchResult ByCategory(LicenseInfo licenseInfo, int categoryId)
         {
             var searchRequest = _searchRequestBuilder
@@ -102,6 +90,18 @@ namespace Maplink.Webservices.Places.Client
                 .WithStartIndex(0)
                 .Build();
             var places = _retriever.RetrieveFrom(searchRequest);
+
+            return ToEntity(places);
+        }
+
+        public PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uri)
+        {
+            var customRequest = _customRequestBuilder
+                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
+                .WithUri(uri)
+                .Build();
+
+            var places = _retriever.RetrieveFrom(customRequest);
 
             return ToEntity(places);
         }

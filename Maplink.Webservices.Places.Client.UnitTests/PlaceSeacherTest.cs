@@ -25,7 +25,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private const double Latitude = -23.45;
         private const double Longitude = -43.56;
         private readonly CultureInfo _unitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
-        private Mock<IPlaceSearchPaginationRequestBuilder> _mockedPaginationRequestBuilder;
+        private Mock<ICustomRequestBuilder> _mockedPaginationRequestBuilder;
         private const int CategoryId = 10;
         private const string Term = "term";
         private const string PaginationUri = "pagination-uri";
@@ -40,7 +40,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             _aLicenseInfo = new LicenseInfo { Login = "login", Key = "key" };
 
             _mockedSearchRequestBuilder = new Mock<ISearchRequestBuilder>();
-            _mockedPaginationRequestBuilder = new Mock<IPlaceSearchPaginationRequestBuilder>();
+            _mockedPaginationRequestBuilder = new Mock<ICustomRequestBuilder>();
             _mockedRetriever = new Mock<IPlacesSearchRetriever>();
             _mockedConverter = new Mock<IPlacesConverter>();
 
@@ -277,7 +277,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeRetrieved()
                 .AndThePlacesCanBeConverted();
 
-           _provider.ByPaginationUri(_aLicenseInfo, PaginationUri).Should().Be.SameInstanceAs(_placeSearchResult);
+           _provider.ByUri(_aLicenseInfo, PaginationUri).Should().Be.SameInstanceAs(_placeSearchResult);
         }
 
         [TestMethod]
@@ -287,7 +287,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeRetrieved()
                 .AndThePlacesCanBeConverted();
 
-            _provider.ByPaginationUri(_aLicenseInfo, PaginationUri);
+            _provider.ByUri(_aLicenseInfo, PaginationUri);
             _mockedRetriever.Verify(it => it.RetrieveFrom(_aCustomRequest), Times.Once());
         }
 
@@ -298,7 +298,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeRetrieved()
                 .AndThePlacesCanBeConverted();
 
-            _provider.ByPaginationUri(_aLicenseInfo, PaginationUri);
+            _provider.ByUri(_aLicenseInfo, PaginationUri);
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
 
