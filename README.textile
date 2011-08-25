@@ -2,6 +2,12 @@ h1. Client .NET (3.5) para acesso aos Webservices de locais
 
 h2. Como usar
 
+h3. Configuração da url de acesso ao webservice
+
+p. Você precisa adicionar no app.config de sua aplicação a seguinte chave:
+
+bc.. <add key="Maplink.Webservices.Places.BaseUri" value="http://url-do-webservice" /> <!-- sem a última barra ("/") -->
+
 h3. Pesquisa de locais
 
 h4. Por Raio
