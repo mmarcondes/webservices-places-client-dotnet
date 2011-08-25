@@ -20,7 +20,22 @@ var term = "termo";
 var placeSearcher = new PlaceSearcher();
 var results = placeSearcher.ByTerm(licenseInfo, term);
 
+h4. Por Categoria
+
+bc.. var licenseInfo = new LicenseInfo { Key = "<chave da sua licença>", Login = "<login da sua licença>"};
+var category = 42;
+var placeSearcher = new PlaceSearcher();
+var results = placeSearcher.ByCategory(licenseInfo, category);
+
 h4. Paginação
 
 bc.. var nextPageResults = ByPaginationUri(licenseInfo, results.NextPageUri);
 var previousPageResults = ByPaginationUri(licenseInfo, results.PreviousPageUri);
+
+h3. Pesquisa de categorias
+
+h4. Todas as categories (disponíveis para o seu pacote)
+
+bc.. var licenseInfo = new LicenseInfo { Key = "<chave da sua licença>", Login = "<login da sua licença>"};
+var categorySearcher = new CategorySearcher();
+var categories = categorySearcher.All(licenseInfo);
