@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Converters;
 using Maplink.Webservices.Places.Client.Entities;

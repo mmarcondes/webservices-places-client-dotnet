@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Wrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SharpTestsEx;
+using UriBuilder = Maplink.Webservices.Places.Client.Builders.UriBuilder;
 
 namespace Maplink.Webservices.Places.Client.UnitTests.Builders
 {
@@ -54,6 +56,14 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         }
 
         [TestMethod]
+        public void ShouldBuildUriWithoutQueryForSearchRequest()
+        {
+            GivenTheUriQueryIsEmpty();
+
+            _builder.For(_request).Should().Be.EqualTo("base-uriuri/path");
+        }
+
+        [TestMethod]
         public void ShouldBuildUriQueryWhenBuildingUriForSearchRequest()
         {
             _builder.For(_request);
@@ -67,6 +77,13 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             _builder.For(_request);
             _mockedConfiguration
                 .Verify(it => it.ValueFor("Maplink.Webservices.Places.BaseUri"), Times.Once());
+        }
+
+        private void GivenTheUriQueryIsEmpty()
+        {
+            _mockedUriQueryBuilder
+                .Setup(it => it.Build(It.IsAny<IEnumerable<KeyValuePair<string, string>>>()))
+                .Returns(String.Empty);
         }
     }
 }

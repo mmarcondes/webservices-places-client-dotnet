@@ -21,12 +21,19 @@ namespace Maplink.Webservices.Places.Client.Builders
         {
             var uriQuery = _uriQueryBuilder.Build(request.Arguments);
 
+            var uriQueryWithStartIndex =
+                String.Format(
+                    "{0}{1}",
+                    uriQuery,
+                    CreateQueryStringForStartIndex(request));
+
             return String.Format(
-                "{0}{1}?{2}{3}", 
+                "{0}{1}{2}", 
                 _configurationWrapper.ValueFor(BaseUriKey), 
                 request.UriPath, 
-                uriQuery,
-                CreateQueryStringForStartIndex(request));
+                uriQueryWithStartIndex != String.Empty 
+                    ? String.Format("?{0}", uriQueryWithStartIndex) 
+                    : String.Empty);
         }
 
         private static string CreateQueryStringForStartIndex(Request request)
