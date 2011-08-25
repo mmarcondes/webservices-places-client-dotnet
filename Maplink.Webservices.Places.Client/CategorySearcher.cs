@@ -28,6 +28,7 @@ namespace Maplink.Webservices.Places.Client
         {
             var requestBuild =
                 _requestBuilder
+                    .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
                     .WithUriPath("/categories")
                     .WithStartIndex(0)
                     .Build();

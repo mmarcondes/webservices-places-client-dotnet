@@ -14,6 +14,8 @@ namespace Maplink.Webservices.Places.Client.UnitTests
     [TestClass]
     public class CategorySearcherTest
     {
+        private const string LicenseKey = "license-key";
+        private const string LicenseLogin = "license-login";
         private ICategorySearcher _searcher;
         private Mock<IRequestBuilder> _mockedRequestBuilder;
         private Mock<IResourceRetriever> _mockedResourceRetriever;
@@ -26,7 +28,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         [TestInitialize]
         public void SetUp()
         {
-            _licenseInfo = new LicenseInfo();
+            _licenseInfo = new LicenseInfo { Login = LicenseLogin, Key = LicenseKey };
 
             _mockedRequestBuilder = new Mock<IRequestBuilder>();
             _mockedResourceRetriever = new Mock<IResourceRetriever>();
@@ -57,6 +59,17 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .WhenListingAllCategories();
 
             _mockedRequestBuilder.Verify(it => it.WithUriPath("/categories"), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldBuildRequestWithLicenseInfoWhenListingCategoriesAvailable()
+        {
+            GivenTheRequestCanBeBuilt()
+                .AndTheResourceCanBeRetrieved()
+                .AndTheResourceCanBeConverted()
+                .WhenListingAllCategories();
+
+            _mockedRequestBuilder.Verify(it => it.WithLicenseInfo(LicenseLogin, LicenseKey), Times.Once());
         }
 
         [TestMethod]
@@ -106,7 +119,10 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private CategorySearcherTest GivenTheRequestCanBeBuilt()
         {
             _requestBuilt = new Request();
-            
+
+            _mockedRequestBuilder
+                .Setup(it => it.WithLicenseInfo(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(_mockedRequestBuilder.Object);
             _mockedRequestBuilder
                 .Setup(it => it.WithUriPath(It.IsAny<string>()))
                 .Returns(_mockedRequestBuilder.Object);
@@ -126,7 +142,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                                      {
                                          All = new List<Client.Resources.Category>()
                                      };
-            
+
             _mockedResourceRetriever
                 .Setup(it => it.From<Categories>(It.IsAny<Request>()))
                 .Returns(_resourceRetrieved);
