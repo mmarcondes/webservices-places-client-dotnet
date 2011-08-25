@@ -11,13 +11,13 @@ namespace Maplink.Webservices.Places.Client
 {
     public class PlaceSearcher : IPlaceSearcher
     {
-        private readonly IPlacesSearchRetriever _retriever;
+        private readonly IResourceRetriever _retriever;
         private readonly IPlacesConverter _converter;
         private readonly IRequestBuilder _requestBuilder;
         private static readonly CultureInfo UnitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
 
         public PlaceSearcher(
-            IPlacesSearchRetriever retriever, 
+            IResourceRetriever retriever, 
             IPlacesConverter converter, 
             IRequestBuilder requestBuilder)
         {
@@ -28,7 +28,7 @@ namespace Maplink.Webservices.Places.Client
 
         public PlaceSearcher()
             : this(
-                new PlacesSearchRetriever(
+                new ResourceRetriever(
                     new HttpRequestBuilder(
                         new UriBuilder(new ConfigurationWrapper(), new UriQueryBuilder()), 
                         new Clock(), 
@@ -97,7 +97,7 @@ namespace Maplink.Webservices.Places.Client
 
         private PlaceSearchResult RetrievePlaces(Request searchRequest)
         {
-            var places = _retriever.RetrieveFrom(searchRequest);
+            var places = _retriever.From<Resources.Places>(searchRequest);
 
             return _converter.ToEntity(places);
         }

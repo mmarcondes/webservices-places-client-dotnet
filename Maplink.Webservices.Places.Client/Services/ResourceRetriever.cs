@@ -1,17 +1,18 @@
 using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Exceptions;
+using Maplink.Webservices.Places.Client.Resources;
 using Maplink.Webservices.Places.Client.Wrappers;
 
 namespace Maplink.Webservices.Places.Client.Services
 {
-    public class PlacesSearchRetriever : IPlacesSearchRetriever
+    public class ResourceRetriever : IResourceRetriever
     {
         private readonly IHttpRequestBuilder _httpRequestBuilder;
         private readonly IHttpClient _httpClient;
         private readonly IXmlSerializerWrapper _serializerWrapper;
 
-        public PlacesSearchRetriever(
+        public ResourceRetriever(
             IHttpRequestBuilder httpRequestBuilder,
             IHttpClient httpClient,
             IXmlSerializerWrapper serializerWrapper)
@@ -20,15 +21,15 @@ namespace Maplink.Webservices.Places.Client.Services
             _httpClient = httpClient;
             _serializerWrapper = serializerWrapper;
         }
-        
-        public Resources.Places RetrieveFrom(Request request)
+
+        public TResource From<TResource>(Request request) where TResource : Resource, new()
         {
             var httpRequest = _httpRequestBuilder.For(request);
 
-            return RetrieveFrom(httpRequest);
+            return RetrieveFrom<TResource>(httpRequest);
         }
 
-        private Resources.Places RetrieveFrom(HttpRequest httpRequest)
+        private TResource RetrieveFrom<TResource>(HttpRequest httpRequest) where TResource : Resource, new()
         {
             var response = _httpClient.Get(httpRequest);
 
@@ -38,8 +39,8 @@ namespace Maplink.Webservices.Places.Client.Services
             }
 
             return HasAnyResourceBeenFound(response)
-                       ? _serializerWrapper.Deserialize<Resources.Places>(response.Body)
-                       : new Resources.Places();
+                       ? _serializerWrapper.Deserialize<TResource>(response.Body)
+                       : new TResource();
         }
 
         private static bool HasAnyResourceBeenFound(HttpResponse httpResponse)

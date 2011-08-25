@@ -82,8 +82,9 @@
     <Compile Include="Resources\Category.cs" />
     <Compile Include="Resources\Place.cs" />
     <Compile Include="Resources\Places.cs" />
-    <Compile Include="Services\IPlacesSearchRetriever.cs" />
-    <Compile Include="Services\PlacesSearchRetriever.cs" />
+    <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Services\IResourceRetriever.cs" />
+    <Compile Include="Services\ResourceRetriever.cs" />
     <Compile Include="Wrappers\Clock.cs" />
     <Compile Include="Wrappers\ConfigurationWrapper.cs" />
     <Compile Include="Wrappers\HttpClient.cs" />

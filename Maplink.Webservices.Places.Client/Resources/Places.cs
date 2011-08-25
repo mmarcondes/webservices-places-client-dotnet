@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Maplink.Webservices.Places.Client.Resources
 {
     [XmlRoot(ElementName = "places")]
-    public class Places
+    public class Places : Resource
     {
         public Places()
         {

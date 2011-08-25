@@ -1,6 +1,7 @@
 ﻿using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Exceptions;
+using Maplink.Webservices.Places.Client.Resources;
 using Maplink.Webservices.Places.Client.Services;
 using Maplink.Webservices.Places.Client.Wrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,13 +11,13 @@ using SharpTestsEx;
 namespace Maplink.Webservices.Places.Client.UnitTests.Services
 {
     [TestClass]
-    public class PlacesSearchRetrieverTest
+    public class ResourceRetrieverTest
     {
-        private IPlacesSearchRetriever _retriever;
+        private IResourceRetriever _retriever;
         private Mock<IHttpRequestBuilder> _mockedRequestBuilder;
         private Mock<IHttpClient> _mockedHttpClient;
         private Mock<IXmlSerializerWrapper> _mockedSerializer;
-        private Client.Resources.Places _deserializedPlaces;
+        private DummyResource _deserializedResource;
         private HttpRequest _httpRequestBuilt;
         private HttpResponse _anOkHttpResponse;
         private HttpResponse _anInvalidHttpResponse;
@@ -36,21 +37,32 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             _mockedHttpClient = new Mock<IHttpClient>();
             _mockedSerializer = new Mock<IXmlSerializerWrapper>();
 
-            _retriever = new PlacesSearchRetriever(
+            _retriever = new ResourceRetriever(
                 _mockedRequestBuilder.Object,
                 _mockedHttpClient.Object,
                 _mockedSerializer.Object);
         }
 
         [TestMethod]
-        public void ShouldRetrievePlacesFromRequest()
+        public void ShouldRetrieveResourceFromRequest()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRequest)
-                .Should().Be.EqualTo(_deserializedPlaces);
+            _retriever.From<DummyResource>(_aRequest)
+                .Should().Be.EqualTo(_deserializedResource);
+        }
+
+        [TestMethod]
+        public void ShouldRetrieveCategoriesFromRequest()
+        {
+            GivenTheRequestWasBuilt()
+                .AndTheResponseWasOk()
+                .AndTheResponseWasDeserialized();
+
+            _retriever.From<DummyResource>(_aRequest)
+                .Should().Be.EqualTo(_deserializedResource);
         }
 
         [TestMethod]
@@ -60,7 +72,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRequest);
+            _retriever.From<DummyResource>(_aRequest);
 
             _mockedRequestBuilder
                 .Verify(it => it.For(_aRequest), Times.Once());
@@ -73,7 +85,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRequest);
+            _retriever.From<DummyResource>(_aRequest);
 
             _mockedHttpClient
                 .Verify(it => it.Get(_httpRequestBuilt), Times.Once());
@@ -86,12 +98,12 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasOk()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRequest);
+            _retriever.From<DummyResource>(_aRequest);
 
             _mockedSerializer
                 .Verify(
-                    it => 
-                        it.Deserialize<Client.Resources.Places>(_anOkHttpResponse.Body), Times.Once());
+                    it =>
+                        it.Deserialize<DummyResource>(_anOkHttpResponse.Body), Times.Once());
         }
 
         [ExpectedException(typeof(PlaceClientRequestException))]
@@ -102,21 +114,21 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
                 .AndTheResponseWasInvalid()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRequest);
+            _retriever.From<DummyResource>(_aRequest);
         }
 
         [TestMethod]
-        public void ShouldRetrieveAnEmptyPlaceFromRequestWhenRetrievingANotFoundReponse()
+        public void ShouldRetrieveADefaultResourceFromRequestWhenRetrievingANotFoundReponse()
         {
             GivenTheRequestWasBuilt()
                 .AndTheResponseWasNotFound()
                 .AndTheResponseWasDeserialized();
 
-            _retriever.RetrieveFrom(_aRequest).Retrieved
-                .Should().Be.Empty();
+            var dummyResourceRetrieved = _retriever.From<DummyResource>(_aRequest);
+            dummyResourceRetrieved.Should().Be.EqualTo(new DummyResource());
         }
 
-        private PlacesSearchRetrieverTest GivenTheRequestWasBuilt()
+        private ResourceRetrieverTest GivenTheRequestWasBuilt()
         {
             _httpRequestBuilt = new HttpRequest();
 
@@ -127,7 +139,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             return this;
         }
 
-        private PlacesSearchRetrieverTest AndTheResponseWasOk()
+        private ResourceRetrieverTest AndTheResponseWasOk()
         {
             _mockedHttpClient
                  .Setup(it => it.Get(It.IsAny<HttpRequest>()))
@@ -136,7 +148,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             return this;
         }
 
-        private PlacesSearchRetrieverTest AndTheResponseWasNotFound()
+        private ResourceRetrieverTest AndTheResponseWasNotFound()
         {
             _mockedHttpClient
                  .Setup(it => it.Get(It.IsAny<HttpRequest>()))
@@ -145,7 +157,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
             return this;
         }
 
-        private PlacesSearchRetrieverTest AndTheResponseWasInvalid()
+        private ResourceRetrieverTest AndTheResponseWasInvalid()
         {
             _mockedHttpClient
                 .Setup(it => it.Get(It.IsAny<HttpRequest>()))
@@ -156,13 +168,13 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Services
 
         private void AndTheResponseWasDeserialized()
         {
-            _deserializedPlaces = new Client.Resources.Places();
+            _deserializedResource = new DummyResource();
 
             _mockedSerializer
                 .Setup(
                     it =>
-                        it.Deserialize<Client.Resources.Places>(It.IsAny<string>()))
-                .Returns(_deserializedPlaces);
+                        it.Deserialize<DummyResource>(It.IsAny<string>()))
+                .Returns(_deserializedResource);
         }
     }
 }

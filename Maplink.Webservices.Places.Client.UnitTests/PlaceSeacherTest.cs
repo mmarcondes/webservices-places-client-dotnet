@@ -13,7 +13,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
     public class PlaceSeacherTest
     {
         private IPlaceSearcher _provider;
-        private Mock<IPlacesSearchRetriever> _mockedRetriever;
+        private Mock<IResourceRetriever> _mockedRetriever;
         private Mock<IPlacesConverter> _mockedConverter;
         private Mock<IRequestBuilder> _mockedSearchRequestBuilder;
         private PlaceSearchResult _placeSearchResult;
@@ -37,7 +37,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             _aLicenseInfo = new LicenseInfo { Login = "login", Key = "key" };
 
             _mockedSearchRequestBuilder = new Mock<IRequestBuilder>();
-            _mockedRetriever = new Mock<IPlacesSearchRetriever>();
+            _mockedRetriever = new Mock<IResourceRetriever>();
             _mockedConverter = new Mock<IPlacesConverter>();
 
             _provider = new PlaceSearcher(
@@ -156,7 +156,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByRadius(_aLicenseInfo, Radius, Latitude, Longitude);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.From<Client.Resources.Places>(_aRequest), Times.Once());
         }
 
 
@@ -250,7 +250,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByTerm(_aLicenseInfo, Term);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.From<Client.Resources.Places>(_aRequest), Times.Once());
         }
 
 
@@ -283,7 +283,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByUri(_aLicenseInfo, PaginationUri);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.From<Client.Resources.Places>(_aRequest), Times.Once());
         }
 
         [TestMethod]
@@ -374,7 +374,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedRetriever.Verify(it => it.RetrieveFrom(_aRequest), Times.Once());
+            _mockedRetriever.Verify(it => it.From<Client.Resources.Places>(_aRequest), Times.Once());
         }
 
         [TestMethod]
@@ -398,7 +398,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private PlaceSeacherTest AndThePlacesCanBeRetrieved()
         {
             _mockedRetriever
-                .Setup(it => it.RetrieveFrom(It.IsAny<Request>()))
+                .Setup(it => it.From<Client.Resources.Places>(It.IsAny<Request>()))
                 .Returns(_retrievedPlaces);
             return this;
         }
