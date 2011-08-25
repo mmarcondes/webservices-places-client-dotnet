@@ -4,7 +4,8 @@ using Maplink.Webservices.Places.Client.Wrappers;
 
 namespace Maplink.Webservices.Places.Client.Builders
 {
-    public class UriBuilder : IUriBuilder
+    public class 
+        UriBuilder : IUriBuilder
     {
         private readonly IConfigurationWrapper _configurationWrapper;
         private readonly IUriQueryBuilder _uriQueryBuilder;
