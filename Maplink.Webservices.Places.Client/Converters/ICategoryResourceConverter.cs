@@ -5,6 +5,6 @@ namespace Maplink.Webservices.Places.Client.Converters
 {
     public interface ICategoryResourceConverter
     {
-        IEnumerable<Category> ToEntity(IEnumerable<Client.Resources.Category> resources);
+        IEnumerable<Category> ToEntity(IEnumerable<Resources.Category> resources);
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Builders\UriBuilder.cs" />
     <Compile Include="Builders\UriQueryBuilder.cs" />
     <Compile Include="CategorySearcher.cs" />
+    <Compile Include="Converters\CategoryResourceConverter.cs" />
     <Compile Include="Converters\ICategoryResourceConverter.cs" />
     <Compile Include="Converters\IPlacesConverter.cs" />
     <Compile Include="Converters\PlacesConverter.cs" />
