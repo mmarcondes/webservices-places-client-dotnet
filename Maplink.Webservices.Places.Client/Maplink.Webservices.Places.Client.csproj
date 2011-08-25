@@ -60,8 +60,11 @@
     <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
     <Compile Include="Builders\UriQueryBuilder.cs" />
+    <Compile Include="CategorySearcher.cs" />
+    <Compile Include="Converters\ICategoryResourceConverter.cs" />
     <Compile Include="Converters\IPlacesConverter.cs" />
     <Compile Include="Converters\PlacesConverter.cs" />
+    <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\LicenseInfo.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\PlaceResult.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Helpers\HmacSha1HashGenerator.cs" />
     <Compile Include="Helpers\IBase64Encoder.cs" />
     <Compile Include="Helpers\IHmacSha1HashGenerator.cs" />
+    <Compile Include="ICategorySearcher.cs" />
     <Compile Include="IPlaceSearcher.cs" />
     <Compile Include="PlacesSearcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

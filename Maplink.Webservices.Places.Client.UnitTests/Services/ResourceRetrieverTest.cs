@@ -1,7 +1,6 @@
 ﻿using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Entities;
 using Maplink.Webservices.Places.Client.Exceptions;
-using Maplink.Webservices.Places.Client.Resources;
 using Maplink.Webservices.Places.Client.Services;
 using Maplink.Webservices.Places.Client.Wrappers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
