@@ -7,7 +7,7 @@ namespace Maplink.Webservices.Places.Client.Builders
 {
     public class RequestBuilder : IRequestBuilder
     {
-        private readonly Request _request;
+        private Request _request;
 
         public RequestBuilder()
         {
@@ -61,7 +61,11 @@ namespace Maplink.Webservices.Places.Client.Builders
 
         public Request Build()
         {
-            return _request; 
+            var request = _request;
+
+            _request = new Request();
+
+            return request;
         }
 
         private static bool ExistsQueryString(IEnumerable<string> splittedUriAndPath)

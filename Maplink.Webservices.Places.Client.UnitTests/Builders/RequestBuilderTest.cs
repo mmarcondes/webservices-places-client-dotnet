@@ -97,5 +97,12 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
             requestBuilt.Arguments.Should().Have.Count.EqualTo(0);
             requestBuilt.StartsAtIndex.Should().Be.EqualTo(60);
         }
+
+        [TestMethod]
+        public void ShouldErasePreviousBuildWhenBuildingARequest()
+        {
+            _requestBuilder.WithStartIndex(10).Build();
+            _requestBuilder.WithLicenseInfo("login", "key").Build().StartsAtIndex.Should().Be.EqualTo(0);
+        }
     }
 }
