@@ -45,7 +45,8 @@ namespace Maplink.Webservices.Places.Client
             LicenseInfo licenseInfo, 
             double radius, 
             double latitude, 
-            double longitude)
+            double longitude,
+            string term = "")
         {
             var searchRequest = _requestBuilder
                 .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
@@ -54,19 +55,6 @@ namespace Maplink.Webservices.Places.Client
                 .WithArgument("radius", radius.ToString(UnitedStatesCultureInfo))
                 .WithArgument("latitude", latitude.ToString(UnitedStatesCultureInfo))
                 .WithArgument("longitude", longitude.ToString(UnitedStatesCultureInfo))
-                .Build();
-
-            return RetrievePlaces(searchRequest);
-        }
-
-        public PlaceSearchResult ByTerm(
-            LicenseInfo licenseInfo, 
-            string term)
-        {
-            var searchRequest = _requestBuilder
-                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
-                .WithUriPath("/places/byterm")
-                .WithStartIndex(0)
                 .WithArgument("term", term)
                 .Build();
 

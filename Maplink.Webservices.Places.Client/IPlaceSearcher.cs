@@ -8,8 +8,8 @@ namespace Maplink.Webservices.Places.Client
             LicenseInfo licenseInfo,
             double radius,
             double latitude,
-            double longitude);
-        PlaceSearchResult ByTerm(LicenseInfo licenseInfo, string term);
+            double longitude,
+            string term = "");
         PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uriPathAndQuery);
         PlaceSearchResult ByCategory(LicenseInfo licenseInfo, int categoryId);
     }
