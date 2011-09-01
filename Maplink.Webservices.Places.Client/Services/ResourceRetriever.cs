@@ -35,7 +35,7 @@ namespace Maplink.Webservices.Places.Client.Services
 
             if (IsAnInvalidResponse(response))
             {
-                throw new PlaceClientRequestException(response.StatusCode);
+                throw new PlaceClientRequestException(response);
             }
 
             return HasAnyResourceBeenFound(response)
