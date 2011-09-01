@@ -1,5 +1,5 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
+using Maplink.Webservices.Places.Client.Arguments;
 using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Converters;
 using Maplink.Webservices.Places.Client.Entities;
@@ -26,9 +26,11 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private const double Longitude = -43.56;
         private readonly CultureInfo _unitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
         private PlaceSearchResult _placeSearchRetrievedByProveider;
+        private PlaceSearchRequest _placeSearchRequest;
         private const int CategoryId = 10;
         private const string Term = "term";
         private const string PaginationUri = "pagination-uri";
+        private const int StartIndex = 30;
 
         [TestInitialize]
         public void SetUp()
@@ -68,7 +70,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .WhenFindingByRadius();
 
             _mockedSearchRequestBuilder
-                .Verify(it=> it.WithLicenseInfo(_aLicenseInfo.Login, _aLicenseInfo.Key), Times.Once());
+                .Verify(it=> it.WithLicenseInfo(_aLicenseInfo), Times.Once());
         }
 
         [TestMethod]
@@ -92,7 +94,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .WhenFindingByRadius();
 
             _mockedSearchRequestBuilder
-                .Verify(it => it.WithStartIndex(0), Times.Once());
+                .Verify(it => it.WithStartIndex(StartIndex), Times.Once());
         }
 
         [TestMethod]
@@ -146,14 +148,14 @@ namespace Maplink.Webservices.Places.Client.UnitTests
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
                 .AndThePlacesCanBeConverted()
-                .WhenFindingByRadiusWithTerm();
+                .WhenFindingByRadius();
 
             _mockedSearchRequestBuilder
                 .Verify(it => it.WithArgument("term", Term), Times.Once());
         }
 
         [TestMethod]
-        public void ShouldBuildSearchRequestForRadiusSearchWithDefaultTermArgument()
+        public void ShouldBuildSearchRequestForRadiusSearchWithCategoryArgument()
         {
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
@@ -161,7 +163,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .WhenFindingByRadius();
 
             _mockedSearchRequestBuilder
-                .Verify(it => it.WithArgument("term", String.Empty), Times.Once());
+                .Verify(it => it.WithArgument("category", CategoryId.ToString()), Times.Once());
         }
         
         [TestMethod]
@@ -210,6 +212,39 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         }
 
         [TestMethod]
+        public void ShouldCreateARequestWithLicenseInfoWhenSearchingForPaginationRequest()
+        {
+            GivenTheSearchRequestCanBeBuilt()
+                .AndThePlacesCanBeRetrieved()
+                .AndThePlacesCanBeConverted();
+
+            _provider.ByUri(_aLicenseInfo, PaginationUri);
+            _mockedSearchRequestBuilder.Verify(it => it.WithLicenseInfo(_aLicenseInfo), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldCreateARequestWithUriPathAndQueryWhenSearchingForPaginationRequest()
+        {
+            GivenTheSearchRequestCanBeBuilt()
+                .AndThePlacesCanBeRetrieved()
+                .AndThePlacesCanBeConverted();
+
+            _provider.ByUri(_aLicenseInfo, PaginationUri);
+            _mockedSearchRequestBuilder.Verify(it => it.WithUriPathAndQuery(PaginationUri), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldCreateARequestWhenSearchingForPaginationRequest()
+        {
+            GivenTheSearchRequestCanBeBuilt()
+                .AndThePlacesCanBeRetrieved()
+                .AndThePlacesCanBeConverted();
+
+            _provider.ByUri(_aLicenseInfo, PaginationUri);
+            _mockedSearchRequestBuilder.Verify(it => it.Build(), Times.Once());
+        }
+
+        [TestMethod]
         public void ShouldRetrieveResourcesWhenSearchingForPaginationRequest()
         {
             GivenTheSearchRequestCanBeBuilt()
@@ -228,97 +263,6 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted();
 
             _provider.ByUri(_aLicenseInfo, PaginationUri);
-            _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldSearchByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId).Should().Be.EqualTo(_placeSearchResult);
-        }
-
-        [TestMethod]
-        public void ShouldBuildSearchRequestWhenSearchingByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedSearchRequestBuilder.Verify(it => it.Build(), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldBuildSearchRequestWithLicenseInfoWhenSearchingByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedSearchRequestBuilder
-                .Verify(it => it.WithLicenseInfo(_aLicenseInfo.Login, _aLicenseInfo.Key), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldBuildSearchRequestWithCategoryIdWhenSearchingByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedSearchRequestBuilder
-                .Verify(it => it.WithArgument("categoryId", CategoryId.ToString()), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldBuildSearchRequestWithUriPathWhenSearchingByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedSearchRequestBuilder
-                .Verify(it => it.WithUriPath("/places/bycategory"), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldBuildSearchRequestWithStartIndexWhenSearchingByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedSearchRequestBuilder
-                .Verify(it => it.WithStartIndex(0), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldRetrievePlacesWhenSearchingByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId);
-            _mockedRetriever.Verify(it => it.From<Client.Resources.Places>(_aRequest), Times.Once());
-        }
-
-        [TestMethod]
-        public void ShouldConvertPlacesWhenSearchingByCategory()
-        {
-            GivenTheSearchRequestCanBeBuilt()
-                .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
-
-            _provider.ByCategory(_aLicenseInfo, CategoryId);
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
 
@@ -348,7 +292,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .Setup(it => it.WithUriPathAndQuery(It.IsAny<string>()))
                 .Returns(_mockedSearchRequestBuilder.Object);
             _mockedSearchRequestBuilder
-                .Setup(it => it.WithLicenseInfo(It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(it => it.WithLicenseInfo(It.IsAny<LicenseInfo>()))
                 .Returns(_mockedSearchRequestBuilder.Object);
             _mockedSearchRequestBuilder
                 .Setup(it => it.WithStartIndex(It.IsAny<int>()))
@@ -365,12 +309,18 @@ namespace Maplink.Webservices.Places.Client.UnitTests
 
         private void WhenFindingByRadius()
         {
-            _placeSearchRetrievedByProveider = _provider.ByRadius(_aLicenseInfo, Radius, Latitude, Longitude);
-        }
+            _placeSearchRequest = new PlaceSearchRequest
+                                      {
+                                          CategoryId = CategoryId,
+                                          Latitude = Latitude,
+                                          LicenseInfo = _aLicenseInfo,
+                                          Longitude = Longitude,
+                                          Radius = Radius,
+                                          Term = Term,
+                                          StartIndex = StartIndex
+                                      };
 
-        private void WhenFindingByRadiusWithTerm()
-        {
-            _placeSearchRetrievedByProveider = _provider.ByRadius(_aLicenseInfo, Radius, Latitude, Longitude, Term);
+            _placeSearchRetrievedByProveider = _provider.ByRadius(_placeSearchRequest);
         }
     }
 }

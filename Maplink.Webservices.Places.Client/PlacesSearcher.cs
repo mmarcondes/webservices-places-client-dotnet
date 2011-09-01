@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Maplink.Webservices.Places.Client.Arguments;
 using Maplink.Webservices.Places.Client.Builders;
 using Maplink.Webservices.Places.Client.Converters;
 using Maplink.Webservices.Places.Client.Entities;
@@ -41,49 +42,33 @@ namespace Maplink.Webservices.Places.Client
         {
         }
 
-        public PlaceSearchResult ByRadius(
-            LicenseInfo licenseInfo, 
-            double radius, 
-            double latitude, 
-            double longitude,
-            string term = "")
+        public PlaceSearchResult ByRadius(PlaceSearchRequest placeSearchRequest)
         {
             var searchRequest = _requestBuilder
-                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
                 .WithUriPath("/places/byradius")
-                .WithStartIndex(0)
-                .WithArgument("radius", radius.ToString(UnitedStatesCultureInfo))
-                .WithArgument("latitude", latitude.ToString(UnitedStatesCultureInfo))
-                .WithArgument("longitude", longitude.ToString(UnitedStatesCultureInfo))
-                .WithArgument("term", term)
+                .WithLicenseInfo(placeSearchRequest.LicenseInfo)
+                .WithStartIndex(placeSearchRequest.StartIndex)
+                .WithArgument("radius", placeSearchRequest.Radius.ToString(UnitedStatesCultureInfo))
+                .WithArgument("latitude", placeSearchRequest.Latitude.ToString(UnitedStatesCultureInfo))
+                .WithArgument("longitude", placeSearchRequest.Longitude.ToString(UnitedStatesCultureInfo))
+                .WithArgument("term", placeSearchRequest.Term)
+                .WithArgument("category", placeSearchRequest.CategoryId.ToString())
                 .Build();
 
-            return RetrievePlaces(searchRequest);
-        }
-
-        public PlaceSearchResult ByCategory(LicenseInfo licenseInfo, int categoryId)
-        {
-            var searchRequest = _requestBuilder
-                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
-                .WithUriPath("/places/bycategory")
-                .WithArgument("categoryId", categoryId.ToString())
-                .WithStartIndex(0)
-                .Build();
-
-            return RetrievePlaces(searchRequest);
+            return RetrievePlacesFor(searchRequest);
         }
 
         public PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uriPathAndQuery)
         {
             var searchRequest = _requestBuilder
-                .WithLicenseInfo(licenseInfo.Login, licenseInfo.Key)
+                .WithLicenseInfo(licenseInfo)
                 .WithUriPathAndQuery(uriPathAndQuery)
                 .Build();
 
-            return RetrievePlaces(searchRequest);
+            return RetrievePlacesFor(searchRequest);
         }
 
-        private PlaceSearchResult RetrievePlaces(Request searchRequest)
+        private PlaceSearchResult RetrievePlacesFor(Request searchRequest)
         {
             var places = _retriever.From<Resources.Places>(searchRequest);
 
