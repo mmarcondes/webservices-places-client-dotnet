@@ -17,7 +17,7 @@ bc.. var request = new PlaceSearchRequestBuilder()
                 .ForLicense("<login da sua licença>", "<chave da sua licença>")
                 .FilteredByTerm("banco 24h") // opcional - filtrar por termo
                 .FilteredByCategory(6) // opcional - filtrar por categoria
-				.StartingAtIndex(30) // opcional
+                .StartingAtIndex(30) // opcional
                 .Build();
 
 var placeSearcher = new PlaceSearcher();
