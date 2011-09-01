@@ -55,6 +55,7 @@
     <Compile Include="Builders\AuthorizationBuilderTest.cs" />
     <Compile Include="Builders\HttpHeaderBuilderTest.cs" />
     <Compile Include="Builders\HttpRequestBuilderTest.cs" />
+    <Compile Include="Builders\PaginationRequestBuilderTest.cs" />
     <Compile Include="Builders\PlaceSearchRequestBuilderTest.cs" />
     <Compile Include="Builders\RequestBuilderTest.cs" />
     <Compile Include="Builders\SignatureBuilderTest.cs" />
