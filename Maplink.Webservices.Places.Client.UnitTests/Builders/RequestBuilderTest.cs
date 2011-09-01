@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Maplink.Webservices.Places.Client.Builders;
+using Maplink.Webservices.Places.Client.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpTestsEx;
 
@@ -13,7 +14,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         [TestInitialize]
         public void SetUp()
         {
-            _requestBuilder = new RequestBuilder();            
+            _requestBuilder = new RequestBuilder();
         }
 
         [TestMethod]
@@ -36,6 +37,17 @@ namespace Maplink.Webservices.Places.Client.UnitTests.Builders
         public void ShouldBuildSearchRequestWithLicenseInfo()
         {
             var requestBuilt = _requestBuilder.WithLicenseInfo("login", "key").Build();
+
+            requestBuilt.LicenseLogin.Should().Be.EqualTo("login");
+            requestBuilt.LicenseKey.Should().Be.EqualTo("key");
+        }
+
+        [TestMethod]
+        public void ShouldBuildSearchRequestWithLicenseInfoBasedOnType()
+        {
+            var licenseInfo = new LicenseInfo { Login = "login", Key = "key" };
+
+            var requestBuilt = _requestBuilder.WithLicenseInfo(licenseInfo).Build();
 
             requestBuilt.LicenseLogin.Should().Be.EqualTo("login");
             requestBuilt.LicenseKey.Should().Be.EqualTo("key");

@@ -8,6 +8,7 @@ namespace Maplink.Webservices.Places.Client.Builders
         IRequestBuilder WithUriPathAndQuery(string uriPathAndQuery);
         IRequestBuilder WithStartIndex(int startIndex);
         IRequestBuilder WithLicenseInfo(string login, string key);
+        IRequestBuilder WithLicenseInfo(LicenseInfo licenseInfo);
         IRequestBuilder WithArgument(string key, string value);
         Request Build();
     }

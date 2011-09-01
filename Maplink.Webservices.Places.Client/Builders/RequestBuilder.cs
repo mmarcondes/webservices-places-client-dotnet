@@ -11,9 +11,9 @@ namespace Maplink.Webservices.Places.Client.Builders
 
         public RequestBuilder()
         {
-            _request = new Request {Arguments = new Dictionary<string, string>()};
+            _request = CreateDefaultRequest();
         }
-        
+
         public IRequestBuilder WithUriPathAndQuery(string uriPathAndQuery)
         {
             var splittedUriAndPath = uriPathAndQuery.Split('?');
@@ -50,6 +50,14 @@ namespace Maplink.Webservices.Places.Client.Builders
             return this;
         }
 
+        public IRequestBuilder WithLicenseInfo(LicenseInfo licenseInfo)
+        {
+            _request.LicenseLogin = licenseInfo.Login;
+            _request.LicenseKey = licenseInfo.Key;
+
+            return this;
+        }
+
         public IRequestBuilder WithArgument(string key, string value)
         {
             _request.Arguments = _request
@@ -63,7 +71,7 @@ namespace Maplink.Webservices.Places.Client.Builders
         {
             var request = _request;
 
-            _request = new Request();
+            _request = CreateDefaultRequest();
 
             return request;
         }
@@ -98,6 +106,11 @@ namespace Maplink.Webservices.Places.Client.Builders
 
             Int32.TryParse(argumentValue, out startIndex);
             return startIndex;
+        }
+
+        private static Request CreateDefaultRequest()
+        {
+            return new Request { Arguments = new Dictionary<string, string>() };
         }
     }
 }
