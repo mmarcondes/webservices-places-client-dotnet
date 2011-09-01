@@ -7,6 +7,6 @@ namespace Maplink.Webservices.Places.Client
     {
         PlaceSearchResult ByRadius(PlaceSearchRequest placeSearchRequest);
 
-        PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uriPathAndQuery);
+        PlaceSearchResult ByUri(PaginationRequest paginationRequest);
     }
 }

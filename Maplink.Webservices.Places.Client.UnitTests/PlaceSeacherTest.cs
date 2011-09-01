@@ -25,8 +25,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         private const double Latitude = -23.45;
         private const double Longitude = -43.56;
         private readonly CultureInfo _unitedStatesCultureInfo = CultureInfo.GetCultureInfo("en-us");
-        private PlaceSearchResult _placeSearchRetrievedByProveider;
+        private PlaceSearchResult _placeSearchRetrievedByProvider;
         private PlaceSearchRequest _placeSearchRequest;
+        private PaginationRequest _paginationRequest;
         private const int CategoryId = 10;
         private const string Term = "term";
         private const string PaginationUri = "pagination-uri";
@@ -58,7 +59,7 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                 .AndThePlacesCanBeConverted()
                 .WhenFindingByRadius();
 
-            _placeSearchRetrievedByProveider.Should().Be.EqualTo(_placeSearchResult);
+            _placeSearchRetrievedByProvider.Should().Be.EqualTo(_placeSearchResult);
         }
 
         [TestMethod]
@@ -206,9 +207,10 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
+                .AndThePlacesCanBeConverted()
+                .WhenSearchingByPaginationUri();
 
-           _provider.ByUri(_aLicenseInfo, PaginationUri).Should().Be.SameInstanceAs(_placeSearchResult);
+           _placeSearchRetrievedByProvider.Should().Be.SameInstanceAs(_placeSearchResult);
         }
 
         [TestMethod]
@@ -216,9 +218,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
+                .AndThePlacesCanBeConverted()
+                .WhenSearchingByPaginationUri();
 
-            _provider.ByUri(_aLicenseInfo, PaginationUri);
             _mockedSearchRequestBuilder.Verify(it => it.WithLicenseInfo(_aLicenseInfo), Times.Once());
         }
 
@@ -227,9 +229,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
+                .AndThePlacesCanBeConverted()
+                .WhenSearchingByPaginationUri();
 
-            _provider.ByUri(_aLicenseInfo, PaginationUri);
             _mockedSearchRequestBuilder.Verify(it => it.WithUriPathAndQuery(PaginationUri), Times.Once());
         }
 
@@ -238,9 +240,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
+                .AndThePlacesCanBeConverted()
+                .WhenSearchingByPaginationUri();
 
-            _provider.ByUri(_aLicenseInfo, PaginationUri);
             _mockedSearchRequestBuilder.Verify(it => it.Build(), Times.Once());
         }
 
@@ -249,9 +251,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
+                .AndThePlacesCanBeConverted()
+                .WhenSearchingByPaginationUri();
 
-            _provider.ByUri(_aLicenseInfo, PaginationUri);
             _mockedRetriever.Verify(it => it.From<Client.Resources.Places>(_aRequest), Times.Once());
         }
 
@@ -260,9 +262,9 @@ namespace Maplink.Webservices.Places.Client.UnitTests
         {
             GivenTheSearchRequestCanBeBuilt()
                 .AndThePlacesCanBeRetrieved()
-                .AndThePlacesCanBeConverted();
+                .AndThePlacesCanBeConverted()
+                .WhenSearchingByPaginationUri();
 
-            _provider.ByUri(_aLicenseInfo, PaginationUri);
             _mockedConverter.Verify(it => it.ToEntity(_retrievedPlaces), Times.Once());
         }
 
@@ -320,7 +322,18 @@ namespace Maplink.Webservices.Places.Client.UnitTests
                                           StartIndex = StartIndex
                                       };
 
-            _placeSearchRetrievedByProveider = _provider.ByRadius(_placeSearchRequest);
+            _placeSearchRetrievedByProvider = _provider.ByRadius(_placeSearchRequest);
+        }
+
+        private void WhenSearchingByPaginationUri()
+        {
+            _paginationRequest = new PaginationRequest
+                                     {
+                                         LicenseInfo = _aLicenseInfo,
+                                         UriPathAndQuery = PaginationUri
+                                     };
+
+            _placeSearchRetrievedByProvider = _provider.ByUri(_paginationRequest);
         }
     }
 }

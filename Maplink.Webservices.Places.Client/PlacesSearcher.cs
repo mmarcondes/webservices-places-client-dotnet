@@ -58,11 +58,11 @@ namespace Maplink.Webservices.Places.Client
             return RetrievePlacesFor(searchRequest);
         }
 
-        public PlaceSearchResult ByUri(LicenseInfo licenseInfo, string uriPathAndQuery)
+        public PlaceSearchResult ByUri(PaginationRequest paginationRequest)
         {
             var searchRequest = _requestBuilder
-                .WithLicenseInfo(licenseInfo)
-                .WithUriPathAndQuery(uriPathAndQuery)
+                .WithLicenseInfo(paginationRequest.LicenseInfo)
+                .WithUriPathAndQuery(paginationRequest.UriPathAndQuery)
                 .Build();
 
             return RetrievePlacesFor(searchRequest);
