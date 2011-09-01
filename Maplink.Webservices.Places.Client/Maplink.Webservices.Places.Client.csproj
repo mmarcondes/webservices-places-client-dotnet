@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arguments\PlaceSearchRequest.cs" />
     <Compile Include="Builders\AllHttpHeadersBuilder.cs" />
     <Compile Include="Builders\AuthorizationBuilder.cs" />
     <Compile Include="Builders\HttpHeaderBuilder.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Builders\IAuthorizationBuilder.cs" />
     <Compile Include="Builders\IHttpHeaderBuilder.cs" />
     <Compile Include="Builders\IHttpRequestBuilder.cs" />
+    <Compile Include="Builders\IPlaceSearchRequestBuilder.cs" />
     <Compile Include="Builders\IRequestBuilder.cs" />
     <Compile Include="Builders\ISignatureBuilder.cs" />
     <Compile Include="Builders\IUriBuilder.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Builders\HttpRequestBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Builders\PlaceSearchRequestBuilder.cs" />
     <Compile Include="Builders\RequestBuilder.cs" />
     <Compile Include="Builders\SignatureBuilder.cs" />
     <Compile Include="Builders\UriBuilder.cs" />
